@@ -18,7 +18,7 @@
  * pinia v2.1.7
  * (c) 2023 Eduardo San Martin Morote
  * @license MIT
- */const Ql=Symbol();var qs;(function(e){e.direct="direct",e.patchObject="patch object",e.patchFunction="patch function"})(qs||(qs={}));function Yl(){const e=Uo(!0),t=e.run(()=>Mr({}));let n=[],s=[];const r=Ar({install(o){r._a=o,o.provide(Ql,r),o.config.globalProperties.$pinia=r,s.forEach(i=>n.push(i)),s=[]},use(o){return!this._a&&!Gl?s.push(o):n.push(o),this},_p:n,_a:null,_e:e,_s:new Map,state:t});return r}const Jl=(e,t)=>{const n=e.__vccOpts||e;for(const[s,r]of t)n[s]=r;return n},Xl={};function Zl(e,t){return ol(),cl("div",null,"App")}const ec=Jl(Xl,[["render",Zl]]);/*!
+ */const Ql=Symbol();var qs;(function(e){e.direct="direct",e.patchObject="patch object",e.patchFunction="patch function"})(qs||(qs={}));function Yl(){const e=Uo(!0),t=e.run(()=>Mr({}));let n=[],s=[];const r=Ar({install(o){r._a=o,o.provide(Ql,r),o.config.globalProperties.$pinia=r,s.forEach(i=>n.push(i)),s=[]},use(o){return!this._a&&!Gl?s.push(o):n.push(o),this},_p:n,_a:null,_e:e,_s:new Map,state:t});return r}const Jl=(e,t)=>{const n=e.__vccOpts||e;for(const[s,r]of t)n[s]=r;return n},Xl={};function Zl(e,t){return ol(),cl("div",null,"App test")}const ec=Jl(Xl,[["render",Zl]]);/*!
   * vue-router v4.4.0
   * (c) 2024 Eduardo San Martin Morote
   * @license MIT
