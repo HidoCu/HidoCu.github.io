@@ -1,1 +1,0 @@
-import{_ as e}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as o,o as c}from"./index-M2GKD4UI.js";const t={},r={class:"home-container"};function n(s,a){return c(),o("div",r," Home ")}const f=e(t,[["render",n]]);export{f as default};

@@ -8,8 +8,7 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build --force",
-    "deploy": "git subtree push --prefix dist origin gh-pages"
+    "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
     "pinia": "^2.1.7",

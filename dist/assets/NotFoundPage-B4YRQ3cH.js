@@ -1,1 +1,0 @@
-import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as e,o as t}from"./index-M2GKD4UI.js";const c={},n={class:"not-found-container"};function r(s,a){return t(),e("div",n," 错误页 ")}const d=o(c,[["render",r]]);export{d as default};
