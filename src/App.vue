@@ -8,7 +8,6 @@ const themeStore = useThemeStore();
   <div class="app-container">
     <n-config-provider :theme="themeStore.naiveTheme">
       <div class="app-content" :data-theme="themeStore.theme">
-        App
         <RouterView />
       </div>
     </n-config-provider>
