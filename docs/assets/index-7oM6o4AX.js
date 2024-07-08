@@ -1,0 +1,1 @@
+import{d as t,c as e,t as n,u as o,o as s}from"./index-DZmW9mKI.js";const a="ᗜ_ᗜ内容都被猫车拉走了...",r={title:a},c={class:"error-container"},d=t({__name:"index",setup(i){return(_,l)=>(s(),e("div",c,n(o(r).title),1))}});export{d as default};

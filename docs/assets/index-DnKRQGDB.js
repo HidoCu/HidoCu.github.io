@@ -1,0 +1,1 @@
+import{d as t,c as e,t as n,u as o,o as s}from"./index-DZmW9mKI.js";const a="推荐页",c={title:a},r={class:"recommend-container"},m=t({__name:"index",setup(i){return(_,l)=>(s(),e("div",r,n(o(c).title),1))}});export{m as default};

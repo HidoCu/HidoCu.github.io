@@ -1,0 +1,1 @@
+import{d as t,c as e,t as n,u as o,o as s}from"./index-DZmW9mKI.js";const a="发电页",c={title:a},i={class:"blog-container"},d=t({__name:"index",setup(r){return(l,_)=>(s(),e("div",i,n(o(c).title),1))}});export{d as default};
