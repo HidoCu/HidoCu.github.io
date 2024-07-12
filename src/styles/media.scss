@@ -1,0 +1,21 @@
+// > $break-point
+$break-point-map-max: (
+    pad: 479px,
+    tablet: 767px,
+    desktop: 1023px,
+    tv: 1199px,
+);
+
+$break-point-map: (
+    pad: 480px,
+    tablet: 768px,
+    desktop: 1024px,
+    tv: 1200px,
+);
+
+@mixin respond($break-point) {
+  $break-point-item: map-get($break-point-map, $break-point);
+  @media screen and (min-width: $break-point-item) {
+    @content;
+  }
+}

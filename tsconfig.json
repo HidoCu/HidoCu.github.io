@@ -9,6 +9,8 @@
     }
   ],
   "compilerOptions": {
-    "types": ["naive-ui/volar"]
+    "types": ["naive-ui/volar"],
+    "jsx": "preserve",
+    "jsxImportSource": "vue"
   }
 }

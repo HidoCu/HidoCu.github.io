@@ -1,0 +1,11 @@
+:root {
+  --main-dark: #18181c;
+}
+
+.app-theme[data-theme="light"] {
+  --bg-color-main: #fff;
+}
+
+.app-theme[data-theme="dark"] {
+  --bg-color-main: var(--main-dark);
+}

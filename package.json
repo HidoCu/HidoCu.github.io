@@ -24,8 +24,6 @@
     "@vue/tsconfig": "^0.5.1",
     "naive-ui": "^2.38.2",
     "npm-run-all2": "^6.2.0",
-    "postcss": "^8.4.39",
-    "postcss-mobile-forever": "^4.1.4",
     "sass": "^1.77.6",
     "typescript": "~5.4.0",
     "unplugin-auto-import": "^0.17.6",

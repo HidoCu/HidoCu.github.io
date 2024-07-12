@@ -1,3 +1,25 @@
 {
-  "title": "Home Layout"
+  "title": "Home Layout",
+  "background-list": [{
+    "id": 102132089,
+    "title": "恋恋の奇妙冒险①",
+    "suffix": "jpg",
+    "platform": "pixiv",
+    "p": 0,
+    "author": {
+      "uid": 19790053,
+      "name": "eps3rd"
+    }
+  }],
+  "background-list-mobile": [{
+    "id": 90203022,
+    "title": "こいし",
+    "suffix": "png",
+    "platform": "pixiv",
+    "p": 0,
+    "author": {
+      "uid": 25228,
+      "name": "綾月すぐれ"
+    }
+  }]
 }

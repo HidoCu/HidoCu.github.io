@@ -40,7 +40,8 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-          @import "@/styles/common.scss";
+          @import "@/styles/common";
+          @import '@/styles/media';
         `
       }
     }
