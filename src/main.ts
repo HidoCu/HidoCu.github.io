@@ -2,6 +2,8 @@ import './styles/main.css';
 import './styles/theme.css';
 import './styles/iconfont.css';
 
+import 'virtual:svg-icons-register';
+
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';

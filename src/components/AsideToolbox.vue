@@ -1,79 +1,282 @@
-<script setup lang="tsx">
-/**
- * 主题切换
- * 回到顶部
- * 本页资源
- */
+<script setup lang="ts">
+import { useThemeStore } from '@/stores/theme';
+import type { IResourcesUsed } from '@/types';
+import { ResourcesUsed } from '@/components';
 
+/* ---------------- Constant ---------------- */
+const ICON_SIZE = 80;
+const ICON_SIZE_CSS = `${ICON_SIZE}px`;
+/* ---------------- Constant ---------------- */
+
+
+/* ---------------- types ---------------- */
 interface ITool {
-  icon: JSX.Element
+  label: '切换主题' | '回到顶部' | '本页资源';
+  icon: `icon-${string}`;
+  handler: (...args: any[]) => void;
 }
+/* ---------------- types ---------------- */
 
-interface IProps {
-  blur?: boolean
-}
 
-withDefaults(defineProps<IProps>(), {
+/* ---------------- Props ---------------- */
+withDefaults(defineProps<{
+  blur: boolean
+}>(), {
   blur: false
-});
+})
+/* ---------------- Props ---------------- */
 
+
+/* ---------------- Hooks ---------------- */
+const route = useRoute();
+const themeStore = useThemeStore();
+/* ---------------- Hooks ---------------- */
+
+
+/* ---------------- 工具栏样式 ---------------- */
+const toolboxRef = ref<HTMLUListElement | null>(null);
+const toolboxHeight = ref(0);
+
+const initToolboxHeight = () => {
+  if (toolboxRef.value) {
+    toolboxHeight.value = toolboxRef.value.clientHeight;
+  }
+}
+/* ---------------- 工具栏样式 ---------------- */
+
+
+/* ---------------- 工具栏打开-关闭 ---------------- */
+const isToolboxOpen = ref(false);
+const currentToolboxContainerHeight = ref(ICON_SIZE);
+const currentToolboxScaleY = ref(0);
+
+const handleToggleToolbox = () => {
+  if (isToolboxOpen.value) {
+    currentToolboxContainerHeight.value = ICON_SIZE;
+    currentToolboxScaleY.value = 0;
+  } else {
+    currentToolboxContainerHeight.value = ICON_SIZE + toolboxHeight.value + 20;
+    currentToolboxScaleY.value = 1;
+  }
+  isToolboxOpen.value = !isToolboxOpen.value;
+}
+/* ---------------- 工具栏打开-关闭 ---------------- */
+
+
+/* ---------------- 获取页面使用资源 ---------------- */
+const pageRes = ref<IResourcesUsed[]>([]);
+
+const getPageRes = () => {
+  route.matched.map(async route => {
+    const resModuleGetter = route.meta.resources as (...args: any[]) => any;
+    const resGetter = await resModuleGetter();
+    const res = resGetter.default();
+    if (res) {
+      pageRes.value.push(...res);
+    }
+  });
+}
+/* ---------------- 获取页面使用资源 ---------------- */
+
+
+/* ---------------- 展示页面使用资源 ---------------- */
+const pageResActive = ref(false);
+
+const handleTogglePageRes = (status: boolean) => {
+  pageResActive.value = status;
+}
+/* ---------------- 展示页面使用资源 ---------------- */
+
+
+/* ---------------- 是否切换页面（路由） ---------------- */
+const isRouteChange = ref(true);
+/* ---------------- 是否切换页面（路由） ---------------- */
+
+
+/* ---------------- 工具栏配置 ---------------- */
 const toolConfigList: ITool[] = [{
-  icon: <i class="iconfont icon-imagevector"></i>
-}]
+  label: '切换主题',
+  icon: 'icon-brightness4',
+  handler: () => {
+    themeStore.toggleTheme();
+  }
+}, {
+  label: '回到顶部',
+  icon: 'icon-arrowupboldcircleoutline',
+  handler: () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+}, {
+  label: '本页资源',
+  icon: 'icon-linkvariant',
+  handler: () => {
+    if (isRouteChange.value) {
+      getPageRes();
+      isRouteChange.value = false;
+    }
+    handleTogglePageRes(true);
+  }
+}];
+/* ---------------- 工具栏配置 ---------------- */
 
-const IconRender = (props: { icon: JSX.Element }) => <>{props.icon}</>;
+
+/* ---------------- 监听路由变化 ---------------- */
+watch(
+    () => route.fullPath,
+    () => {
+      isRouteChange.value = true;
+    },
+    { immediate: true }
+);
+/* ---------------- 监听路由变化 ---------------- */
+
+
+/* ---------------- 生命周期钩子 ---------------- */
+onMounted(() => {
+  initToolboxHeight();
+});
+/* ---------------- 生命周期钩子 ---------------- */
 </script>
 
 <template>
-  <teleport to="body">
-    <div class="app-theme toolbox-container">
-      <div class="toolbox__icon-btn common-flex-center">
-        <i class="icon iconfont icon-logo"></i>
-      </div>
-      <div class="toolbox__tools-list-container">
-        <ul class="toolbox__tools-list">
-          <li
-              class="toolbox__tools-item"
-              v-for="(tool, index) in toolConfigList"
-              :key="index">
-            <IconRender :icon="tool.icon" />
-          </li>
-        </ul>
-      </div>
+  <div
+      class="toolbox-container"
+      :style="{ height: currentToolboxContainerHeight + 'px'}">
+    <div
+        class="toolbox__icon-btn common-flex-center common-cursor"
+        :class="{ active: isToolboxOpen }"
+        @click="handleToggleToolbox">
+      <i class="iconfont icon-logo"></i>
     </div>
-  </teleport>
+    <div
+        class="toolbox__tools-list-container"
+        :class="{ blur: blur }"
+        :style="{ transform: `scaleY(${currentToolboxScaleY})` }">
+      <ul class="toolbox__tools-list" ref="toolboxRef">
+        <li
+            class="toolbox__tools-item common-flex-center"
+            v-for="(tool, index) in toolConfigList"
+            :key="index">
+          <div
+              class="toolbox__tools-icon common-flex-center common-cursor"
+              @click="tool.handler">
+            <i class="common-icon iconfont" :class="tool.icon"></i>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <ResourcesUsed :resources="pageRes" v-model:show="pageResActive" />
 </template>
 
 <style scoped lang="scss">
 .toolbox-container {
-  --size: 80px;
   display: none;
-  user-select: none;
 
   @include respond('tablet') {
-    display: block;
+    display: flex;
+    justify-content: center;
+    user-select: none;
+
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    right: 10px;
+    right: 20px;
 
-    // 展开按钮
+    --btn-size: v-bind(ICON_SIZE_CSS);
+    --btn-icon-size: 55px;
+
+    --tool-size: 60px;
+    --tool-icon-size: 45px;
+
+    --toolbox-padding-top: 5px;
+    --toolbox-padding-bottom: 10px;
+
+    --toolbox-top-offset: 40px;
+    --toolbox-top-margin: calc(
+        var(--btn-size) -
+        var(--toolbox-top-offset) +
+        var(--toolbox-padding-top)
+    );
+
+    --anime-duration: .5s;
+    --anime-function: cubic-bezier(0.680, -0.550, 0.265, 1.550);
+
+    width: var(--btn-size);
+    border-radius: 999px;
+    transition: height var(--anime-duration) var(--anime-function);
+
+    // 触发按钮
     & .toolbox__icon-btn {
-      width: var(--size);
-      height: var(--size);
-      background-color: #d19cb8;
+      position: absolute;
+      z-index: 1;
+
+      width: var(--btn-size);
+      height: var(--btn-size);
+      background-color: #6982bd;
       border-radius: 50%;
 
-      & .icon {
-        font-size: 50px;
+      transform: rotate(0deg);
+      transition: all var(--anime-duration) ease;
+
+      &.active {
+        transform: rotate(440deg);
+      }
+
+      & > i.iconfont {
+        font-size: var(--btn-icon-size);
+        line-height: var(--btn-icon-size);
         color: #fff;
       }
     }
 
-    // 展开内容
+    // 容器
     & .toolbox__tools-list-container {
+      position: absolute;
+      top: var(--toolbox-top-offset);
+      background-color: var(--bg-color-card);
 
-      & .toolbox__tools-list {}
+      &.blur {
+        background-color: rgba(255, 255, 255, .15);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 0 30px 10px rgba(0, 0, 0, .3);
+      }
+
+      border-radius: 999px;
+      transform-origin: center top;
+      transition: transform var(--anime-duration) var(--anime-function);
+      overflow: hidden;
+
+      & .toolbox__tools-list {
+        margin-top: var(--toolbox-top-margin);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-bottom: var(--toolbox-padding-bottom);
+
+        & .toolbox__tools-item {
+          & .toolbox__tools-icon {
+            width: var(--tool-size);
+            height: var(--tool-size);
+
+            & > i.iconfont {
+              font-size: var(--tool-icon-size);
+              line-height: var(--tool-size);
+              color: var(--icon-color);
+              transition: all .1s ease-in;
+            }
+
+            &:hover {
+              & > i.iconfont {
+                color: #ffa9cc;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

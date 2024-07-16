@@ -1,11 +1,45 @@
 :root {
   --main-dark: #18181c;
+  --grey-dark: #48484e;
+  
+  --color-primary: #2080f0;
+  --color-primary-light: #70c0e8;
+  --color-success: #18a058;
+  --color-success-light: #63e2b7;
+  --color-warning: #f0a020;
+  --color-warning-light: #f2c97d;
+  --color-error: #d03050;
+  --color-error-light: #e88080;
 }
 
-.app-theme[data-theme="light"] {
+body {
   --bg-color-main: #fff;
+  --bg-color-card: #fff;
+  --icon-color: #666;
+  --active-color: #3330e8;
+  --border-color: #efeff5;
+  
+  --theme-color-primary: var(--color-primary);
+  --theme-color-success: var(--color-success);
+  --theme-color-warning: var(--color-warning);
+  --theme-color-error: var(--color-error);
+  
+  --theme-color-shadow: 255, 255, 255;
+  --theme-color-shadow-icon: 255, 255, 255;
 }
 
-.app-theme[data-theme="dark"] {
+body[data-theme="dark"] {
   --bg-color-main: var(--main-dark);
+  --bg-color-card: var(--grey-dark);
+  --icon-color: #fff;
+  --active-color: #fff;
+  --border-color: #3f3f44;
+  
+  --theme-color-primary: var(--color-primary-light);
+  --theme-color-success: var(--color-success-light);
+  --theme-color-warning: var(--color-warning-light);
+  --theme-color-error: var(--color-error-light);
+  
+  --theme-color-shadow: 255, 255, 0;
+  --theme-color-shadow-icon: 48, 48, 48;
 }

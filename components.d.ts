@@ -8,9 +8,23 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AsideToolbox: typeof import('./src/components/AsideToolbox.vue')['default']
+    DataDescription: typeof import('./src/components/DataDescription.vue')['default']
+    NAvatar: typeof import('naive-ui')['NAvatar']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
+    NDrawer: typeof import('naive-ui')['NDrawer']
+    NDrawerContent: typeof import('naive-ui')['NDrawerContent']
+    NIcon: typeof import('naive-ui')['NIcon']
+    NList: typeof import('naive-ui')['NList']
+    NListItem: typeof import('naive-ui')['NListItem']
+    NPopover: typeof import('naive-ui')['NPopover']
+    NTag: typeof import('naive-ui')['NTag']
+    NThing: typeof import('naive-ui')['NThing']
+    NTooltip: typeof import('naive-ui')['NTooltip']
+    ResourcesUsed: typeof import('./src/components/ResourcesUsed.vue')['default']
+    ResourcesUsedDialog: typeof import('./src/components/ResourcesUsed.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
     ThemeProvider: typeof import('./src/components/ThemeProvider.vue')['default']
   }
 }

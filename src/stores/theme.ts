@@ -1,31 +1,29 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { GlobalTheme } from 'naive-ui';
-import { darkTheme } from 'naive-ui';
+import { startViewTransitionSafe } from '@/utils/tools';
 
 type TTheme = 'light' | 'dark';
-type TNaiveTheme = null | GlobalTheme;
 
-export const useThemeStore: any = defineStore(
+export const useThemeStore = defineStore(
   'theme',
   () => {
-    const isDarkTheme = ref(false);
-    const naiveTheme = ref<TNaiveTheme>(null);
     const theme = ref<TTheme>('light');
     
     const toggleTheme = () => {
-      console.log('toggleTheme');
-      if (isDarkTheme.value) {
-        naiveTheme.value = darkTheme;
-        theme.value = 'dark';
+      if (theme.value === 'light') {
+        startViewTransitionSafe(() => {
+          theme.value = 'dark';
+          document.body.dataset.theme = 'dark';
+        });
       } else {
-        naiveTheme.value = null;
-        theme.value = 'light';
+        startViewTransitionSafe(() => {
+          theme.value = 'light';
+          document.body.dataset.theme = 'light';
+        });
       }
-      isDarkTheme.value = !isDarkTheme.value;
     }
     
-    return { isDarkTheme, naiveTheme, theme, toggleTheme }
+    return { theme, toggleTheme }
   },
   {
     persist: true,

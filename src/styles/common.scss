@@ -32,7 +32,22 @@
     box-shadow: 0 0 30px 10px rgba(0, 0, 0, .3);
     color: #fff;
   }
+  
+  &.icon {
+    background-color: rgba(var(--theme-color-shadow-icon));
+    user-select: none;
+    border-radius: 8px;
+    box-shadow: 1px 1px 2px 0 rgba(var(--theme-color-shadow), .3);
+    transition: all .1s linear;
+    
+    &:active {
+      box-shadow: 0 0 1px 0 rgba(var(--theme-color-shadow), .3);;
+      transform: translate(1px, 1px);
+    }
+  }
 }
+
+
 
 .common-flex-center {
   display: flex;
@@ -42,4 +57,13 @@
   &.vertical {
     flex-direction: column;
   }
+}
+
+.common-icon {
+  color: var(--icon-color);
+}
+
+.common-cursor {
+  cursor: pointer;
+  user-select: none;
 }

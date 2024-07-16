@@ -152,7 +152,3 @@ button {
 textarea {
   resize: none;
 }
-
-.root-class {
-  min-height: 100vh;
-}

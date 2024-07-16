@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import data from './page.json';
 import { random } from '@/utils';
-import type { IImageInfo } from '@/types';
-import { AsideToolbox } from '@/components';
-import { Constant } from '@/common/constant';
+import type { INativeImage } from '@/types';
+import NativeAccessor from '@/common/constant-util';
 
-const bgiList = data['background-list'] as IImageInfo[];
-const bgiMobileList = data['background-list-mobile'] as IImageInfo[];
+const bgiList = data['background-list'] as INativeImage[];
+const bgiMobileList = data['background-list-mobile'] as INativeImage[];
 
-const generateRandomBgi = (bgiList: IImageInfo[]) => {
+const generateRandomBgi = (bgiList: INativeImage[]) => {
   const randomBgi = bgiList[random(0, bgiList.length - 1)];
-  // /images/bg/${randomBgi.id}_p${randomBgi.p}.${randomBgi.suffix}
-  return `url("${Constant.getNativeImgUrl(randomBgi, 'bg')}")`;
+  return `url("${NativeAccessor.image('bg', randomBgi)}")`;
 }
 
 const bgiUrl = ref('');
@@ -27,7 +25,6 @@ onMounted(() => {
   <div class="home-layout-container">
     <div class="home-layout-content">
       <RouterView />
-      <AsideToolbox />
     </div>
   </div>
 </template>
