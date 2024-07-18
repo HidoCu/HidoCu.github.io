@@ -9,6 +9,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     AsideToolbox: typeof import('./src/components/AsideToolbox.vue')['default']
     DataDescription: typeof import('./src/components/DataDescription.vue')['default']
+    LHeader: typeof import('./src/components/modules/LHeader.vue')['default']
+    MenuButton: typeof import('./src/components/MenuButton.vue')['default']
+    MHeader: typeof import('./src/components/modules/MHeader.vue')['default']
+    MHomeHeader: typeof import('./src/components/modules/MHomeHeader.vue')['default']
     NAvatar: typeof import('naive-ui')['NAvatar']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDrawer: typeof import('naive-ui')['NDrawer']

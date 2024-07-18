@@ -3,9 +3,12 @@ import type { IAuthorBase, IResourcesUsed, TPlatform } from '@/types';
 import { SvgIcon } from '@/components';
 import { PlatformAuthorLinkPrefix, PlatformIcon, PlatformLinkPrefix, TagColorMap } from '@/common/constant';
 
-defineProps<{
+withDefaults(defineProps<{
   resources: IResourcesUsed[];
-}>();
+  placement?: 'top' | 'right' | 'bottom' | 'left';
+}>(), {
+  placement: 'right',
+});
 
 const show = defineModel<boolean>('show');
 
@@ -40,9 +43,9 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
 
 <template>
   <n-drawer
-      placement="right"
+      :placement="placement"
       v-model:show="show"
-      width="20%"
+      width="500px"
       close-on-esc
       show-mask
       block-scroll>
@@ -138,7 +141,9 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
 <style scoped lang="scss">
 .ru__content {
 
-  & .ru__source-platform {}
+  & .ru__source-platform {
+    padding-right: 10px;
+  }
 
   & .ru__res-name {
     &::before {

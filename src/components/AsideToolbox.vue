@@ -27,10 +27,10 @@ withDefaults(defineProps<{
 /* ---------------- Props ---------------- */
 
 
-/* ---------------- Hooks ---------------- */
+/* ---------------- Stores & Hooks ---------------- */
 const route = useRoute();
 const themeStore = useThemeStore();
-/* ---------------- Hooks ---------------- */
+/* ---------------- Stores & Hooks ---------------- */
 
 
 /* ---------------- 工具栏样式 ---------------- */
@@ -62,6 +62,7 @@ const handleToggleToolbox = () => {
 }
 /* ---------------- 工具栏打开-关闭 ---------------- */
 
+// TODO 页面资源获取与使用和更新抽取成Hook
 
 /* ---------------- 获取页面使用资源 ---------------- */
 const pageRes = ref<IResourcesUsed[]>([]);
@@ -175,13 +176,14 @@ onMounted(() => {
 <style scoped lang="scss">
 .toolbox-container {
   display: none;
+  position: fixed;
+  user-select: none;
 
+  // PC
   @include respond('tablet') {
     display: flex;
     justify-content: center;
-    user-select: none;
 
-    position: fixed;
     top: 50%;
     transform: translateY(-50%);
     right: 20px;
@@ -216,8 +218,8 @@ onMounted(() => {
 
       width: var(--btn-size);
       height: var(--btn-size);
-      background-color: #6982bd;
       border-radius: 50%;
+      background-color: #6982bd;
 
       transform: rotate(0deg);
       transition: all var(--anime-duration) ease;

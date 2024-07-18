@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import data from './page.json';
-
 </script>
 
 <template>
@@ -23,23 +21,12 @@ import data from './page.json';
   display: grid;
   grid-template-areas:
     "header"
-    "nav"
     "content"
     "footer";
   gap: 20px;
 
-  @include respond('tablet') {
-    grid-template-areas:
-      "header content content"
-      "nav    content content"
-      "nav    footer  footer ";
-  }
-
-  @include respond('desktop') {
-    grid-template-areas:
-      "header content content content"
-      "nav    content content content"
-      "nav    footer  footer  footer ";
+  & > .common-card {
+    box-shadow: 0 0 30px 10px rgba(0, 0, 0, .2);
   }
 
   // avatar username ...
@@ -50,6 +37,11 @@ import data from './page.json';
   // 功能导航
   & .home__nav {
     grid-area: nav;
+    display: none;
+
+    @include respond('tablet') {
+      display: block;
+    }
   }
 
   //主要内容（介绍、说明）
@@ -63,6 +55,21 @@ import data from './page.json';
   // 尾部的一些信息
   & .home__footer {
     grid-area: footer;
+  }
+
+  // media
+  @include respond('tablet') {
+    grid-template-areas:
+      "header content content"
+      "nav    content content"
+      "nav    footer  footer ";
+  }
+
+  @include respond('desktop') {
+    grid-template-areas:
+      "header content content content"
+      "nav    content content content"
+      "nav    footer  footer  footer ";
   }
 }
 </style>
