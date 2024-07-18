@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useThemeStore } from '@/stores/theme';
-import type { IResourcesUsed } from '@/types';
 import { ResourcesUsed } from '@/components';
+import { usePageResources } from '@/hooks';
 
 /* ---------------- Constant ---------------- */
 const ICON_SIZE = 80;
@@ -28,8 +28,9 @@ withDefaults(defineProps<{
 
 
 /* ---------------- Stores & Hooks ---------------- */
-const route = useRoute();
+// const route = useRoute();
 const themeStore = useThemeStore();
+const { update, resources } = usePageResources();
 /* ---------------- Stores & Hooks ---------------- */
 
 
@@ -62,23 +63,6 @@ const handleToggleToolbox = () => {
 }
 /* ---------------- 工具栏打开-关闭 ---------------- */
 
-// TODO 页面资源获取与使用和更新抽取成Hook
-
-/* ---------------- 获取页面使用资源 ---------------- */
-const pageRes = ref<IResourcesUsed[]>([]);
-
-const getPageRes = () => {
-  route.matched.map(async route => {
-    const resModuleGetter = route.meta.resources as (...args: any[]) => any;
-    const resGetter = await resModuleGetter();
-    const res = resGetter.default();
-    if (res) {
-      pageRes.value.push(...res);
-    }
-  });
-}
-/* ---------------- 获取页面使用资源 ---------------- */
-
 
 /* ---------------- 展示页面使用资源 ---------------- */
 const pageResActive = ref(false);
@@ -87,11 +71,6 @@ const handleTogglePageRes = (status: boolean) => {
   pageResActive.value = status;
 }
 /* ---------------- 展示页面使用资源 ---------------- */
-
-
-/* ---------------- 是否切换页面（路由） ---------------- */
-const isRouteChange = ref(true);
-/* ---------------- 是否切换页面（路由） ---------------- */
 
 
 /* ---------------- 工具栏配置 ---------------- */
@@ -114,25 +93,11 @@ const toolConfigList: ITool[] = [{
   label: '本页资源',
   icon: 'icon-linkvariant',
   handler: () => {
-    if (isRouteChange.value) {
-      getPageRes();
-      isRouteChange.value = false;
-    }
+    update();
     handleTogglePageRes(true);
   }
 }];
 /* ---------------- 工具栏配置 ---------------- */
-
-
-/* ---------------- 监听路由变化 ---------------- */
-watch(
-    () => route.fullPath,
-    () => {
-      isRouteChange.value = true;
-    },
-    { immediate: true }
-);
-/* ---------------- 监听路由变化 ---------------- */
 
 
 /* ---------------- 生命周期钩子 ---------------- */
@@ -170,7 +135,7 @@ onMounted(() => {
       </ul>
     </div>
   </div>
-  <ResourcesUsed :resources="pageRes" v-model:show="pageResActive" />
+  <ResourcesUsed :resources="resources" v-model:show="pageResActive" />
 </template>
 
 <style scoped lang="scss">

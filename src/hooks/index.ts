@@ -1,5 +1,5 @@
 import { usePageResources } from './pageResources';
 
-export default {
+export {
   usePageResources
 }
