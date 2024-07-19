@@ -3,7 +3,7 @@ import data from './page.json';
 import { random } from '@/utils';
 import type { INativeImage } from '@/types';
 import NativeAccessor from '@/common/constant-util';
-import { MenuButton } from '@/components';
+import { NavigationMenu } from '@/components';
 
 /* -------------------- Background -------------------- */
 const bgiList = data['background-list'] as INativeImage[];
@@ -18,37 +18,20 @@ const bgiUrl = ref('');
 const bgiMobileUrl = ref('');
 /* -------------------- Background -------------------- */
 
-
-
-/* -------------------- Header -------------------- */
-const isMenuOpen = ref(false);
-/* -------------------- Header -------------------- */
-
 onMounted(() => {
   bgiUrl.value = generateRandomBgi(bgiList);
   bgiMobileUrl.value = generateRandomBgi(bgiMobileList);
-
 });
 </script>
 
 <template>
   <div class="home-layout__container">
     <header class="home-layout__header">
-      <div class="home-layout__header-inner">
-        <div class="home-layout__header-left">
-          <div class="home-layout__menu-btn">
-            <MenuButton v-model:active="isMenuOpen" :border-width="3" />
-          </div>
-        </div>
-        <div class="home-layout__header-right">
-          <div class="home-layout__theme-switch"></div>
-          <div class="home-layout__resources-used"></div>
-        </div>
-      </div>
+      <NavigationMenu />
     </header>
-    <div class="home-layout__content">
+    <main class="home-layout__content">
       <RouterView />
-    </div>
+    </main>
   </div>
 </template>
 
@@ -62,22 +45,9 @@ onMounted(() => {
   background-image: v-bind(bgiMobileUrl);
 
   & .home-layout__header {
-    backdrop-filter: blur(10px);
-    height: 60px;
-    padding: 5px;
-
-    & .home-layout__header-inner {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      & .home-layout__header-left {
-        & .home-layout__menu-btn {}
-      }
-      & .home-layout__header-right {}
-    }
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
 
     @include respond('tablet') {
       display: none;

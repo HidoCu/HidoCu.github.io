@@ -7,14 +7,20 @@ const props = withDefaults(defineProps<{
   size?: number | 'respond';
   radius?: TCssUnit | number;
   borderWidth?: number;
+  borderColor?: string;
   speed?: number;
   color?: string;
+  backgroundColor?: string;
+  padding?: number;
 }>(), {
   size: 40,
   radius: '10px',
   borderWidth: 2,
+  borderColor: '#fff',
   speed: 0.3,
   color: '#fff',
+  backgroundColor: 'transparent',
+  padding: 4,
 });
 
 const btnSize = computed(() => {
@@ -31,6 +37,7 @@ const borderRadius = computed(() => {
 });
 const borderW = computed(() => Math.abs(props.borderWidth) + 'px');
 const animeSpeed = computed(() => Math.abs(props.speed) + 's');
+const pd = computed(() => Math.abs(props.padding) + 'px');
 
 const active = defineModel<boolean>('active');
 const handleChangeState = () => {
@@ -58,14 +65,19 @@ const handleChangeState = () => {
   --menu-button-size: v-bind(btnSize);
   --menu-button-radius: v-bind(borderRadius);
   --menu-button-border-width: v-bind(borderW);
+  --menu-button-border-color: v-bind(borderColor);
   --menu-button-speed: v-bind(animeSpeed);
   --menu-button-color: v-bind(color);
+  --menu-button-background-color: v-bind(backgroundColor);
+  --menu-button-padding: v-bind(pd);
 
   width: var(--menu-button-size);
   height: var(--menu-button-size);
   border-radius: var(--menu-button-radius);
-  border: var(--menu-button-border-width) solid var(--menu-button-color);
-  padding: 4px;
+  border: var(--menu-button-border-width) solid var(--menu-button-border-color);
+  padding: var(--menu-button-padding);
+
+  background-color: var(--menu-button-background-color);
 
   & .menu-button__inner {
     height: 100%;

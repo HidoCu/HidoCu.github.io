@@ -23,7 +23,14 @@ export const useThemeStore = defineStore(
       }
     }
     
-    return { theme, toggleTheme }
+    const setTheme = (themeVal: TTheme) => {
+      startViewTransitionSafe(() => {
+        theme.value = themeVal;
+        document.body.dataset.theme = themeVal;
+      });
+    }
+    
+    return { theme, toggleTheme, setTheme }
   },
   {
     persist: true,

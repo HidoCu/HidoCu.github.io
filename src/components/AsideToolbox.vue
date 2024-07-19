@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useThemeStore } from '@/stores/theme';
-import { ResourcesUsed } from '@/components';
+import { useThemeStore } from '@/stores';
 import { usePageResources } from '@/hooks';
+import { ResourcesUsed } from '@/components';
 
 /* ---------------- Constant ---------------- */
 const ICON_SIZE = 80;
@@ -30,7 +30,7 @@ withDefaults(defineProps<{
 /* ---------------- Stores & Hooks ---------------- */
 // const route = useRoute();
 const themeStore = useThemeStore();
-const { update, resources } = usePageResources();
+const { updateResources, resUsed } = usePageResources();
 /* ---------------- Stores & Hooks ---------------- */
 
 
@@ -93,7 +93,7 @@ const toolConfigList: ITool[] = [{
   label: '本页资源',
   icon: 'icon-linkvariant',
   handler: () => {
-    update();
+    updateResources();
     handleTogglePageRes(true);
   }
 }];
@@ -135,7 +135,7 @@ onMounted(() => {
       </ul>
     </div>
   </div>
-  <ResourcesUsed :resources="resources" v-model:show="pageResActive" />
+  <ResourcesUsed :resources="resUsed" v-model:show="pageResActive" />
 </template>
 
 <style scoped lang="scss">

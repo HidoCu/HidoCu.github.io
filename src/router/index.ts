@@ -35,7 +35,7 @@ const routes = [{
     name: 'Blog',
     component: () => import('@/views/pages/BlogPage/index.vue'),
     meta: {
-      title: '发电',
+      title: '文章',
       resources: () => import('@/views/pages/BlogPage/resources-used'),
     }
   }, {
@@ -59,7 +59,7 @@ const routes = [{
     name: 'About',
     component: () => import('@/views/pages/AboutPage/index.vue'),
     meta: {
-      title: '碎碎念',
+      title: '关于',
       resources: () => import('@/views/pages/AboutPage/resources-used'),
     }
   }, {
@@ -76,7 +76,7 @@ const routes = [{
   name: 'Error',
   component: () => import('@/views/pages/ErrorPage/index.vue'),
   meta: {
-    title: '页面被幽幽子吃了',
+    title: '404',
     resources: () => import('@/views/pages/ErrorPage/resources-used'),
   }
 }, {

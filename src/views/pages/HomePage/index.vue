@@ -21,6 +21,7 @@
   display: grid;
   grid-template-areas:
     "header"
+    "nav"
     "content"
     "footer";
   gap: 20px;
@@ -37,11 +38,6 @@
   // 功能导航
   & .home__nav {
     grid-area: nav;
-    display: none;
-
-    @include respond('tablet') {
-      display: block;
-    }
   }
 
   //主要内容（介绍、说明）
