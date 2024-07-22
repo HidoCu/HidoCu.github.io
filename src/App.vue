@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useThemeStore } from '@/stores/theme';
-import { AsideToolbox, Loading } from '@/components';
+import { AsideToolbox, LoadingProvider } from '@/components';
 import { darkTheme, type GlobalTheme } from 'naive-ui';
 
 type TNaiveTheme = null | GlobalTheme;
@@ -19,13 +19,12 @@ onMounted(() => {
 <template>
   <div class="app-container app-theme">
     <n-config-provider :theme="naiveTheme">
-      <div class="app-content">
-        <RouterView />
-        <AsideToolbox :blur="route.name === 'Home'" />
-      </div>
-      <div class="app-loading">
-        <Loading />
-      </div>
+      <LoadingProvider>
+        <div class="app-content">
+          <RouterView />
+          <AsideToolbox :blur="route.name === 'Home'" />
+        </div>
+      </LoadingProvider>
     </n-config-provider>
   </div>
 </template>

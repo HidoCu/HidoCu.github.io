@@ -72,6 +72,12 @@ export const cutArr = <T>(arr: T[], start = 0, size = 5) => {
   ].filter(item => item.length !== 0);
 }
 
+/**
+ * 是否十六进制颜色
+ * @param c 色值字符串
+ * @return true/false
+ * @example isHexColor('#f5ae2c');
+ */
 export const isHexColor = (c: string) => {
   const HexValue = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
   const HexColorLen = [3, 4, 6, 8];
@@ -87,4 +93,33 @@ export const isHexColor = (c: string) => {
       return false;
   }
   return true;
+}
+
+/**
+ * 获取一个随机HEX色值
+ */
+export const randomHexColor = () => {
+  const hex = Math.floor(Math.random() * 16777215).toString(16);
+  return `#${hex.padStart(6, '0')}`;
+}
+
+/**
+ * 防抖
+ * @param fn 目标函数
+ * @param duration 延时，默认0.3s
+ * @return 防抖后的函数
+ */
+export function debounce<ARG extends any[], R>(
+    fn: (...args: ARG) => R,
+    duration: number = 300
+): (...args: ARG) => void {
+  let timer: any;
+  return function (this: any, ...args) {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      fn.apply(this, args);
+    }, duration);
+  }
 }

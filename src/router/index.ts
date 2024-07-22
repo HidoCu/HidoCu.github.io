@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useLoadingStore } from '@/stores';
 
 const routes = [{
   path: '/',
@@ -82,11 +83,23 @@ const routes = [{
 }, {
   path: '/:catchall(.*)',
   redirect: '/error'
-}]
+}];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
+});
+
+
+router.beforeEach((_to, _from, next) => {
+  const loadingStore = useLoadingStore();
+  loadingStore.loading();
+  next();
+});
+
+router.afterEach(() => {
+  const loadingStore = useLoadingStore();
+  // loadingStore.delayDone(0);
 });
 
 export default router;
