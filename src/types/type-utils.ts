@@ -49,3 +49,13 @@ export type TZero4Nine = 0 | TOne4Nine;
  * @see rgba
  */
 export type THex = TZero4Nine | 'a' | 'b' | 'c' | 'd' | 'e' | 'f';
+
+/**
+ * 坐标轴
+ */
+export type TAxis = 'x' | 'y';
+
+/**
+ * 立体坐标轴
+ */
+export type TAxis3D = TAxis | 'z';

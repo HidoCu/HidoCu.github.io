@@ -1,18 +1,40 @@
 <script setup lang="ts">
 import gsap from 'gsap';
 import { Sakura } from '@/components/icons';
-import sakuraConfigList, { type ISakura } from './config';
+import sakuraConfigList, { type ISakura, type TDistance } from './config';
+import { useWindowSize } from '@vueuse/core';
+import type { TAxis } from '@/types/type-utils';
+
+const { width, height } = useWindowSize();
+
+const AxisMap = Object.freeze({
+  x: width.value,
+  y: height.value,
+});
 
 const sakuraList = toRef(sakuraConfigList);
 
-const isPerMode = (mode: boolean, offset: number) => mode ? `${offset}%` : `${offset}px`;
+const getDistanceCSSProp = (distance: TDistance) => distance[1] ? `${distance[0]}%` : `${distance[0]}px`
+
+const calcDistance = (distance: TDistance, axis: TAxis) => {
+  const [disData, disMode] = distance;
+  if (disMode && disData >= 0 && disData <= 100) {
+    const screenAxisSize = AxisMap[axis];
+    return Math.round(screenAxisSize * (disData / 100));
+  }
+  return disData;
+}
 
 const sakuraAnimation = (config: ISakura, selectorIndex: number) => {
   const selector = `.sakura-${selectorIndex}`;
 
-  const calcStartDistance = config.beginEndDistance;
-  const calcDistance = calcStartDistance + config.distance;
-  const calcEndDistance = calcDistance + config.beginEndDistance;
+  const calcStartDistanceVal = calcDistance(config.beginEndDistance, 'y');
+  const calcDistanceVal = calcStartDistanceVal + calcDistance(config.distance, 'y');
+  const calcEndDistanceVal = calcDistanceVal + calcDistance(config.beginEndDistance, 'y');
+
+  const defaultConfig = {
+    ease: 'linear',
+  }
 
   gsap.to(selector, {
     rotate: config.rotation,
@@ -23,36 +45,37 @@ const sakuraAnimation = (config: ISakura, selectorIndex: number) => {
 
   gsap.timeline({
     repeat: -1,
-  })  // 初始态
+    delay: config.delay,
+  })// 初始态
       .from(selector, {
+        ...defaultConfig,
         scale: 0,
         opacity: 0,
-        ease: 'linear'
       })
       // 初段出现
       .to(selector, {
-        y: calcStartDistance,
+        ...defaultConfig,
+        y: calcStartDistanceVal,
         duration: config.beginEndDuration,
-        ease: 'linear'
       }, '<')
       // 下落
       .to(selector, {
-        y: calcDistance,
+        ...defaultConfig,
+        y: calcDistanceVal,
         duration: config.duration,
-        ease: 'linear'
       })
       // 尾段缩放
       .to(selector, {
-        y: calcEndDistance,
+        ...defaultConfig,
+        y: calcEndDistanceVal,
         duration: config.beginEndDuration,
-        ease: 'linear'
       })
       // 消失
       .to(selector, {
+        ...defaultConfig,
         scale: 0,
         opacity: 0,
         duration: 1,
-        ease: 'linear'
       }, '<')
       // 下次刷新等待
       .to(selector, {
@@ -60,8 +83,12 @@ const sakuraAnimation = (config: ISakura, selectorIndex: number) => {
       });
 }
 
-onMounted(() => {
+const registerAnimation = () => {
   sakuraList.value.forEach((sakura, index) => sakuraAnimation(sakura, index));
+}
+
+onMounted(() => {
+  registerAnimation();
 });
 </script>
 
@@ -75,8 +102,8 @@ onMounted(() => {
           :class="[`sakura-${index}`]"
           :style="{
             '--i': index,
-            top: isPerMode(sakura.xPerMode, sakura.x),
-            left: isPerMode(sakura.yPerMode, sakura.y)
+            top: getDistanceCSSProp(sakura.x),
+            left: getDistanceCSSProp(sakura.y)
           }">
         <Sakura :size="sakura.size" :fill-color="sakura.color" />
       </div>

@@ -1,23 +1,22 @@
 import { type TIntRange } from '@/types/type-utils'
 import { rgba } from '@/utils/tools';
 
-export enum RotationEnum {
+export enum ERotation {
   CW = 360,
   CCW = -360,
 }
 
+/**
+ * 对应坐标距离 [距离，是否百分比]
+ */
+export type TDistance = [number, boolean];
+
 export interface ISakura {
-  /** x轴是否采用百分比距离 */
-  xPerMode: boolean;
-  
-  /** y轴是否采用百分比距离 */
-  yPerMode: boolean;
-  
   /** 起始x轴 */
-  x: number;
+  x: TDistance;
   
   /** 起始y轴 */
-  y: number;
+  y: TDistance;
   
   /** 起始结束动画播放时间 */
   beginEndDuration: number;
@@ -26,22 +25,25 @@ export interface ISakura {
   duration: number;
   
   /** 首尾段移动距离 px */
-  beginEndDistance: number;
+  beginEndDistance: TDistance;
   
   /** 中段移动距离 px */
-  distance: number;
+  distance: TDistance;
   
   /** 最大尺寸 */
-  size: TIntRange<1, 301>;
+  size: TIntRange<1, 501>;
   
   /** 自旋速度 */
   rotateDuration: number;
   
   /** 自旋方向（顺时针 | 逆时针） */
-  rotation: RotationEnum;
+  rotation: ERotation;
   
   /** 重复播放间隔 */
   broadcastDuration: number;
+  
+  /** 动画延迟 */
+  delay: number;
   
   /** 颜色（建议使用rgba辅助函数） */
   color?: string;
@@ -49,32 +51,30 @@ export interface ISakura {
 
 const sakuraConfigList: ISakura[] = [
   {
-    xPerMode: true,
-    yPerMode: true,
-    x: 10,
-    y: 10,
+    x: [10, true],
+    y: [10, true],
     beginEndDuration: 1,
     duration: 3,
-    beginEndDistance: 100,
-    distance: 400,
+    beginEndDistance: [100, false],
+    distance: [400, false],
     size: 100,
     rotateDuration: 5,
-    rotation: RotationEnum.CW,
-    broadcastDuration: 2
+    rotation: ERotation.CW,
+    broadcastDuration: 2,
+    delay: 1,
   },
   {
-    xPerMode: true,
-    yPerMode: true,
-    x: 20,
-    y: 35,
+    x: [20, true],
+    y: [35, true],
     beginEndDuration: 1,
     duration: 3,
-    beginEndDistance: 130,
-    distance: 460,
+    beginEndDistance: [130, false],
+    distance: [400, false],
     size: 130,
     rotateDuration: 4,
-    rotation: RotationEnum.CCW,
+    rotation: ERotation.CCW,
     broadcastDuration: 0,
+    delay: 0
   }
 ];
 
