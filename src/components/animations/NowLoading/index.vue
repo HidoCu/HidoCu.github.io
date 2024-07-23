@@ -25,16 +25,16 @@ const calcDistance = (distance: TDistance, axis: TAxis) => {
   return disData;
 }
 
-const sakuraAnimation = (config: ISakura, selectorIndex: number) => {
+const sakuraAnimation = (
+    config: ISakura,
+    selectorIndex: number,
+    defaultConfig: object = {}
+) => {
   const selector = `.sakura-${selectorIndex}`;
 
   const calcStartDistanceVal = calcDistance(config.beginEndDistance, 'y');
   const calcDistanceVal = calcStartDistanceVal + calcDistance(config.distance, 'y');
   const calcEndDistanceVal = calcDistanceVal + calcDistance(config.beginEndDistance, 'y');
-
-  const defaultConfig = {
-    ease: 'linear',
-  }
 
   gsap.to(selector, {
     rotate: config.rotation,
@@ -83,12 +83,14 @@ const sakuraAnimation = (config: ISakura, selectorIndex: number) => {
       });
 }
 
-const registerAnimation = () => {
-  sakuraList.value.forEach((sakura, index) => sakuraAnimation(sakura, index));
+const registerAnimation = (defaultConfig: object = {}) => {
+  sakuraList.value.forEach((sakura, index) => sakuraAnimation(sakura, index, defaultConfig));
 }
 
 onMounted(() => {
-  registerAnimation();
+  registerAnimation({
+    ease: 'linear',
+  });
 });
 </script>
 
