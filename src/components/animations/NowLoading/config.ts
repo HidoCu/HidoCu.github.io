@@ -1,5 +1,4 @@
 import { type TIntRange } from '@/types/type-utils'
-import { rgba } from '@/utils/tools';
 
 export enum ERotation {
   CW = 360,
@@ -7,16 +6,23 @@ export enum ERotation {
 }
 
 /**
- * 对应坐标距离 [距离，是否百分比]
+ * 对应坐标轴距离
+ * @var val 距离数值
+ * @var perUnit 是否像百分比单位（默认像素）
+ * @var reverse 是否于right/bottom计算（默认left/top）
  */
-export type TDistance = [number, boolean];
+export interface IDistance {
+  val: number;
+  perUnit?: boolean;
+  reverse?: boolean;
+}
 
-export interface ISakura {
+export interface IAnimationItemConfig {
   /** 起始x轴 */
-  x: TDistance;
+  x: IDistance;
   
   /** 起始y轴 */
-  y: TDistance;
+  y: IDistance;
   
   /** 起始结束动画播放时间 */
   beginEndDuration: number;
@@ -25,10 +31,10 @@ export interface ISakura {
   duration: number;
   
   /** 首尾段移动距离 px */
-  beginEndDistance: TDistance;
+  beginEndDistance: IDistance;
   
   /** 中段移动距离 px */
-  distance: TDistance;
+  distance: IDistance;
   
   /** 最大尺寸 */
   size: TIntRange<1, 501>;
@@ -49,33 +55,26 @@ export interface ISakura {
   color?: string;
 }
 
-const sakuraConfigList: ISakura[] = [
+const animationItemConfigs: IAnimationItemConfig[] = [
   {
-    x: [10, true],
-    y: [10, true],
+    x: {
+      val: 10,
+      perUnit: true,
+    },
+    y: {
+      val: 10,
+      perUnit: true,
+    },
+    beginEndDistance: { val: 100 },
+    distance: { val: 400 },
     beginEndDuration: 1,
     duration: 3,
-    beginEndDistance: [100, false],
-    distance: [400, false],
     size: 100,
     rotateDuration: 5,
     rotation: ERotation.CW,
     broadcastDuration: 2,
     delay: 1,
-  },
-  {
-    x: [20, true],
-    y: [35, true],
-    beginEndDuration: 1,
-    duration: 3,
-    beginEndDistance: [130, false],
-    distance: [400, false],
-    size: 130,
-    rotateDuration: 4,
-    rotation: ERotation.CCW,
-    broadcastDuration: 0,
-    delay: 0
   }
 ];
 
-export default sakuraConfigList;
+export default animationItemConfigs;

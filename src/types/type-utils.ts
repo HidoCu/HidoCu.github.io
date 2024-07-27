@@ -37,18 +37,18 @@ export type TIntRange<
 /**
  * 1到9
  */
-export type TOne4Nine = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+export type TOne2Nine = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 /**
  * 0到9
  */
-export type TZero4Nine = 0 | TOne4Nine;
+export type TZero2Nine = 0 | TOne2Nine;
 
 /**
  * 我发现16进制色值还是不太现实，需要色值类型还是rgba吧
  * @see rgba
  */
-export type THex = TZero4Nine | 'a' | 'b' | 'c' | 'd' | 'e' | 'f';
+export type THex = TZero2Nine | 'a' | 'b' | 'c' | 'd' | 'e' | 'f';
 
 /**
  * 坐标轴
