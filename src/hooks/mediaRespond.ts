@@ -22,7 +22,7 @@ const BreakPointRange = Object.freeze({
 
 const BreakPointRangeKeyList = Object.keys(BreakPointRange);
 
-export const useOffset = () => {
+export const useMediaRespond = () => {
   const { width, height } = useWindowSize();
   
   const axisMap = ref({
@@ -38,17 +38,10 @@ export const useOffset = () => {
    * 将百分比单位转为实际屏幕像素（px）单位
    * @param per （CSS）百分比单位
    * @param axis 宽（x）或高（y）
-   * @param processor 结果处理函数
    */
-  const percentage2Px = (
-    per: number,
-    axis: TAxis,
-    processor?: (val: number) => any) => {
+  const percentage2Px = (per: number, axis: TAxis) => {
     const per2Float = per / 100;
     const screenAxisSize = getScreenAxisSize(axis);
-    if (processor) {
-      return processor(screenAxisSize * per2Float);
-    }
     return screenAxisSize * per2Float;
   }
   

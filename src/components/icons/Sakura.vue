@@ -1,22 +1,25 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
+import type { TIntRange } from '@/types/type-utils';
+
+const props = withDefaults(defineProps<{
   size?: number;
   fillColor?: string;
-  outerClass?: string;
-  innerClass?: string;
+  opacity?: TIntRange<0, 101>;
+  serial?: number;
 }>(), {
   size: 100,
   fillColor: '#e89abe',
-  outerClass: '',
-  innerClass: '',
+  opacity: 100,
 });
+
+const opacityCpt = computed(() => props.opacity / 100);
 
 defineOptions({ inheritAttrs: false });
 </script>
 
 <template>
-  <div class="sakura__container" :class="outerClass">
-    <div class="sakura__svg-container" :class="innerClass">
+  <div class="sakura__container" :style="{ opacity: opacityCpt }">
+    <div class="sakura__svg-container">
       <svg
           t="1721634297860"
           class="icon"
@@ -53,11 +56,23 @@ defineOptions({ inheritAttrs: false });
         </path>
       </svg>
     </div>
+    <div v-if="serial !== undefined" class="debug-serial">{{ serial }}</div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .sakura__container {
-  & .sakura__svg-container {}
+  position: relative;
+
+  & .debug-serial {
+    color: aqua;
+    font-size: 48px;
+    font-weight: 600;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 </style>

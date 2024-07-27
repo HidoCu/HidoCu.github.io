@@ -3,9 +3,9 @@ import gsap from 'gsap';
 import { Sakura } from '@/components/icons';
 import animationItemConfigs, { type IAnimationItemConfig, type IDistance } from './config';
 import type { TAxis } from '@/types/type-utils';
-import { useOffset } from '@/hooks/offset';
+import { useMediaRespond } from '@/hooks/mediaRespond';
 
-const { percentage2Px } = useOffset()
+const { percentage2Px } = useMediaRespond();
 
 const animationItemConfigList = toRef(animationItemConfigs);
 
@@ -13,10 +13,9 @@ const animationItemConfigList = toRef(animationItemConfigs);
  * 根据距离配置对象直接导出css属性值
  * @param distance 对应坐标轴距离
  */
-const getDistanceCSSProp = (distance: IDistance) => {
-  const cssUnit = distance.perUnit ? '%' : 'px';
-  return distance.val + cssUnit;
-}
+const getDistanceCSSProp = (distance: IDistance) =>
+    `${distance.val}${distance.perUnit ? '%' : 'px'}`;
+
 
 /**
  * 将百分比形式距离根据屏幕大小换算为实际的像素值（px）
@@ -25,7 +24,7 @@ const getDistanceCSSProp = (distance: IDistance) => {
  */
 const calcDistance = (distance: IDistance, axis: TAxis) =>
     distance.perUnit ?
-        percentage2Px(distance.val, axis, Math.round) :
+        Math.round(percentage2Px(distance.val, axis)) :
         distance.val
 
 /**
@@ -75,10 +74,10 @@ const setAnimation = (
   const calcEndDistanceVal = calcDistanceVal + calcDistance(config.beginEndDistance, 'y');
 
   gsap.to(selector, {
+    ...defaultConfig,
     rotate: config.rotation,
     duration: config.rotateDuration,
     repeat: -1,
-    ease: 'linear'
   });
 
   gsap.timeline({
@@ -147,7 +146,11 @@ onMounted(() => {
           :key="index"
           :class="[getAnimeItemByIndex(index)]"
           :style="calcInitOffset(index, sakura)">
-        <Sakura :size="sakura.size" :fill-color="sakura.color" />
+        <Sakura
+            :size="sakura.size"
+            :fill-color="sakura.color"
+            :opacity="80"
+            :serial="index" />
       </div>
     </div>
   </div>
