@@ -1,11 +1,11 @@
 import type { IDocument, TIntRange } from '@/types/type-utils';
 
 /*
- * tools和utils的区别
- * 我个人理解就是utils比较通用，复制到其他项目还能用
- * tools跟项目耦合度比较大，基本就在某个环境下才能用了
- * ...好吧我就是想分着玩玩
- */
+  tools和utils的区别
+  我个人理解就是utils比较通用，复制到其他项目还能用
+  tools跟项目耦合度比较大，基本就在某个环境下才能用了
+  ...好吧我就是想分着玩玩
+*/
 
 /**
  * 返回一个CSS rgba色值函数
@@ -28,7 +28,8 @@ export const rgba = (
  * 这玩意现在只有Chrome和edge(我没验证)能用
  * 管他呢，反正自娱自乐的玩意儿，啥都想搞一搞
  * 也没人看这破页面了
- * @param fn
+ * @param fn 切换主题函数
+ * @see startViewTransition
  */
 export const startViewTransitionSafe = (fn: () => void) => {
   const dom: IDocument = document;

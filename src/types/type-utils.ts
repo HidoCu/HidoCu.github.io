@@ -20,10 +20,10 @@ export type ReverseOptional<T, K extends keyof T> =
  */
 export type TEnumerate<
   N extends number,
-  Acc extends number[] = []> =
-  Acc['length'] extends N ?
-    Acc[number] :
-    TEnumerate<N, [...Acc, Acc['length']]>;
+  ACC extends number[] = []> =
+  ACC['length'] extends N ?
+    ACC[number] :
+    TEnumerate<N, [...ACC, ACC['length']]>;
 
 /**
  * 掘金上抄的
@@ -59,3 +59,8 @@ export type TAxis = 'x' | 'y';
  * 立体坐标轴
  */
 export type TAxis3D = TAxis | 'z';
+
+/**
+ *  通用函数类型
+ */
+export type TFunction = (...args: any[]) => any;

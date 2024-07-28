@@ -7,7 +7,7 @@ import { useMediaRespond } from '@/hooks/mediaRespond';
 
 const { percentage2Px } = useMediaRespond();
 
-const animationItemConfigList = toRef(animationItemConfigs);
+const animationItemConfigList = ref<IAnimationItemConfig[]>(animationItemConfigs);
 
 /**
  * 根据距离配置对象直接导出css属性值

@@ -1,4 +1,5 @@
 import type { IResourcesUsed } from '@/types';
+import type { TFunction } from '@/types/type-utils';
 
 export const usePageResources = () => {
   const route = useRoute();
@@ -8,7 +9,7 @@ export const usePageResources = () => {
   
   const loadResources = () => {
     route.matched.forEach(async route => {
-      const resModuleGetter = route.meta.resources as (...args: any[]) => any;
+      const resModuleGetter = route.meta.resources as TFunction;
       const resGetter = await resModuleGetter();
       const res = resGetter.default();
       if (res) {

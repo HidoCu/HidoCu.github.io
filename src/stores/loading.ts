@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import type { TFunction } from '@/types/type-utils';
 
 export const useLoadingStore = defineStore('loading', () => {
   const show = ref(false);
@@ -11,7 +12,7 @@ export const useLoadingStore = defineStore('loading', () => {
     show.value = false;
   }
   
-  const delayDone = (delay = 1000, doneCb?: Function) => {
+  const delayDone = (delay = 1000, doneCb?: TFunction) => {
     if (delay <= 0) {
       done();
       return;

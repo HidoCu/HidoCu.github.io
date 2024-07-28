@@ -73,6 +73,25 @@ export const cutArr = <T>(arr: T[], start = 0, size = 5) => {
 }
 
 /**
+ * 数组分页
+ * @param arr 目标数组
+ * @param index 页码
+ * @param size 每页条目数目（默认10）
+ */
+export const paginArr = <T>(arr: T[], index: number, size = 10) => {
+  const MAX_IDX = Math.ceil(arr.length / size);
+  if (index > MAX_IDX) {
+    throw new Error(`Index ${index} is out of range. Max index is ${MAX_IDX}`);
+  }
+  if (index <= 0) {
+    throw new Error(`Index ${index} is out of range. Index must be greater than 0`);
+  }
+  const start = (index - 1) * size;
+  const end = start + size;
+  return arr.slice(start, end);
+}
+
+/**
  * 是否十六进制颜色
  * @param c 色值字符串
  * @return true/false
@@ -120,6 +139,38 @@ export function debounce<ARG extends any[], R>(
     }
     timer = setTimeout(() => {
       fn.apply(this, args);
+      clearTimeout(timer)
     }, duration);
   }
 }
+
+/**
+ * 节流
+ * @param fn 目标函数
+ * @param duration 延时，默认0.2s
+ * @return 节流后的函数
+ */
+export function throttle<ARG extends any[], R>(
+  fn: (...args: ARG) => R,
+  duration: number = 200
+): (...args: ARG) => void {
+  let timer: any;
+  return function (this: any, ...args) {
+    if (timer) {
+      return;
+    }
+    timer = setTimeout(() => {
+      fn.apply(this, args);
+      clearTimeout(timer);
+      timer = null;
+    }, duration);
+  }
+}
+
+/**
+ * 单词首字母大写
+ * @param str 目标字符串
+ * @return 首字母大写字符串
+ */
+export const capitalize = (str: string) =>
+    !str ? str : str.charAt(0).toUpperCase() + str.slice(1);
