@@ -4,16 +4,16 @@ import type { TFunction } from '@/types/type-utils';
 export const usePageResources = () => {
   const route = useRoute();
   
-  const resUsed = ref<IResourcesUsed[]>([]);
+  const resourcesUsedList = ref<IResourcesUsed[]>([]);
   const isRouteChange = ref(true);
   
   const loadResources = () => {
-    route.matched.forEach(async route => {
+    route.matched.map(async route => {
       const resModuleGetter = route.meta.resources as TFunction;
       const resGetter = await resModuleGetter();
       const res = resGetter.default();
       if (res) {
-        resUsed.value.push(...res);
+        resourcesUsedList.value.push(...res);
       }
     });
   }
@@ -29,5 +29,5 @@ export const usePageResources = () => {
     isRouteChange.value = true;
   }, { immediate: true });
   
-  return { updateResources, resUsed }
+  return { updateResources, resourcesUsedList }
 }

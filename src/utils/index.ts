@@ -94,7 +94,7 @@ export const paginArr = <T>(arr: T[], index: number, size = 10) => {
 /**
  * 是否十六进制颜色
  * @param c 色值字符串
- * @return true/false
+ * @return boolean
  * @example isHexColor('#f5ae2c');
  */
 export const isHexColor = (c: string) => {
@@ -107,9 +107,10 @@ export const isHexColor = (c: string) => {
   if (!HexColorLen.includes(color.length)) {
     return false;
   }
-  for (let colorChar of color) {
-    if (!HexValue.includes(colorChar))
+  for (const colorChar of color) {
+    if (!HexValue.includes(colorChar)) {
       return false;
+    }
   }
   return true;
 }

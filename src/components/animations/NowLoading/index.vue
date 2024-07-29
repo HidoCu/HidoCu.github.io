@@ -3,9 +3,9 @@ import gsap from 'gsap';
 import { Sakura } from '@/components/icons';
 import animationItemConfigs, { type IAnimationItemConfig, type IDistance } from './config';
 import type { TAxis } from '@/types/type-utils';
-import { useMediaRespond } from '@/hooks/mediaRespond';
+import { useMediaWrapper } from '@/hooks';
 
-const { percentage2Px } = useMediaRespond();
+const { percentage2Px } = useMediaWrapper();
 
 const animationItemConfigList = ref<IAnimationItemConfig[]>(animationItemConfigs);
 
@@ -147,6 +147,7 @@ onMounted(() => {
           :class="[getAnimeItemByIndex(index)]"
           :style="calcInitOffset(index, sakura)">
         <Sakura
+            debug
             :size="sakura.size"
             :fill-color="sakura.color"
             :opacity="80"

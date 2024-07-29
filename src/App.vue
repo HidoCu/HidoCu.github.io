@@ -2,18 +2,14 @@
 import { useThemeStore } from '@/stores/theme';
 import { AsideToolbox, LoadingProvider } from '@/components';
 import { darkTheme, type GlobalTheme } from 'naive-ui';
-
-type TNaiveTheme = null | GlobalTheme;
+import { NowLoading } from '@/components/animations';
 
 const themeStore = useThemeStore();
 const route = useRoute();
 
-const naiveTheme = computed<TNaiveTheme>(() =>
+const naiveTheme = computed<GlobalTheme | null>(() =>
     themeStore.theme === 'light' ? null : darkTheme
 );
-
-onMounted(() => {
-});
 </script>
 
 <template>
@@ -24,6 +20,9 @@ onMounted(() => {
           <RouterView />
           <AsideToolbox :blur="route.name === 'Home'" />
         </div>
+        <template #pcLoading>
+          <NowLoading />
+        </template>
       </LoadingProvider>
     </n-config-provider>
   </div>

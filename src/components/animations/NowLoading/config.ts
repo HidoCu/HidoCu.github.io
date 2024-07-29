@@ -56,6 +56,7 @@ export interface IAnimationItemConfig {
 }
 
 const animationItemConfigs: IAnimationItemConfig[] = [
+  /* batch 1 average */
   // 0
   {
     x: {
@@ -181,6 +182,7 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     delay: 1.2,
   },
   
+  /* batch 2 low place */
   // 0-5
   {
     x: {
@@ -307,6 +309,136 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     rotation: ERotation.CW,
     broadcastDuration: 1,
     delay: 2.5,
+  },
+  
+  /* batch 3 high place */
+  // 0-5-10
+  {
+    x: {
+      val: 9,
+      perUnit: true,
+    },
+    y: {
+      val: -15,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 100,
+    },
+    distance: {
+      val: 40,
+      perUnit: true
+    },
+    beginEndDuration: 1,
+    duration: 5,
+    size: 150,
+    rotateDuration: 5,
+    rotation: ERotation.CW,
+    broadcastDuration: .5,
+    delay: .4,
+  },
+  
+  // 1-6-11
+  {
+    x: {
+      val: 31,
+      perUnit: true,
+    },
+    y: {
+      val: -7,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 150,
+    },
+    distance: {
+      val: 45,
+      perUnit: true
+    },
+    beginEndDuration: 3,
+    duration: 15,
+    size: 160,
+    rotateDuration: 10,
+    rotation: ERotation.CW,
+    broadcastDuration: .2,
+    delay: 0.5,
+  },
+  
+  // 2-7-12
+  {
+    x: {
+      val: 47,
+      perUnit: true,
+    },
+    y: {
+      val: -25,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 140,
+    },
+    distance: {
+      val: 80,
+      perUnit: true,
+    },
+    beginEndDuration: 1.2,
+    duration: 8,
+    size: 350,
+    rotateDuration: 5,
+    rotation: ERotation.CW,
+    broadcastDuration: 5,
+    delay: .5,
+  },
+  
+  // 3-8-13
+  {
+    x: {
+      val: 67,
+      perUnit: true,
+    },
+    y: {
+      val: -15,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 90,
+    },
+    distance: {
+      val: 530,
+    },
+    beginEndDuration: .8,
+    duration: 4,
+    size: 180,
+    rotateDuration: 4,
+    rotation: ERotation.CCW,
+    broadcastDuration: .2,
+    delay: 1.25,
+  },
+  
+  // 4-9-14
+  {
+    x: {
+      val: 88,
+      perUnit: true,
+    },
+    y: {
+      val: -10,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 90,
+    },
+    distance: {
+      val: 70,
+      perUnit: true
+    },
+    beginEndDuration: 1,
+    duration: 8,
+    size: 220,
+    rotateDuration: 5,
+    rotation: ERotation.CCW,
+    broadcastDuration: .6,
+    delay: 2,
   },
 ];
 

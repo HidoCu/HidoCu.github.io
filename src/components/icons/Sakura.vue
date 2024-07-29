@@ -6,10 +6,12 @@ const props = withDefaults(defineProps<{
   fillColor?: string;
   opacity?: TIntRange<0, 101>;
   serial?: number;
+  debug?: boolean;
 }>(), {
   size: 100,
   fillColor: '#e89abe',
   opacity: 100,
+  debug: false,
 });
 
 const opacityCpt = computed(() => props.opacity / 100);
@@ -56,7 +58,7 @@ defineOptions({ inheritAttrs: false });
         </path>
       </svg>
     </div>
-    <div v-if="serial !== undefined" class="debug-serial">{{ serial }}</div>
+    <div v-if="debug" class="debug-serial">{{ serial }}</div>
   </div>
 </template>
 

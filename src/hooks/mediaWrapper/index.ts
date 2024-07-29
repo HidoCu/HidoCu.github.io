@@ -1,8 +1,7 @@
 import { useWindowSize } from '@vueuse/core';
 import type { TAxis } from '@/types/type-utils';
 import { capitalize, debounce } from '@/utils';
-
-export type TBreakPoint = 'mobile' | 'pad' | 'tablet' | 'desktop' | 'tv';
+import type { TBreakPoint, TBreakPointHandler, TTrigger } from './types';
 
 export const BreakPointMap = Object.freeze(new Map<TBreakPoint, number>([
   ['mobile', 0],
@@ -12,26 +11,20 @@ export const BreakPointMap = Object.freeze(new Map<TBreakPoint, number>([
   ['tv', 1200],
 ]));
 
-type TBreakPointHandler = `on${Capitalize<TBreakPoint>}`;
-type IRespond = Partial<{ [K in TBreakPointHandler]: THandler[] }>;
-
-interface IHandlerArgs {
-  width: number;
-  height: number;
-  breakPoint: TBreakPoint;
-}
-type THandler = (ctx: IHandlerArgs) => any;
-
-const getHandlerByBreakPoint = (respond: TBreakPoint) =>
-  `on${capitalize(respond)}` as TBreakPointHandler;
-
-export const useMediaRespond = () => {
+export const useMediaWrapper = () => {
   const { width, height } = useWindowSize();
+  
+  /**
+   * 根据断点名称获取响应回调名
+   * @param respond 断点名
+   */
+  const _getHandlerByBreakPoint = (respond: TBreakPoint) =>
+    `on${capitalize(respond)}` as TBreakPointHandler;
   
   /**
    * 当前屏幕宽高
    */
-  const axisMap = ref({
+  const _axisMap = ref({
     x: width.value,
     y: height.value,
   });
@@ -39,18 +32,18 @@ export const useMediaRespond = () => {
   /**
    * 当前响应式断点
    */
-  const respond = ref<TBreakPoint>();
+  const breakPoint = ref<TBreakPoint>();
   
   /**
    * 本次更新前的，上一个断点
    */
-  const lastRespond = ref<TBreakPoint>();
+  const _prevBreakPoint = ref<TBreakPoint>();
   
   /**
    * 获取当前窗口宽（x）或高（y）
    * @param axis
    */
-  const getScreenAxisSize = (axis: TAxis) => axisMap.value[axis];
+  const getScreenAxisSize = (axis: TAxis) => _axisMap.value[axis];
   
   /**
    * 将百分比单位转为实际屏幕像素（px）单位
@@ -66,36 +59,28 @@ export const useMediaRespond = () => {
   /**
    * 断点监听器回调表
    */
-  const respondHandlers = ref<IRespond>({});
-  
-  /**
-   * 当前断点监听器回调（序列）执行的返回值数组
-   * 结果顺序为监听器注册顺序
-   */
-  const handlerResults = ref<any[]>();
+  const _respondHandlerHolder = ref(new Map<TBreakPointHandler, TTrigger[]>());
   
   /**
    * 断点监听器
    * 当响应式断点发生变化时执行的回调（可多次注册）
-   * @param respondTo 监听的响应式断点
-   * @param handler 需要调用的回调函数
-   * @example onRespond('desktop', handler);
+   * @param breakPoint 监听的响应式断点
+   * @param trigger 需要调用的回调函数
+   * @example onRespond('desktop', desktopHandler);
    */
-  const onRespond = (respondTo: TBreakPoint, handler: THandler) => {
-    const handlerName = getHandlerByBreakPoint(respondTo);
-    const handlerList = respondHandlers.value[handlerName];
-    if (!handlerList) {
-      respondHandlers.value[handlerName] = [handler];
-    } else {
-      respondHandlers.value[handlerName]!.push(handler);
+  const onRespond = (breakPoint: TBreakPoint, trigger: TTrigger) => {
+    const handlerName = _getHandlerByBreakPoint(breakPoint);
+    if (!_respondHandlerHolder.value.has(handlerName)) {
+      _respondHandlerHolder.value.set(handlerName, []);
     }
+    const handlerList = _respondHandlerHolder.value.get(handlerName)!;
+    _respondHandlerHolder.value.set(handlerName, [...handlerList, trigger]);
   }
   
   /**
    * 更新当前响应式断点
    */
-  const updateRespond = debounce(function (currentW: number) {
-    console.log('update', currentW);
+  const _updateBreakPoint = debounce(function (currentW: number) {
     for (let i = 0; i < BreakPointMap.size; i++) {
       const bpKey = Array.from(BreakPointMap.keys())[i];
       const bpKeyNext = Array.from(BreakPointMap.keys())[i + 1];
@@ -104,15 +89,15 @@ export const useMediaRespond = () => {
       const bpValNext = BreakPointMap.get(bpKeyNext)! || Infinity;
       
       if (currentW >= bpVal && currentW < bpValNext) {
-        lastRespond.value = respond.value;
-        respond.value = bpKey;
+        _prevBreakPoint.value = breakPoint.value;
+        breakPoint.value = bpKey;
         break;
       }
     }
   });
   
   watch(width, (newW) => {
-    updateRespond(newW);
+    _updateBreakPoint(newW);
   }, { immediate: true });
   
   /**
@@ -121,11 +106,11 @@ export const useMediaRespond = () => {
    * @see respondHandlers
    * @param currentResp 当前响应式断点
    */
-  const executeRespondHandler = (currentResp: TBreakPoint) => {
-    const handlerName = getHandlerByBreakPoint(currentResp);
-    const handlers = respondHandlers.value[handlerName];
-    if (handlers) {
-      return handlers.map(handler => handler({
+  const _respondHandlerExecutor = (currentResp: TBreakPoint) => {
+    const handlerName = _getHandlerByBreakPoint(currentResp);
+    if (_respondHandlerHolder.value.has(handlerName)) {
+      const handlerList = _respondHandlerHolder.value.get(handlerName)!;
+      handlerList.map(handler => handler({
         width: width.value,
         height: height.value,
         breakPoint: currentResp,
@@ -133,17 +118,20 @@ export const useMediaRespond = () => {
     }
   }
   
-  watch(respond, (newResp) => {
-    if (newResp) {
-      handlerResults.value = executeRespondHandler(newResp);
-    }
+  watch(breakPoint, () => {
+    _respondHandlerExecutor(breakPoint.value!);
+  });
+  
+  onBeforeUnmount(() => {
+    _respondHandlerHolder.value.clear();
   });
   
   return {
-    respond,
+    width,
+    height,
+    breakPoint,
     getScreenAxisSize,
     percentage2Px,
     onRespond,
-    handlerResults
   }
 }

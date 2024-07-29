@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { useLoadingStore } from '@/stores';
-import { NowLoading } from '@/components/animations';
+
+const props = withDefaults(defineProps<{
+  maskColor?: string;
+}>(), {
+  maskColor: '#0009'
+});
 
 const loadingStore = useLoadingStore();
 </script>
@@ -10,13 +15,16 @@ const loadingStore = useLoadingStore();
     <div class="loading-provider__content">
       <slot></slot>
     </div>
-    <div
-        v-show="loadingStore.show"
-        class="loading-provider__loading">
+    <div v-show="loadingStore.loadingState" class="loading-provider__loading">
       <section class="loading-provider__pc-loading-container">
-        <NowLoading />
+        <slot name="pcLoading" />
       </section>
-      <section class="loading-provider__h5-loading-container"></section>
+      <section class="loading-provider__h5-loading-container">
+        <slot name="h5Loading" />
+      </section>
+    </div>
+    <div v-show="loadingStore.spinState" class="loading-provider__spin">
+      <slot name="spin" />
     </div>
   </div>
 </template>
@@ -27,7 +35,7 @@ const loadingStore = useLoadingStore();
     position: fixed;
     z-index: 1000;
     inset: 0;
-    background-color: #0009;
+    background-color: v-bind(maskColor);
 
     & .loading-provider__pc-loading-container {
       display: none;

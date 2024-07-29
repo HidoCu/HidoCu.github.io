@@ -61,6 +61,6 @@ export type TAxis = 'x' | 'y';
 export type TAxis3D = TAxis | 'z';
 
 /**
- *  通用函数类型
+ *  函数类型
  */
 export type TFunction = (...args: any[]) => any;
