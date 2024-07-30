@@ -2,13 +2,13 @@
 import { useThemeStore } from '@/stores';
 import { usePageResources } from '@/hooks';
 import { ResourcesUsed } from '@/components';
-import type { TFunction } from '@/types/type-utils';
+import type { FFunction } from '@/types/type-utils';
 
 /* ---------------- public ---------------- */
 interface ITool {
   label: '切换主题' | '回到顶部' | '本页资源';
   icon: `icon-${string}`;
-  handler: TFunction;
+  handler: FFunction;
 }
 
 const props = withDefaults(defineProps<{

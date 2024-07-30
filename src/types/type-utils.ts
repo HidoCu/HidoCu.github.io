@@ -63,4 +63,14 @@ export type TAxis3D = TAxis | 'z';
 /**
  *  函数类型
  */
-export type TFunction = (...args: any[]) => any;
+export type FFunction = (...args: any[]) => any;
+
+/**
+ * 类选择器
+ */
+export type TClassSelector = `.${string}`;
+
+/**
+ * ID选择器
+ */
+export type TIdSelector = `#${string}`;

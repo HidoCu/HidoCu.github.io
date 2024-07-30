@@ -2,7 +2,7 @@
 import { useThemeStore } from '@/stores/theme';
 import { AsideToolbox, LoadingProvider } from '@/components';
 import { darkTheme, type GlobalTheme } from 'naive-ui';
-import { NowLoading } from '@/components/animations';
+import { NowLoading, OnmyodamaSpin } from '@/components/animations';
 
 const themeStore = useThemeStore();
 const route = useRoute();
@@ -21,7 +21,9 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
           <AsideToolbox :blur="route.name === 'Home'" />
         </div>
         <template #pcLoading>
-          <NowLoading />
+          <NowLoading>
+            <OnmyodamaSpin />
+          </NowLoading>
         </template>
       </LoadingProvider>
     </n-config-provider>

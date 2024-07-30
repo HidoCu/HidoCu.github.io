@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { TFunction } from '@/types/type-utils';
+import type { FFunction } from '@/types/type-utils';
 
 export const useLoadingStore = defineStore('loading', () => {
   /**
@@ -34,7 +34,7 @@ export const useLoadingStore = defineStore('loading', () => {
    * @param delay 自动完成加载时间
    * @param onLoadingDone 关闭加载效果后的回调
    */
-  const delayDone = (delay = 1000, onLoadingDone?: TFunction) => {
+  const delayDone = (delay = 1000, onLoadingDone?: FFunction) => {
     if (delay <= 0) {
       loading(false);
       return;

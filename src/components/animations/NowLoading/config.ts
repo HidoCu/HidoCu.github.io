@@ -1,63 +1,21 @@
-import { type TIntRange } from '@/types/type-utils'
+import type { FIdGenerator, IAnimationConfig, ICreateAnimationConfig } from '@/hooks/animation/snow/types';
+import { RotationMode } from '@/hooks/animation/snow/types';
 
-export enum ERotation {
-  CW = 360,
-  CCW = -360,
+const createAnimationConfigs = (
+  configs: ICreateAnimationConfig[],
+  idGenerator?: FIdGenerator): IAnimationConfig[] => {
+  const defaultGenerator: FIdGenerator = (index: number) => index + 1;
+  const generator = idGenerator || defaultGenerator
+  return configs.map((config, index) => {
+    return {
+      ...config,
+      id: generator(index),
+    } as IAnimationConfig;
+  });
 }
 
-/**
- * 对应坐标轴距离
- * @var val 距离数值
- * @var perUnit 是否像百分比单位（默认像素）
- * @var reverse 是否于right/bottom计算（默认left/top）
- */
-export interface IDistance {
-  val: number;
-  perUnit?: boolean;
-  reverse?: boolean;
-}
-
-export interface IAnimationItemConfig {
-  /** 起始x轴 */
-  x: IDistance;
-  
-  /** 起始y轴 */
-  y: IDistance;
-  
-  /** 起始结束动画播放时间 */
-  beginEndDuration: number;
-  
-  /** 中间段播放时间 */
-  duration: number;
-  
-  /** 首尾段移动距离 px */
-  beginEndDistance: IDistance;
-  
-  /** 中段移动距离 px */
-  distance: IDistance;
-  
-  /** 最大尺寸 */
-  size: TIntRange<1, 501>;
-  
-  /** 自旋速度 */
-  rotateDuration: number;
-  
-  /** 自旋方向（顺时针 | 逆时针） */
-  rotation: ERotation;
-  
-  /** 重复播放间隔 */
-  broadcastDuration: number;
-  
-  /** 动画延迟 */
-  delay: number;
-  
-  /** 颜色（建议使用rgba辅助函数） */
-  color?: string;
-}
-
-const animationItemConfigs: IAnimationItemConfig[] = [
+const animationItemConfigs: ICreateAnimationConfig[] = [
   /* batch 1 average */
-  // 0
   {
     x: {
       val: 12,
@@ -77,12 +35,10 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 4,
     size: 240,
     rotateDuration: 5,
-    rotation: ERotation.CW,
+    rotation: RotationMode.CW,
     broadcastDuration: 2,
     delay: 0,
   },
-  
-  // 1
   {
     x: {
       val: 32,
@@ -102,12 +58,10 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 4,
     size: 180,
     rotateDuration: 4,
-    rotation: ERotation.CCW,
+    rotation: RotationMode.CCW,
     broadcastDuration: 1,
     delay: .2,
   },
-  
-  // 2
   {
     x: {
       val: 55,
@@ -127,12 +81,10 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 6,
     size: 140,
     rotateDuration: 4,
-    rotation: ERotation.CCW,
+    rotation: RotationMode.CCW,
     broadcastDuration: .5,
     delay: .5,
   },
-  
-  // 3
   {
     x: {
       val: 74,
@@ -152,12 +104,10 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 5,
     size: 140,
     rotateDuration: 4,
-    rotation: ERotation.CW,
+    rotation: RotationMode.CW,
     broadcastDuration: 1,
     delay: 1.2,
   },
-  
-  // 4
   {
     x: {
       val: 91,
@@ -177,13 +127,12 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 5,
     size: 140,
     rotateDuration: 3,
-    rotation: ERotation.CCW,
+    rotation: RotationMode.CCW,
     broadcastDuration: 1,
     delay: 1.2,
   },
   
   /* batch 2 low place */
-  // 0-5
   {
     x: {
       val: 5,
@@ -204,12 +153,10 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 3,
     size: 120,
     rotateDuration: 4.5,
-    rotation: ERotation.CCW,
+    rotation: RotationMode.CCW,
     broadcastDuration: .2,
     delay: .5,
   },
-  
-  // 1-6
   {
     x: {
       val: 25,
@@ -230,12 +177,10 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 12,
     size: 240,
     rotateDuration: 7,
-    rotation: ERotation.CCW,
+    rotation: RotationMode.CCW,
     broadcastDuration: 1,
     delay: 2,
   },
-  
-  // 2-7
   {
     x: {
       val: 48,
@@ -255,12 +200,10 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 6,
     size: 200,
     rotateDuration: 8,
-    rotation: ERotation.CW,
+    rotation: RotationMode.CW,
     broadcastDuration: 2,
     delay: .7,
   },
-  
-  // 3-8
   {
     x: {
       val: 69,
@@ -280,12 +223,10 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 3,
     size: 170,
     rotateDuration: 4,
-    rotation: ERotation.CW,
+    rotation: RotationMode.CW,
     broadcastDuration: 1.4,
     delay: 1.8,
   },
-  
-  // 4-9
   {
     x: {
       val: 85,
@@ -306,13 +247,12 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 8,
     size: 250,
     rotateDuration: 9,
-    rotation: ERotation.CW,
+    rotation: RotationMode.CW,
     broadcastDuration: 1,
     delay: 2.5,
   },
   
   /* batch 3 high place */
-  // 0-5-10
   {
     x: {
       val: 9,
@@ -333,12 +273,10 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 5,
     size: 150,
     rotateDuration: 5,
-    rotation: ERotation.CW,
+    rotation: RotationMode.CW,
     broadcastDuration: .5,
     delay: .4,
   },
-  
-  // 1-6-11
   {
     x: {
       val: 31,
@@ -359,12 +297,10 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 15,
     size: 160,
     rotateDuration: 10,
-    rotation: ERotation.CW,
+    rotation: RotationMode.CW,
     broadcastDuration: .2,
     delay: 0.5,
   },
-  
-  // 2-7-12
   {
     x: {
       val: 47,
@@ -385,12 +321,10 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 8,
     size: 350,
     rotateDuration: 5,
-    rotation: ERotation.CW,
+    rotation: RotationMode.CW,
     broadcastDuration: 5,
     delay: .5,
   },
-  
-  // 3-8-13
   {
     x: {
       val: 67,
@@ -410,12 +344,10 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 4,
     size: 180,
     rotateDuration: 4,
-    rotation: ERotation.CCW,
+    rotation: RotationMode.CCW,
     broadcastDuration: .2,
     delay: 1.25,
   },
-  
-  // 4-9-14
   {
     x: {
       val: 88,
@@ -436,10 +368,256 @@ const animationItemConfigs: IAnimationItemConfig[] = [
     duration: 8,
     size: 220,
     rotateDuration: 5,
-    rotation: ERotation.CCW,
+    rotation: RotationMode.CCW,
     broadcastDuration: .6,
     delay: 2,
   },
+  
+  /* batch 4-1 lasting slow */
+  {
+    x: {
+      val: 11,
+      perUnit: true,
+    },
+    y: {
+      val: 33,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 150,
+    },
+    distance: {
+      val: 70,
+      perUnit: true
+    },
+    beginEndDuration: 4,
+    duration: 24,
+    size: 140,
+    rotateDuration: 8,
+    rotation: RotationMode.CCW,
+    broadcastDuration: 1,
+    delay: 4,
+  },
+  {
+    x: {
+      val: 27,
+      perUnit: true,
+    },
+    y: {
+      val: 8,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 150,
+    },
+    distance: {
+      val: 75,
+      perUnit: true
+    },
+    beginEndDuration: 4,
+    duration: 30,
+    size: 160,
+    rotateDuration: 10,
+    rotation: RotationMode.CW,
+    broadcastDuration: .5,
+    delay: 12,
+  },
+  {
+    x: {
+      val: 52,
+      perUnit: true,
+    },
+    y: {
+      val: 44,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 140,
+    },
+    distance: {
+      val: 30,
+      perUnit: true,
+    },
+    beginEndDuration: 8,
+    duration: 45,
+    size: 240,
+    rotateDuration: 10,
+    rotation: RotationMode.CCW,
+    broadcastDuration: 2,
+    delay: 6,
+  },
+  {
+    x: {
+      val: 62,
+      perUnit: true,
+    },
+    y: {
+      val: 34,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 90,
+    },
+    distance: {
+      val: 60,
+      perUnit: true
+    },
+    beginEndDuration: 5,
+    duration: 30,
+    size: 220,
+    rotateDuration: 15,
+    rotation: RotationMode.CW,
+    broadcastDuration: .2,
+    delay: 1.25,
+  },
+  {
+    x: {
+      val: 92,
+      perUnit: true,
+    },
+    y: {
+      val: 5,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 200,
+    },
+    distance: {
+      val: 85,
+      perUnit: true
+    },
+    beginEndDuration: 12,
+    duration: 45,
+    size: 170,
+    rotateDuration: 10,
+    rotation: RotationMode.CW,
+    broadcastDuration: .6,
+    delay: 2,
+  },
+  
+  /* batch 4-2 lasting slow */
+  {
+    x: {
+      val: 14,
+      perUnit: true,
+    },
+    y: {
+      val: 14,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 150,
+    },
+    distance: {
+      val: 65,
+      perUnit: true
+    },
+    beginEndDuration: 8,
+    duration: 28,
+    size: 170,
+    rotateDuration: 12,
+    rotation: RotationMode.CCW,
+    broadcastDuration: 1,
+    delay: 18,
+  },
+  {
+    x: {
+      val: 33,
+      perUnit: true,
+    },
+    y: {
+      val: 28,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 250,
+    },
+    distance: {
+      val: 60,
+      perUnit: true
+    },
+    beginEndDuration: 8,
+    duration: 38,
+    size: 195,
+    rotateDuration: 12,
+    rotation: RotationMode.CW,
+    broadcastDuration: 3,
+    delay: 22,
+  },
+  {
+    x: {
+      val: 48,
+      perUnit: true,
+    },
+    y: {
+      val: 18,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 140,
+    },
+    distance: {
+      val: 55,
+      perUnit: true,
+    },
+    beginEndDuration: 6,
+    duration: 45,
+    size: 205,
+    rotateDuration: 12,
+    rotation: RotationMode.CW,
+    broadcastDuration: 2,
+    delay: 20,
+  },
+  {
+    x: {
+      val: 60,
+      perUnit: true,
+    },
+    y: {
+      val: 15,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 150,
+    },
+    distance: {
+      val: 90,
+      perUnit: true
+    },
+    beginEndDuration: 15,
+    duration: 50,
+    size: 240,
+    rotateDuration: 14,
+    rotation: RotationMode.CCW,
+    broadcastDuration: 3,
+    delay: 12,
+  },
+  {
+    x: {
+      val: 86,
+      perUnit: true,
+    },
+    y: {
+      val: 5,
+      perUnit: true,
+    },
+    beginEndDistance: {
+      val: 200,
+    },
+    distance: {
+      val: 75,
+      perUnit: true
+    },
+    beginEndDuration: 12,
+    duration: 48,
+    size: 215,
+    rotateDuration: 10,
+    rotation: RotationMode.CCW,
+    broadcastDuration: 4,
+    delay: 16,
+  },
 ];
 
-export default animationItemConfigs;
+const animationConfigs = createAnimationConfigs(animationItemConfigs);
+
+export default animationConfigs;

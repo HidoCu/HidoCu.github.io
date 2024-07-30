@@ -34,6 +34,7 @@ declare module 'vue' {
     NThing: typeof import('naive-ui')['NThing']
     NTooltip: typeof import('naive-ui')['NTooltip']
     Onmyodama: typeof import('./src/components/icons/Onmyodama.vue')['default']
+    OnmyodamaSpin: typeof import('./src/components/animations/OnmyodamaSpin/index.vue')['default']
     ResourcesUsed: typeof import('./src/components/ResourcesUsed.vue')['default']
     ResourcesUsedDialog: typeof import('./src/components/ResourcesUsed.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
