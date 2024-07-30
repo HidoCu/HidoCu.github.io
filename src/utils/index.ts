@@ -175,3 +175,10 @@ export function throttle<ARG extends any[], R>(
  */
 export const capitalize = (str: string) =>
     !str ? str : str.charAt(0).toUpperCase() + str.slice(1);
+
+/**
+ * 目标是否为函数
+ * @param target
+ */
+export const isFunction = (target: any) =>
+  Object.prototype.toString.call(target) === '[object Function]';

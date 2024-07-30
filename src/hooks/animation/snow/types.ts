@@ -69,7 +69,4 @@ export interface IAnimationConfig extends ICreateAnimationConfig {
   id: TConfigId;
 }
 
-export type TPosition =
-  'start-top' | 'center-top' | 'end-top' |
-  'start-center' | 'center' | 'end-center' |
-  'start-bottom' | 'center-bottom' | 'end-bottom';
+export type FSelectorGenerator = (targetSelector: TConfigId) => string;

@@ -1,20 +1,7 @@
-import type { FIdGenerator, IAnimationConfig, ICreateAnimationConfig } from '@/hooks/animation/snow/types';
+import { createAnimationConfigs } from '@/hooks/animation/snow';
 import { RotationMode } from '@/hooks/animation/snow/types';
 
-const createAnimationConfigs = (
-  configs: ICreateAnimationConfig[],
-  idGenerator?: FIdGenerator): IAnimationConfig[] => {
-  const defaultGenerator: FIdGenerator = (index: number) => index + 1;
-  const generator = idGenerator || defaultGenerator
-  return configs.map((config, index) => {
-    return {
-      ...config,
-      id: generator(index),
-    } as IAnimationConfig;
-  });
-}
-
-const animationItemConfigs: ICreateAnimationConfig[] = [
+const animationConfigs = createAnimationConfigs([
   /* batch 1 average */
   {
     x: {
@@ -616,8 +603,6 @@ const animationItemConfigs: ICreateAnimationConfig[] = [
     broadcastDuration: 4,
     delay: 16,
   },
-];
-
-const animationConfigs = createAnimationConfigs(animationItemConfigs);
+]);
 
 export default animationConfigs;

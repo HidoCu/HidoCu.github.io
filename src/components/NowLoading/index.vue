@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { Sakura } from '@/components/icons';
-import animationItemConfigs from './config';
-import { useSnowAnimation } from '@/hooks/animation';
-import type { IAnimationConfig, TPosition } from '@/hooks/animation/snow/types';
+import animationItemConfigs from './animation-config';
+import { useSnowAnimation } from '@/hooks/animation'
+
+type TPosition =
+    'start-top'    | 'center-top'    | 'end-top'    |
+    'start-center' | 'center'        | 'end-center' |
+    'start-bottom' | 'center-bottom' | 'end-bottom' ;
 
 const props = withDefaults(defineProps<{
   position?: TPosition;
@@ -10,7 +14,7 @@ const props = withDefaults(defineProps<{
   position: 'end-bottom'
 });
 
-const animationItemConfigList = ref<IAnimationConfig[]>(animationItemConfigs);
+const animationItemConfigList = ref(animationItemConfigs);
 
 const {
   setSelector,
@@ -49,12 +53,10 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .nl__container {
-  width: 100%;
-  height: 100%;
-
-  position: relative;
-
   & .sakura-box {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
 
     & .sakura {
       position: absolute;

@@ -1,8 +1,36 @@
 import type { UnwrapRef } from 'vue';
-import type { IAnimationConfig, IDistance } from './types';
+import type {
+  FIdGenerator,
+  FSelectorGenerator,
+  IAnimationConfig,
+  ICreateAnimationConfig,
+  IDistance,
+  TConfigId
+} from './types';
 import { useMediaWrapper } from '@/hooks';
-import type { TAxis } from '@/types/type-utils';
+import type { FFunction, TAxis } from '@/types/type-utils';
 import gsap from 'gsap';
+import { isFunction } from '@/utils';
+
+/**
+ * 创建动画配置对象
+ * @param configs 动画配置对象列表
+ * @param idGenerator ID生成规则（默认使用循环下标）
+ */
+export const createAnimationConfigs = (configs: ICreateAnimationConfig[], idGenerator?: FIdGenerator) => {
+  const defaultGenerator: FIdGenerator = (index: number) => index + 1;
+  const generator = idGenerator || defaultGenerator;
+  
+  const idHistoryList: TConfigId[] = [];
+  return configs.map((config, index) => {
+    const id = generator(index);
+    if (idHistoryList.includes(id)) {
+      throw new Error(`ID: ${id} is repeated in the history list [${idHistoryList}]`);
+    }
+    idHistoryList.push(id);
+    return { ...config, id } as IAnimationConfig;
+  });
+}
 
 export const useSnowAnimation = (animationConfigs: Ref<UnwrapRef<IAnimationConfig[]>>) => {
   const { percentage2Px } = useMediaWrapper();
@@ -12,9 +40,21 @@ export const useSnowAnimation = (animationConfigs: Ref<UnwrapRef<IAnimationConfi
    * 使用该函数设置动画对象的类名，并将循环下标传进来生成动态类名
    * @param selector 选择器
    * @param config 目标动画配置对象，其ID属性参与构成完整选择器
+   * @return 处理后的选择器名
    * @example
-   *  <ul v-for="(item, index) in animationList" :key="item.id">
-   *    <li :class=[setSelector('.animation-item', item.id)]>{{ item }}</li>
+   *  <ul
+   *      :style="{
+   *        position: 'relative',
+   *        width: '100vw',
+   *        height: '100vh'
+   *      }"
+   *      v-for="(animationConfig, index) in animationList"
+   *      :key="animationConfig.id">
+   *    <li
+   *        :style="{ position: 'absolute' }"
+   *        :class=[setSelector('.animation-item', animationConfig)]>
+   *      <AnimationItem :some-props="animationConfig" />
+   *    </li>
    *  </ul>
    */
   const setSelector = (selector: string, config: IAnimationConfig) => selector + config.id;
@@ -122,13 +162,23 @@ export const useSnowAnimation = (animationConfigs: Ref<UnwrapRef<IAnimationConfi
   /**
    * 根据动画配置对象添加动画
    * 默认按照配置对象的序列注册动画
-   * @param prefix 元素选择器前缀
+   * @param selector 使用 setSelector设置的选择器名（需要带上对应的选择器）
+   * @see setSelector
    * @param defaultConfig 默认配置
+   * @example
+   *  <div ... :id="setSelector('example-id-selector', animationConfig)"></div>
+   *  ...
+   *  onMounted(() => {
+   *    registerAnimation('#example-id-selector')
+   *  });
    */
-  const registerAnimation = (prefix: string, defaultConfig: Record<string, any> = {}) => {
+  const registerAnimation = (selector: string | FSelectorGenerator, defaultConfig: Record<string, any> = {}) => {
+    const selectorFn =
+      typeof selector === 'string' ?
+        (configId: TConfigId) => selector + configId :  selector;
     toValue(animationConfigs).map(animationConfig => {
-      const selector = prefix + animationConfig.id;
-      _setAnimation(animationConfig, selector, defaultConfig);
+      const targetSelector = selectorFn(animationConfig.id);
+      _setAnimation(animationConfig, targetSelector, defaultConfig);
     });
   }
   

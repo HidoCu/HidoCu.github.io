@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useThemeStore } from '@/stores/theme';
-import { AsideToolbox, LoadingProvider } from '@/components';
+import { AsideToolbox, LoadingProvider, NowLoading, OnmyodamaSpin } from '@/components';
 import { darkTheme, type GlobalTheme } from 'naive-ui';
-import { NowLoading, OnmyodamaSpin } from '@/components/animations';
 
 const themeStore = useThemeStore();
 const route = useRoute();
