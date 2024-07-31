@@ -72,6 +72,31 @@ export const cutArr = <T>(arr: T[], start = 0, size = 5) => {
   ].filter(item => item.length !== 0);
 }
 
+/**
+ * 数组分页
+ * @param arr 目标数组
+ * @param index 页码
+ * @param size 每页条目数目（默认10）
+ */
+export const paginArr = <T>(arr: T[], index: number, size = 10) => {
+  const MAX_IDX = Math.ceil(arr.length / size);
+  if (index > MAX_IDX) {
+    throw new Error(`Index ${index} is out of range. Max index is ${MAX_IDX}`);
+  }
+  if (index <= 0) {
+    throw new Error(`Index ${index} is out of range. Index must be greater than 0`);
+  }
+  const start = (index - 1) * size;
+  const end = start + size;
+  return arr.slice(start, end);
+}
+
+/**
+ * 是否十六进制颜色
+ * @param c 色值字符串
+ * @return boolean
+ * @example isHexColor('#f5ae2c');
+ */
 export const isHexColor = (c: string) => {
   const HexValue = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
   const HexColorLen = [3, 4, 6, 8];
@@ -82,9 +107,78 @@ export const isHexColor = (c: string) => {
   if (!HexColorLen.includes(color.length)) {
     return false;
   }
-  for (let colorChar of color) {
-    if (!HexValue.includes(colorChar))
+  for (const colorChar of color) {
+    if (!HexValue.includes(colorChar)) {
       return false;
+    }
   }
   return true;
 }
+
+/**
+ * 获取一个随机HEX色值
+ */
+export const randomHexColor = () => {
+  const hex = Math.floor(Math.random() * 16777215).toString(16);
+  return `#${hex.padStart(6, '0')}`;
+}
+
+/**
+ * 防抖
+ * @param fn 目标函数
+ * @param duration 延时，默认0.3s
+ * @return 防抖后的函数
+ */
+export function debounce<ARG extends any[], R>(
+    fn: (...args: ARG) => R,
+    duration: number = 300
+): (...args: ARG) => void {
+  let timer: any;
+  return function (this: any, ...args) {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      fn.apply(this, args);
+      clearTimeout(timer)
+    }, duration);
+  }
+}
+
+/**
+ * 节流
+ * @param fn 目标函数
+ * @param duration 延时，默认0.2s
+ * @return 节流后的函数
+ */
+export function throttle<ARG extends any[], R>(
+  fn: (...args: ARG) => R,
+  duration: number = 200
+): (...args: ARG) => void {
+  let timer: any;
+  return function (this: any, ...args) {
+    if (timer) {
+      return;
+    }
+    timer = setTimeout(() => {
+      fn.apply(this, args);
+      clearTimeout(timer);
+      timer = null;
+    }, duration);
+  }
+}
+
+/**
+ * 单词首字母大写
+ * @param str 目标字符串
+ * @return 首字母大写字符串
+ */
+export const capitalize = (str: string) =>
+    !str ? str : str.charAt(0).toUpperCase() + str.slice(1);
+
+/**
+ * 目标是否为函数
+ * @param target
+ */
+export const isFunction = (target: any) =>
+  Object.prototype.toString.call(target) === '[object Function]';

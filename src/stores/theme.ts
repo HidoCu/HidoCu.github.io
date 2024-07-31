@@ -4,9 +4,7 @@ import { startViewTransitionSafe } from '@/utils/tools';
 
 type TTheme = 'light' | 'dark';
 
-export const useThemeStore = defineStore(
-  'theme',
-  () => {
+export const useThemeStore = defineStore('theme', () => {
     const theme = ref<TTheme>('light');
     
     const toggleTheme = () => {
@@ -31,8 +29,5 @@ export const useThemeStore = defineStore(
     }
     
     return { theme, toggleTheme, setTheme }
-  },
-  {
-    persist: true,
-  }
+  }, { persist: true }
 );

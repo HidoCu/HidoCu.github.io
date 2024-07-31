@@ -2,36 +2,29 @@
 import { useThemeStore } from '@/stores';
 import { usePageResources } from '@/hooks';
 import { ResourcesUsed } from '@/components';
+import type { FFunction } from '@/types/type-utils';
 
-/* ---------------- Constant ---------------- */
-const ICON_SIZE = 80;
-const ICON_SIZE_CSS = `${ICON_SIZE}px`;
-/* ---------------- Constant ---------------- */
-
-
-/* ---------------- types ---------------- */
+/* ---------------- public ---------------- */
 interface ITool {
   label: '切换主题' | '回到顶部' | '本页资源';
   icon: `icon-${string}`;
-  handler: (...args: any[]) => void;
+  handler: FFunction;
 }
-/* ---------------- types ---------------- */
 
-
-/* ---------------- Props ---------------- */
-withDefaults(defineProps<{
-  blur: boolean
+const props = withDefaults(defineProps<{
+  blur?: boolean;
+  iconSize?: number;
 }>(), {
-  blur: false
-})
-/* ---------------- Props ---------------- */
+  blur: false,
+  iconSize: 80
+});
 
+const iconSizeCss = computed(() => Math.abs(props.iconSize) + 'px');
 
-/* ---------------- Stores & Hooks ---------------- */
-// const route = useRoute();
 const themeStore = useThemeStore();
-const { updateResources, resUsed } = usePageResources();
-/* ---------------- Stores & Hooks ---------------- */
+const { updateResources, resourcesUsedList: resUsed } = usePageResources();
+/* ---------------- public ---------------- */
+
 
 
 /* ---------------- 工具栏样式 ---------------- */
@@ -43,25 +36,31 @@ const initToolboxHeight = () => {
     toolboxHeight.value = toolboxRef.value.clientHeight;
   }
 }
+
+onMounted(() => {
+  initToolboxHeight();
+});
 /* ---------------- 工具栏样式 ---------------- */
+
 
 
 /* ---------------- 工具栏打开-关闭 ---------------- */
 const isToolboxOpen = ref(false);
-const currentToolboxContainerHeight = ref(ICON_SIZE);
+const currentToolboxContainerHeight = ref(props.iconSize);
 const currentToolboxScaleY = ref(0);
 
 const handleToggleToolbox = () => {
   if (isToolboxOpen.value) {
-    currentToolboxContainerHeight.value = ICON_SIZE;
+    currentToolboxContainerHeight.value = props.iconSize;
     currentToolboxScaleY.value = 0;
   } else {
-    currentToolboxContainerHeight.value = ICON_SIZE + toolboxHeight.value + 20;
+    currentToolboxContainerHeight.value = props.iconSize + toolboxHeight.value + 20;
     currentToolboxScaleY.value = 1;
   }
   isToolboxOpen.value = !isToolboxOpen.value;
 }
 /* ---------------- 工具栏打开-关闭 ---------------- */
+
 
 
 /* ---------------- 展示页面使用资源 ---------------- */
@@ -71,6 +70,7 @@ const handleTogglePageRes = (status: boolean) => {
   pageResActive.value = status;
 }
 /* ---------------- 展示页面使用资源 ---------------- */
+
 
 
 /* ---------------- 工具栏配置 ---------------- */
@@ -98,13 +98,6 @@ const toolConfigList: ITool[] = [{
   }
 }];
 /* ---------------- 工具栏配置 ---------------- */
-
-
-/* ---------------- 生命周期钩子 ---------------- */
-onMounted(() => {
-  initToolboxHeight();
-});
-/* ---------------- 生命周期钩子 ---------------- */
 </script>
 
 <template>
@@ -119,7 +112,7 @@ onMounted(() => {
     </div>
     <div
         class="toolbox__tools-list-container"
-        :class="{ blur: blur }"
+        :class="{ blur }"
         :style="{ transform: `scaleY(${currentToolboxScaleY})` }">
       <ul class="toolbox__tools-list" ref="toolboxRef">
         <li
@@ -153,7 +146,7 @@ onMounted(() => {
     transform: translateY(-50%);
     right: 20px;
 
-    --btn-size: v-bind(ICON_SIZE_CSS);
+    --btn-size: v-bind(iconSizeCss);
     --btn-icon-size: 55px;
 
     --tool-size: 60px;
