@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { useLoadingStore } from '@/stores';
+import { useVShowFade } from '@/hooks';
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
   maskColor?: string;
 }>(), {
   maskColor: '#0009'
 });
 
 const loadingStore = useLoadingStore();
+const { fadeStatus, setFadeStatus, fadeOut } = useVShowFade('.loading-provider__loading');
+
+watch(() => loadingStore.loadingStatus, (newStatus) => {
+  newStatus ? setFadeStatus(true) : fadeOut(1000)
+});
 </script>
 
 <template>
@@ -15,7 +21,7 @@ const loadingStore = useLoadingStore();
     <div class="loading-provider__content">
       <slot></slot>
     </div>
-    <div v-show="loadingStore.loadingState" class="loading-provider__loading">
+    <div v-show="fadeStatus" class="loading-provider__loading">
       <section class="loading-provider__pc-loading-container">
         <slot name="pcLoading" />
       </section>
@@ -36,6 +42,8 @@ const loadingStore = useLoadingStore();
     z-index: 1000;
     inset: 0;
     background-color: v-bind(maskColor);
+
+    transition: all .3s linear;
 
     & .loading-provider__pc-loading-container {
       display: none;

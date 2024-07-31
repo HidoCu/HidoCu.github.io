@@ -5,7 +5,7 @@ const props = withDefaults(defineProps<{
   size?: number;
   fillColor?: string;
   opacity?: TIntRange<0, 101>;
-  serial?: number;
+  serial?: number | string;
   debug?: boolean;
 }>(), {
   size: 100,

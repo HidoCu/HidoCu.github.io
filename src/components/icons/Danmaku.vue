@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getColorByPreset, type TPreset } from '@/components/icons/colors';
+import { getColorByPreset, type TPreset } from '@/common/colors';
 
 const props = withDefaults(defineProps<{
   size?: number;

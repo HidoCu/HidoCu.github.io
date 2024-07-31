@@ -57,6 +57,16 @@ export const useMediaWrapper = () => {
   }
   
   /**
+   * 将实际像素宽度转换为窗口百分比
+   * @param px （CSS）像素单位
+   * @param axis 宽（x）或高（y）
+   */
+  const px2Percentage = (px: number, axis: TAxis) => {
+    const screenAxisSize = getScreenAxisSize(axis);
+    return Math.floor(px / screenAxisSize * 100);
+  }
+  
+  /**
    * 断点监听器回调表
    */
   const _respondHandlerHolder = ref(new Map<TBreakPointHandler, TTrigger[]>());
@@ -132,6 +142,7 @@ export const useMediaWrapper = () => {
     breakPoint,
     getScreenAxisSize,
     percentage2Px,
+    px2Percentage,
     onRespond,
   }
 }

@@ -5,14 +5,14 @@ export const useLoadingStore = defineStore('loading', () => {
   /**
    * （全屏）加载状态
    */
-  const loadingState = ref(false);
+  const loadingStatus = ref(false);
   
   /**
    * 是否开始/结束加载（默认开始）
    * @param state 开始 / 结束加载状态
    */
   const loading = (state = true) => {
-    loadingState.value = state;
+    loadingStatus.value = state;
   }
   
   /**
@@ -22,10 +22,10 @@ export const useLoadingStore = defineStore('loading', () => {
   
   /**
    * 是否开始/结束加载（默认开始）
-   * @param state 开始 / 结束加载状态
+   * @param status 开始 / 结束加载状态
    */
-  const spin = (state = true) => {
-    spinState.value = state;
+  const spin = (status = true) => {
+    spinState.value = status;
   }
   
   /**
@@ -46,8 +46,12 @@ export const useLoadingStore = defineStore('loading', () => {
     }, delay);
   }
   
+  const fadeDone = (selector: string, delay = 3000, onLoadingDone?: FFunction) => {
+  
+  }
+  
   return {
-    loadingState,
+    loadingStatus,
     spinState,
     loading,
     spin,

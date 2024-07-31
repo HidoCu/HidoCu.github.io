@@ -15,6 +15,32 @@ export type ReverseOptional<T, K extends keyof T> =
   Pick<T, K> & Partial<Omit<T, K>>;
 
 /**
+ * 获取对象中所有可选属性的键的联合类型
+ */
+export type OptionalKeys<T> = {
+  [K in keyof T]-?: {} extends { [P in K]: T[K] } ? K : never
+}[keyof T];
+
+/**
+ * 移除联合类型中的undefined
+ */
+export type ExcludeUndefined<T> = T extends undefined ? never : T;
+
+/**
+ * 提取所有可选属性
+ */
+export type PickOptional<T> = {
+  [K in OptionalKeys<T>]: ExcludeUndefined<T[K]>
+}
+
+/**
+ * 将对象可选属性变为必选
+ */
+export type WithRequired<T, K extends OptionalKeys<T>> = T & {
+  [P in K]-?: ExcludeUndefined<T[P]>;
+};
+
+/**
  * 掘金上抄的
  * [0, number)范围数字，一般不用
  */

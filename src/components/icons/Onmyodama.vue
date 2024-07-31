@@ -1,21 +1,30 @@
 <script setup lang="ts">
-import { getColorByPreset, type TPreset } from './colors';
+import { getColorByPreset, type TPreset } from '../../common/colors';
 
 const props = withDefaults(defineProps<{
   yinColor?: string | TPreset;
   yangColor?: string | TPreset;
   size?: number;
   luminescence?: boolean;
+  luminescenceColor?: string | TPreset;
+  blurRadius?: number;
+  diffusionRadius?: number;
 }>(), {
   yinColor: 'classic',
   yangColor: '#ffffff',
   size: 100,
   luminescence: false,
+  luminescenceColor: 'classic',
+  blurRadius: 20,
+  diffusionRadius: 4
 });
 
 const yin = computed(() => getColorByPreset(props.yinColor));
 const yang = computed(() => getColorByPreset(props.yangColor));
+const lColor = computed(() => getColorByPreset(props.luminescenceColor));
 const size = computed(() => Math.abs(props.size) + 'px');
+const blur = computed(() => props.blurRadius + 'px');
+const diffusion = computed(() => props.diffusionRadius + 'px');
 </script>
 
 <template>
@@ -30,6 +39,10 @@ const size = computed(() => Math.abs(props.size) + 'px');
   --onmyodama-size: v-bind(size);
   --onmyodama-yin-color: v-bind(yin);
   --onmyodama-yang-color: v-bind(yang);
+  --onmyodama-luminescence-color: v-bind(lColor);
+
+  --onmyodama-luminescence-blur: v-bind(blur);
+  --onmyodama-luminescence-diffusion: v-bind(diffusion);
 
   width: var(--onmyodama-size);
   height: var(--onmyodama-size);
@@ -37,7 +50,7 @@ const size = computed(() => Math.abs(props.size) + 'px');
   border-radius: 50%;
 
   &.luminescence {
-    box-shadow: 0 0 10px var(--onmyodama-yin-color);
+    box-shadow: 0 0 var(--onmyodama-luminescence-blur) var(--onmyodama-luminescence-diffusion) var(--onmyodama-luminescence-color);
   }
 
   &::before,

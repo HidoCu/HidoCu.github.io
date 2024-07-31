@@ -9,6 +9,7 @@ const route = useRoute();
 const naiveTheme = computed<GlobalTheme | null>(() =>
     themeStore.theme === 'light' ? null : darkTheme
 );
+
 </script>
 
 <template>
