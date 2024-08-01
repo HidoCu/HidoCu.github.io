@@ -3,9 +3,14 @@ import { Onmyodama } from '@/components/icons';
 import gsap from 'gsap';
 
 const props = withDefaults(defineProps<{
+  iconSize?: number;
+  needText?: boolean,
   text?: string;
   textSub?: string;
+
 }>(), {
+  iconSize: 120,
+  needText: true,
   text: '少女祈祷中',
   textSub: 'Now Loading...',
 });
@@ -22,16 +27,18 @@ const registerOnmyodamaAnimation = (selector: string) => {
   });
 }
 
-const registerTextAnimation = (selector: string, opacity = .4) => {
-  gsap.timeline({
-    repeat: -1
-  }).from(selector, {
-    opacity,
-    duration: 1,
-  }).to(selector, {
-    opacity,
-    duration: .5
+const registerTextAnimation = (selector: string) => {
+  const tl = gsap.timeline({
+    repeat: -1,
+    delay: .5,
   });
+  tl.to(selector, {
+    opacity: .5,
+    duration: .6,
+  }).to(selector, {
+    opacity: 1,
+    duration: 1,
+  })
 }
 
 onMounted(() => {
@@ -43,9 +50,9 @@ onMounted(() => {
 <template>
   <div class="onmyodama-spin__container">
     <div class="od-spin__onmyodama">
-      <Onmyodama luminescence :size="120" />
+      <Onmyodama luminescence :size="iconSize" />
     </div>
-    <div class="od-spin__text">
+    <div v-show="needText" class="od-spin__text">
       <section class="od-spin__text text-main">
         <span
             class="text-char"

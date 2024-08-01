@@ -8,24 +8,19 @@ export const useLoadingStore = defineStore('loading', () => {
   const loadingStatus = ref(false);
   
   /**
+   * 加载时的动画
+   * 加载时间较短不推荐开启
+   */
+  const withAnimation = ref(false);
+  
+  /**
    * 是否开始/结束加载（默认开始）
    * @param state 开始 / 结束加载状态
+   * @param animation 是否需要加载动画（默认否）
    */
-  const loading = (state = true) => {
+  const loading = (state = true, animation = false) => {
     loadingStatus.value = state;
-  }
-  
-  /**
-   * 一个更加轻量化的加载状态
-   */
-  const spinState = ref(false);
-  
-  /**
-   * 是否开始/结束加载（默认开始）
-   * @param status 开始 / 结束加载状态
-   */
-  const spin = (status = true) => {
-    spinState.value = status;
+    withAnimation.value = animation;
   }
   
   /**
@@ -37,24 +32,21 @@ export const useLoadingStore = defineStore('loading', () => {
   const delayDone = (delay = 1000, onLoadingDone?: FFunction) => {
     if (delay <= 0) {
       loading(false);
+      withAnimation.value = false;
       return;
     }
     const id = setTimeout(() => {
       loading(false);
+      withAnimation.value = false;
       onLoadingDone && onLoadingDone();
       clearTimeout(id);
     }, delay);
   }
   
-  const fadeDone = (selector: string, delay = 3000, onLoadingDone?: FFunction) => {
-  
-  }
-  
   return {
     loadingStatus,
-    spinState,
+    withAnimation,
     loading,
-    spin,
     delayDone
   }
 });

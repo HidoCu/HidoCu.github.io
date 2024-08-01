@@ -8,11 +8,13 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AsideToolbox: typeof import('./src/components/AsideToolbox.vue')['default']
+    Comp: typeof import('./src/components/UseSpin/Comp.vue')['default']
     Danmaku: typeof import('./src/components/icons/Danmaku.vue')['default']
     ExpansionContainer: typeof import('./src/components/ExpansionContainer.vue')['default']
     LoadingProvider: typeof import('./src/components/LoadingProvider.vue')['default']
     MenuButton: typeof import('./src/components/MenuButton.vue')['default']
     NavigationMenu: typeof import('./src/components/NavigationMenu.vue')['default']
+    NButton: typeof import('naive-ui')['NButton']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDrawer: typeof import('naive-ui')['NDrawer']
     NDrawerContent: typeof import('naive-ui')['NDrawerContent']
@@ -23,7 +25,7 @@ declare module 'vue' {
     NTag: typeof import('naive-ui')['NTag']
     NThing: typeof import('naive-ui')['NThing']
     Onmyodama: typeof import('./src/components/icons/Onmyodama.vue')['default']
-    OnmyodamaSpin: typeof import('./src/components/OnmyodamaSpin/index.vue')['default']
+    OnmyodamaSpin: typeof import('./src/components/OnmyodamaSpin.vue')['default']
     ResourcesUsed: typeof import('./src/components/ResourcesUsed.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

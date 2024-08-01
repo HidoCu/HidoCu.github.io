@@ -3,6 +3,7 @@ import type { FFunction } from '@/types/type-utils';
 import { useTimeoutFn } from '@vueuse/core';
 
 /**
+ * （已弃用）平滑过渡v-show效果
  * @deprecated 计划使用VisibleFade组件代替
  * @see VisibleFade
  * @param elem

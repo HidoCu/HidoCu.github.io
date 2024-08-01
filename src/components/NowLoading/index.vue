@@ -5,8 +5,10 @@ import { useSnowAnimation } from '@/hooks/animation'
 
 const props = withDefaults(defineProps<{
   padding?: number;
+  animation?: boolean;
 }>(), {
   padding: 100,
+  animation: false,
 });
 
 /* ******************** Animation ******************** */
@@ -26,7 +28,7 @@ const pd = computed(() => props.padding + 'px');
 
 <template>
   <div class="nl__container">
-    <div class="sakura-box">
+    <div v-show="animation" class="sakura-box">
       <div
           class="sakura"
           v-for="(sakura, index) in animationItemConfigList"

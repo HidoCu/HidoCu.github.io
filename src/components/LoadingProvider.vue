@@ -26,9 +26,6 @@ const loadingStore = useLoadingStore();
         <slot name="h5Loading" />
       </section>
     </VisibleFade>
-    <div v-show="loadingStore.spinState" class="loading-provider__spin">
-      <slot name="spin" />
-    </div>
   </div>
 </template>
 
@@ -54,8 +51,11 @@ const loadingStore = useLoadingStore();
     }
 
     & .loading-provider__h5-loading-container {
-      width: 100%;
-      height: 100%;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       @include respond('tablet') {
         display: none;

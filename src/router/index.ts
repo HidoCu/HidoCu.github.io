@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useLoadingStore } from '@/stores';
+import { NowLoading } from '@/components';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -97,7 +98,7 @@ router.beforeEach((_to, _from, next) => {
 
 router.afterEach(() => {
   const loadingStore = useLoadingStore();
-  loadingStore.delayDone(5 * 1000);
+  loadingStore.delayDone(1000);
 });
 
 export default router;

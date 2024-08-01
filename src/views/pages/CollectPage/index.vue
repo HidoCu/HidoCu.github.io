@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import data from './page.json';
+
+onMounted(() => {
+  console.log('done')
+});
 </script>
 
 <template>

@@ -45,11 +45,8 @@ const fadeOut = () => {
 }
 
 watch(() => props.visible, (newV) => {
+  console.log('visible change');
   newV ? fadeIn() : fadeOut();
-});
-
-onMounted(() => {
-  console.log(selector.value)
 });
 </script>
 
