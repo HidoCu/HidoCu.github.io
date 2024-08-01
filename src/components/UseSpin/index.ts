@@ -4,9 +4,11 @@ import type { IUseSpinConfig } from './types';
 
 const UseSpin = (config?: IUseSpinConfig) => {
   const fadeDuration = config?.delay || 0
+  const needMask = !config?.mask;
   
   const spinApp = createApp(Comp, {
-    duration: fadeDuration / 1000
+    duration: fadeDuration / 1000,
+    mask: needMask,
   });
   const mountElement = document.createElement('div');
   document.body.appendChild(mountElement);

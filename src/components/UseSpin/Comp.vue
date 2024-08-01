@@ -2,9 +2,10 @@
 import { OnmyodamaSpin } from '@/components';
 import gsap from 'gsap';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   duration: number;
-}>();
+  mask: boolean;
+}>(), {});
 
 const useSpinSelector = ref('use-spin');
 const useSpin = computed(() => '.' + useSpinSelector.value);
@@ -29,12 +30,13 @@ defineExpose({ fadeOut });
 
 onMounted(() => {
   fadeIn();
-  console.log(props.duration)
 });
 </script>
 
 <template>
-  <div class="use-onmyodama-spin" :class="[useSpinSelector]">
+  <div
+      class="use-onmyodama-spin"
+      :class="[useSpinSelector, { mask }]">
     <div class="use-onmyodama-spin__inner">
       <OnmyodamaSpin />
     </div>
@@ -43,13 +45,16 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .use-onmyodama-spin {
-  background-color: #0009;
   position: fixed;
   inset: 0;
   opacity: 0;
 
+  &.mask {
+    background-color: #0009;
+  }
+
   & .use-onmyodama-spin__inner {
-    position: absolute;
+    position: fixed;
 
     top: 50%;
     left: 50%;

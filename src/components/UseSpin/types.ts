@@ -4,4 +4,5 @@ export interface IUseSpinConfig {
   onSpin?: FFunction;
   fade?: boolean;
   delay?: number;
+  mask?: boolean;
 }
