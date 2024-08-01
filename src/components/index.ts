@@ -6,4 +6,5 @@ export { default as ExpansionContainer } from './ExpansionContainer.vue';
 export { default as NavigationMenu } from './NavigationMenu.vue';
 export { default as LoadingProvider } from './LoadingProvider.vue';
 export { default as NowLoading } from './NowLoading/index.vue';
-export { default as OnmyodamaSpin } from '@/components/OnmyodamaSpin/index.vue';
+export { default as OnmyodamaSpin } from './OnmyodamaSpin/index.vue';
+export { default as VisibleFade } from './VisibleFade.vue';

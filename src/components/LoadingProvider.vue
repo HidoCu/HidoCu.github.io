@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useLoadingStore } from '@/stores';
-import { useVShowFade } from '@/hooks';
+import { VisibleFade } from '@/components';
 
 withDefaults(defineProps<{
   maskColor?: string;
@@ -9,26 +9,23 @@ withDefaults(defineProps<{
 });
 
 const loadingStore = useLoadingStore();
-const { fadeStatus, setFadeStatus, fadeOut } = useVShowFade('.loading-provider__loading');
-
-watch(() => loadingStore.loadingStatus, (newStatus) => {
-  newStatus ? setFadeStatus(true) : fadeOut(1000)
-});
 </script>
 
 <template>
   <div class="loading-provider__container">
     <div class="loading-provider__content">
-      <slot></slot>
+      <slot />
     </div>
-    <div v-show="fadeStatus" class="loading-provider__loading">
+    <VisibleFade
+        class-name="loading-provider__loading"
+        :visible="loadingStore.loadingStatus">
       <section class="loading-provider__pc-loading-container">
         <slot name="pcLoading" />
       </section>
       <section class="loading-provider__h5-loading-container">
         <slot name="h5Loading" />
       </section>
-    </div>
+    </VisibleFade>
     <div v-show="loadingStore.spinState" class="loading-provider__spin">
       <slot name="spin" />
     </div>

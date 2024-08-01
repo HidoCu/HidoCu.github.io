@@ -2,6 +2,11 @@ import gsap from 'gsap';
 import type { FFunction } from '@/types/type-utils';
 import { useTimeoutFn } from '@vueuse/core';
 
+/**
+ * @deprecated 计划使用VisibleFade组件代替
+ * @see VisibleFade
+ * @param elem
+ */
 export const useVShowFade = (elem: string) => {
   
   const fadeStatus = ref(false);
