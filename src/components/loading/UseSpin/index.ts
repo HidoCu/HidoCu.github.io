@@ -1,4 +1,4 @@
-import Comp from '@/components/UseSpin/Comp.vue';
+import Comp from '@/components/loading/UseSpin/Comp.vue';
 import type { FFunction } from '@/types/type-utils';
 import type { IUseSpinConfig } from './types';
 

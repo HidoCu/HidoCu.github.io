@@ -8,7 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AsideToolbox: typeof import('./src/components/AsideToolbox.vue')['default']
-    Comp: typeof import('./src/components/UseSpin/Comp.vue')['default']
+    Comp: typeof import('./src/components/loading/UseSpin/Comp.vue')['default']
     Danmaku: typeof import('./src/components/icons/Danmaku.vue')['default']
     ExpansionContainer: typeof import('./src/components/ExpansionContainer.vue')['default']
     LoadingProvider: typeof import('./src/components/LoadingProvider.vue')['default']
@@ -20,7 +20,8 @@ declare module 'vue' {
     NDrawerContent: typeof import('naive-ui')['NDrawerContent']
     NList: typeof import('naive-ui')['NList']
     NListItem: typeof import('naive-ui')['NListItem']
-    NowLoading: typeof import('./src/components/NowLoading/index.vue')['default']
+    NowLoading: typeof import('./src/components/loading/NowLoading/index.vue')['default']
+    NowLoadingFade: typeof import('./src/components/loading/NowLoading/NowLoadingFade.vue')['default']
     NPopover: typeof import('naive-ui')['NPopover']
     NTag: typeof import('naive-ui')['NTag']
     NThing: typeof import('naive-ui')['NThing']
@@ -32,7 +33,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Sakura: typeof import('./src/components/icons/Sakura.vue')['default']
     SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
-    TransitionRouter: typeof import('./src/components/TransitionRouter.vue')['default']
-    VisibleFade: typeof import('./src/components/VisibleFade.vue')['default']
+    VisibleFade: typeof import('./src/components/loading/NowLoading/NowLoadingFade.vue')['default']
   }
 }

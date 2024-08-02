@@ -68,7 +68,7 @@ export const useSnowAnimation = (animationConfigs: Ref<UnwrapRef<IAnimationConfi
    *      :key="animationConfig.id">
    *    <li
    *        :style="{ position: 'absolute' }"
-   *        :class=[setSelector('.animation-item', animationConfig)]>
+   *        :class=[setSelector('.loading-item', animationConfig)]>
    *      <AnimationItem :some-props="animationConfig" />
    *    </li>
    *  </ul>

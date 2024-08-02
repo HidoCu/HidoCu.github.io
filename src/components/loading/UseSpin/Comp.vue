@@ -28,7 +28,7 @@ onMounted(() => {
 <template>
   <Transition name="fade">
     <div
-        v-show="spinShow"
+        v-if="spinShow"
         class="onmyodama-container"
         :class="{ mask }">
       <div class="onmyodama-rotate">

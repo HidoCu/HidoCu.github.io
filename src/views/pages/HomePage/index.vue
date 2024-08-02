@@ -1,27 +1,11 @@
 <script setup lang="ts">
-import { UseSpin } from '@/components';
 
-const handleTest = () => {
-  const umount = UseSpin({
-    delay: 500,
-    onSpin: (app) => {
-      return 'signal';
-    },
-  });
-
-  const id = setTimeout(() => {
-    umount((res, comp) => {
-    });
-    clearTimeout(id);
-  }, 3000);
-}
 </script>
 
 <template>
   <div class="home-container">
     <header class="home__my-info common-card blur">
       header
-      <n-button type="primary" @click="handleTest">测试组件</n-button>
     </header>
     <nav class="home__nav common-card blur">nav</nav>
     <main class="home__main-content common-card blur">

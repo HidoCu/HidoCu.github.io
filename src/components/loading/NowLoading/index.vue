@@ -53,8 +53,8 @@ const pd = computed(() => props.padding + 'px');
   --now-loading-pd: v-bind(pd);
 
   & .sakura-box {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     position: relative;
 
     & .sakura {

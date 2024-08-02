@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useLoadingStore } from '@/stores';
-import { VisibleFade } from '@/components';
+import { NowLoadingFade } from '@/components';
 
 withDefaults(defineProps<{
   maskColor?: string;
@@ -16,7 +16,7 @@ const loadingStore = useLoadingStore();
     <div class="loading-provider__content">
       <slot />
     </div>
-    <VisibleFade
+    <NowLoadingFade
         class-name="loading-provider__loading"
         :visible="loadingStore.loadingStatus">
       <section class="loading-provider__pc-loading-container">
@@ -25,7 +25,7 @@ const loadingStore = useLoadingStore();
       <section class="loading-provider__h5-loading-container">
         <slot name="h5Loading" />
       </section>
-    </VisibleFade>
+    </NowLoadingFade>
   </div>
 </template>
 
@@ -33,8 +33,8 @@ const loadingStore = useLoadingStore();
 .loading-provider__container {
   & .loading-provider__loading {
     position: fixed;
-    z-index: 1000;
     inset: 0;
+    z-index: 1000;
     background-color: v-bind(maskColor);
 
     transition: all .3s linear;

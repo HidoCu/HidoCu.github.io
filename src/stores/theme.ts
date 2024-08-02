@@ -8,25 +8,18 @@ export const useThemeStore = defineStore('theme', () => {
     const theme = ref<TTheme>('light');
     
     const toggleTheme = () => {
-      if (theme.value === 'light') {
-        startViewTransitionSafe(() => {
-          theme.value = 'dark';
-          document.body.dataset.theme = 'dark';
-        });
-      } else {
-        startViewTransitionSafe(() => {
-          theme.value = 'light';
-          document.body.dataset.theme = 'light';
-        });
-      }
+      theme.value = theme.value === 'light' ? 'dark' : 'light';
     }
     
     const setTheme = (themeVal: TTheme) => {
-      startViewTransitionSafe(() => {
-        theme.value = themeVal;
-        document.body.dataset.theme = themeVal;
-      });
+      theme.value = themeVal;
     }
+    
+    watch(() => theme.value, (newTheme) => {
+      startViewTransitionSafe(() => {
+        document.body.dataset.theme = newTheme;
+      });
+    }, { immediate: true });
     
     return { theme, toggleTheme, setTheme }
   }, { persist: true }
