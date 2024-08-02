@@ -27,10 +27,12 @@ declare module 'vue' {
     Onmyodama: typeof import('./src/components/icons/Onmyodama.vue')['default']
     OnmyodamaSpin: typeof import('./src/components/OnmyodamaSpin.vue')['default']
     ResourcesUsed: typeof import('./src/components/ResourcesUsed.vue')['default']
+    RouterFade: typeof import('./src/components/RouterFade.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sakura: typeof import('./src/components/icons/Sakura.vue')['default']
     SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
+    TransitionRouter: typeof import('./src/components/TransitionRouter.vue')['default']
     VisibleFade: typeof import('./src/components/VisibleFade.vue')['default']
   }
 }

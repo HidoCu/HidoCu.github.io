@@ -89,16 +89,12 @@ const router = createRouter({
   }]
 });
 
-
 router.beforeEach((_to, _from, next) => {
-  const loadingStore = useLoadingStore();
-  loadingStore.loading();
   next();
 });
 
 router.afterEach(() => {
-  const loadingStore = useLoadingStore();
-  loadingStore.delayDone(1000);
+
 });
 
 export default router;

@@ -15,7 +15,6 @@ const UseSpin = (config?: IUseSpinConfig) => {
   const spinComp = spinApp.mount(mountElement) as InstanceType<typeof Comp>;
   
   const callbackRes = config && config.onSpin && config.onSpin(spinComp);
-  const needFade = !!config?.fade;
   
   const unmount = () => {
     spinApp.unmount();
@@ -24,15 +23,11 @@ const UseSpin = (config?: IUseSpinConfig) => {
   
   return (onUnmount?: FFunction) => {
     onUnmount && onUnmount(callbackRes, spinComp);
-    if (needFade) {
-      spinComp.fadeOut();
-      const id = setTimeout(() => {
-        unmount();
-        clearTimeout(id);
-      }, fadeDuration);
-    } else {
+    spinComp.fadeOut();
+    const timeoutId = setTimeout(() => {
       unmount();
-    }
+      clearTimeout(timeoutId);
+    }, fadeDuration);
   }
 }
 

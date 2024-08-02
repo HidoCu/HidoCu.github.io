@@ -3,7 +3,6 @@ import { UseSpin } from '@/components';
 
 const handleTest = () => {
   const umount = UseSpin({
-    fade: true,
     delay: 500,
     onSpin: (app) => {
       return 'signal';

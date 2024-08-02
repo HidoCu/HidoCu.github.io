@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useThemeStore } from '@/stores/theme';
-import { AsideToolbox, LoadingProvider, NowLoading, OnmyodamaSpin } from '@/components';
+import { AsideToolbox, LoadingProvider, NowLoading, OnmyodamaSpin, TransitionRouter } from '@/components';
 import { darkTheme, type GlobalTheme } from 'naive-ui';
 import { useLoadingStore } from '@/stores';
 
@@ -19,7 +19,11 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
     <n-config-provider :theme="naiveTheme">
       <LoadingProvider>
         <div class="app-content">
-          <RouterView />
+          <RouterView v-slot="{Component}">
+            <TransitionRouter>
+              <component :is="Component" />
+            </TransitionRouter>
+          </RouterView>
           <AsideToolbox :blur="route.name === 'Home'" />
         </div>
         <template #pcLoading>

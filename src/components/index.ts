@@ -9,3 +9,4 @@ export { default as NowLoading } from './NowLoading/index.vue';
 export { default as OnmyodamaSpin } from './OnmyodamaSpin.vue';
 export { default as VisibleFade } from './VisibleFade.vue';
 export { default as UseSpin } from './UseSpin';
+export { default as TransitionRouter } from './TransitionRouter.vue';

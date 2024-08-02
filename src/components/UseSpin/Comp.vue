@@ -1,29 +1,21 @@
 <script setup lang="ts">
 import { OnmyodamaSpin } from '@/components';
-import gsap from 'gsap';
 
 const props = withDefaults(defineProps<{
   duration: number;
   mask: boolean;
 }>(), {});
 
-const useSpinSelector = ref('use-spin');
-const useSpin = computed(() => '.' + useSpinSelector.value);
+const animeDuration = computed(() => props.duration + 's');
+
+const spinShow = ref(false);
 
 const fadeIn = () => {
-  gsap.to(useSpin.value, {
-    opacity: 1,
-    duration: props.duration,
-    ease: 'none'
-  });
+  spinShow.value = true;
 }
 
 const fadeOut = () => {
-  gsap.to(useSpin.value, {
-    opacity: 0,
-    duration: props.duration,
-    ease: 'none'
-  });
+  spinShow.value = false;
 }
 
 defineExpose({ fadeOut });
@@ -34,31 +26,67 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-      class="use-onmyodama-spin"
-      :class="[useSpinSelector, { mask }]">
-    <div class="use-onmyodama-spin__inner">
-      <OnmyodamaSpin />
+  <Transition name="fade">
+    <div
+        v-show="spinShow"
+        class="onmyodama-container"
+        :class="{ mask }">
+      <div class="onmyodama-rotate">
+        <OnmyodamaSpin />
+      </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <style scoped lang="scss">
-.use-onmyodama-spin {
+.onmyodama-container {
   position: fixed;
   inset: 0;
-  opacity: 0;
+  z-index: 1000;
 
   &.mask {
     background-color: #0009;
   }
 
-  & .use-onmyodama-spin__inner {
-    position: fixed;
-
+  & .onmyodama-rotate {
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
+}
+
+%transition-animation {
+  transition: all v-bind(animeDuration) linear;
+}
+
+// 进入起始态
+.fade-enter-from {
+  opacity: 0;
+}
+
+// 进入中
+.fade-enter-active {
+  @extend %transition-animation;
+}
+
+// 进入结束态
+.fade-enter-to {
+  opacity: 1;
+}
+
+// 离开起始态
+.fade-leave-from {
+  opacity: 1;
+}
+
+// 离开中
+.fade-leave-active {
+  @extend %transition-animation;
+}
+
+// 离开结束态
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
