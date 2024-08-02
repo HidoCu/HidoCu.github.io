@@ -17,6 +17,8 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
   <div class="app-container app-theme">
     <n-config-provider :theme="naiveTheme">
       <LoadingProvider>
+
+        <!-- Content -->
         <div class="app-content">
           <RouterView v-slot="{Component}">
             <Transition name="app-layout" mode="out-in">
@@ -25,6 +27,9 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
           </RouterView>
           <AsideToolbox :blur="route.name === 'Home'" />
         </div>
+        <!-- Content -->
+
+        <!-- Loading -->
         <template #pcLoading>
           <NowLoading :animation="loadingStore.withAnimation">
             <OnmyodamaSpin />
@@ -33,15 +38,14 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
         <template #h5Loading>
           <OnmyodamaSpin :need-text="false" :icon-size="100" />
         </template>
+        <!-- Loading -->
+
       </LoadingProvider>
     </n-config-provider>
   </div>
 </template>
 
 <style scoped lang="scss">
-.app-container {
-}
-
 // 进入起始态
 .app-layout-enter-from {
   transform: scale(0.95);

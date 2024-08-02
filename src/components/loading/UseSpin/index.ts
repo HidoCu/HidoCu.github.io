@@ -2,6 +2,8 @@ import Comp from '@/components/loading/UseSpin/Comp.vue';
 import type { FFunction } from '@/types/type-utils';
 import type { IUseSpinConfig } from './types';
 
+
+
 const UseSpin = (config?: IUseSpinConfig) => {
   const fadeDuration = config?.delay || 0
   const needMask = !config?.mask;
@@ -14,21 +16,18 @@ const UseSpin = (config?: IUseSpinConfig) => {
   document.body.appendChild(mountElement);
   const spinComp = spinApp.mount(mountElement) as InstanceType<typeof Comp>;
   
-  const callbackRes = config && config.onSpin && config.onSpin(spinComp);
+  const onSpinResult = config && config.onSpin && config.onSpin(spinComp);
   
-  const unmount = () => {
-    spinApp.unmount();
-    document.body.removeChild(mountElement);
-  }
-  
-  return (onUnmount?: FFunction) => {
-    onUnmount && onUnmount(callbackRes, spinComp);
+  const finish = () => {
     spinComp.fadeOut();
     const timeoutId = setTimeout(() => {
-      unmount();
+      document.body.removeChild(mountElement);
+      spinApp.unmount();
       clearTimeout(timeoutId);
     }, fadeDuration);
   }
+  
+  return { onSpinResult, finish }
 }
 
 export default UseSpin;

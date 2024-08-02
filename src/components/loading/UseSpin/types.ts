@@ -1,7 +1,9 @@
-import type { FFunction } from '@/types/type-utils';
+import type { Component } from 'vue';
+
+export type FOnSpin = (compInstance?: Component) => any;
 
 export interface IUseSpinConfig {
-  onSpin?: FFunction;
+  onSpin?: FOnSpin;
   delay?: number;
   mask?: boolean;
 }
