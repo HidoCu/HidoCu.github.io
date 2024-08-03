@@ -27,6 +27,7 @@ declare module 'vue' {
     Onmyodama: typeof import('./src/components/icons/Onmyodama.vue')['default']
     OnmyodamaSpin: typeof import('./src/components/OnmyodamaSpin.vue')['default']
     ResourcesUsed: typeof import('./src/components/ResourcesUsed.vue')['default']
+    Revolver: typeof import('./src/components/Revolver.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sakura: typeof import('./src/components/icons/Sakura.vue')['default']

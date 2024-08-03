@@ -1,31 +1,31 @@
-export default {
-  Koumakyou: ['レミリア・スカーレット', 'フランドール・スカーレット'],
+export default [
+  /*Koumakyou*/ ...['レミリア・スカーレット', 'フランドール・スカーレット'],
   
-  Youyoumu: [],
+  /*Youyoumu*/ ...[],
   
-  Eiyashou:  ['博麗霊夢', '霧雨魔理沙'],
+  /*Eiyashou*/ ...['博麗霊夢', '霧雨魔理沙'],
   
-  Kaeizuka:  [],
+  /*Kaeizuka*/ ...[],
   
-  Fuujinroku:  [],
+  /*Fuujinroku*/ ...[],
   
-  Chireiden:  ['古明地さとり', '古明地こいし'],
+  /*Chireiden*/ ...['古明地さとり', '古明地こいし'],
   
-  Seirensen: [],
+  /*Seirensen*/ ...[],
   
-  Shinreibyou: [],
+  /*Shinreibyou*/ ...[],
   
-  Kishinjou: [],
+  /*Kishinjou*/ ...[],
   
-  Kanjuden: [],
+  /*Kanjuden*/ ...[],
   
-  Tenkuushou: [],
+  /*Tenkuushou*/ ...[],
   
-  Kikeijuu: [],
+  /*Kikeijuu*/ ...[],
   
-  Kouryuudou: [],
+  /*Kouryuudou*/ ...[],
   
-  Juuouen: [],
+  /*Juuouen*/ ...[],
   
-  Others: []
-}
+  /*Others*/ ...[]
+] as const;

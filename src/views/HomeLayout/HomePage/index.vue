@@ -1,11 +1,25 @@
 <script setup lang="ts">
+import avatars from './data.json';
+import type { INativeImage } from '@/types';
+import { Revolver } from '@/components';
+import NativeAccessor from '@/common/constant-util';
 
+const useHeader = () => {
+  const avatarList = ref(avatars['background-list'] as INativeImage[]);
+  const avatarUrlList = ref<string[]>([]);
+  avatarUrlList.value = avatarList.value.map(img => NativeAccessor.image('revolver', img));
+  return { avatarUrlList }
+}
+
+const { avatarUrlList } = useHeader();
 </script>
 
 <template>
   <div class="home-container">
     <header class="home__my-info common-card blur">
-      header
+      <div class="home__revolver">
+        <Revolver :images="avatarUrlList" />
+      </div>
     </header>
     <nav class="home__nav common-card blur">nav</nav>
     <main class="home__main-content common-card blur">
@@ -47,8 +61,11 @@
   & .home__main-content {
     grid-area: content;
 
-    & .home__intro {}
-    & .home__illustrate {}
+    & .home__intro {
+    }
+
+    & .home__illustrate {
+    }
   }
 
   // 尾部的一些信息

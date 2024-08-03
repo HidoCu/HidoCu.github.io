@@ -1,4 +1,4 @@
-import type { IImageInfo, TNativeImgUrl, TPlatform, TTag } from '@/types';
+import type { IImageInfo, TNativeImgUrl, TPlatform } from '@/types';
 import { rgba } from '@/utils/tools';
 import TagData from './tag-data';
 
@@ -65,11 +65,7 @@ export class ConstantUtils {
   }
 }
 
-/**
- * touhou人物表
- * @see TagData
- */
-export const Tags = [...Object.values(TagData).flat()] as const;
+export type TTag = typeof TagData[number];
 
 /**
  * 每个人物对应的主题色

@@ -1,4 +1,4 @@
-import type { Tags } from '@/common/constant';
+import type { TTag } from '@/common/constant';
 import type { ReverseOptional } from './type-utils';
 
 /**
@@ -15,11 +15,6 @@ export type TPlatform = 'pixiv' | 'bilibili' | 'acfun' | 'twitter' | 'x' | 'yout
  * 使用资源的类型
  */
 export type TResType = 'image' | 'video' | 'text' | 'others';
-
-/**
- * 使用资源的tag
- */
-export type TTag = typeof Tags[number];
 
 /**
  * data.json 本地访问图片注册

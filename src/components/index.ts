@@ -8,3 +8,4 @@ export { default as NowLoading } from './loading/NowLoading/index.vue';
 export { default as OnmyodamaSpin } from './OnmyodamaSpin.vue';
 export { default as NowLoadingFade } from './loading/NowLoading/NowLoadingFade.vue';
 export { default as UseSpin } from './loading/UseSpin';
+export { default as Revolver } from './Revolver.vue';
