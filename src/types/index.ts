@@ -22,7 +22,7 @@ export type TResType = 'image' | 'video' | 'text' | 'others';
 export type TTag = typeof Tags[number];
 
 /**
- * page.json 本地访问图片注册
+ * data.json 本地访问图片注册
  */
 export interface INativeImage {
   id: string | number;
@@ -96,7 +96,7 @@ export type TNativeImgUrl = 'bg';
 /* ----------------------------------------------------------- */
 
 /**
- * 引用资源信息（page.json）
+ * 引用资源信息（data.json）
  * @see INativeImage
  * @deprecated 计划使用INativeImage替代
  */

@@ -10,8 +10,8 @@ export const usePageResources = () => {
   const loadResources = () => {
     route.matched.map(async route => {
       const resModuleGetter = route.meta.resources as FFunction;
-      const resGetter = await resModuleGetter();
-      const res = resGetter.default();
+      const resGetter = resModuleGetter();
+      const res = await resGetter();
       if (res) {
         resourcesUsedList.value.push(...res);
       }

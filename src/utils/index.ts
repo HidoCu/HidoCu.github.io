@@ -182,3 +182,14 @@ export const capitalize = (str: string) =>
  */
 export const isFunction = (target: any) =>
   Object.prototype.toString.call(target) === '[object Function]';
+
+/**
+ * 大驼峰命名转短横线
+ * @param str 目标串
+ */
+export const upperCamel2Kebab = (str: string) => {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1-$2') // 在小写字母和大写字母之间添加短横线
+    .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2') // 在两个大写字母之间添加短横线（如果后面有小写字母）
+    .toLowerCase(); // 转换为小写
+}
