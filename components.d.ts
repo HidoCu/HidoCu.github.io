@@ -10,7 +10,6 @@ declare module 'vue' {
     AsideToolbox: typeof import('./src/components/AsideToolbox.vue')['default']
     Comp: typeof import('./src/components/loading/UseSpin/Comp.vue')['default']
     Danmaku: typeof import('./src/components/icons/Danmaku.vue')['default']
-    ExpansionContainer: typeof import('./src/components/ExpansionContainer.vue')['default']
     LoadingProvider: typeof import('./src/components/LoadingProvider.vue')['default']
     MenuButton: typeof import('./src/components/MenuButton.vue')['default']
     NavigationMenu: typeof import('./src/components/NavigationMenu.vue')['default']
@@ -28,11 +27,9 @@ declare module 'vue' {
     Onmyodama: typeof import('./src/components/icons/Onmyodama.vue')['default']
     OnmyodamaSpin: typeof import('./src/components/OnmyodamaSpin.vue')['default']
     ResourcesUsed: typeof import('./src/components/ResourcesUsed.vue')['default']
-    RouterFade: typeof import('./src/components/RouterFade.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sakura: typeof import('./src/components/icons/Sakura.vue')['default']
     SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
-    VisibleFade: typeof import('./src/components/loading/NowLoading/NowLoadingFade.vue')['default']
   }
 }
