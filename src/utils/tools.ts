@@ -34,13 +34,7 @@ export const rgba = (
  */
 export const startViewTransitionSafe = (fn: () => void) => {
   const dom: IDocument = document;
-  if (dom.startViewTransition) {
-    dom.startViewTransition(() => {
-      fn();
-    });
-  } else {
-    fn();
-  }
+  dom.startViewTransition ? dom.startViewTransition(fn) : fn();
 }
 
 export const defineResources = (resources: IResourcesUsed[]) => resources;

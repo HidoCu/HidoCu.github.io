@@ -170,7 +170,7 @@ const toolConfigList: ITool[] = [{
     transition: height var(--anime-duration) var(--anime-function);
 
     // 触发按钮
-    & .toolbox__icon-btn {
+    .toolbox__icon-btn {
       position: absolute;
       z-index: 1;
 
@@ -194,7 +194,7 @@ const toolConfigList: ITool[] = [{
     }
 
     // 容器
-    & .toolbox__tools-list-container {
+    .toolbox__tools-list-container {
       position: absolute;
       top: var(--toolbox-top-offset);
       background-color: var(--bg-color-card);
@@ -210,15 +210,15 @@ const toolConfigList: ITool[] = [{
       transition: transform var(--anime-duration) var(--anime-function);
       overflow: hidden;
 
-      & .toolbox__tools-list {
+      .toolbox__tools-list {
         margin-top: var(--toolbox-top-margin);
         display: flex;
         flex-direction: column;
         gap: 10px;
         padding-bottom: var(--toolbox-padding-bottom);
 
-        & .toolbox__tools-item {
-          & .toolbox__tools-icon {
+        .toolbox__tools-item {
+          .toolbox__tools-icon {
             width: var(--tool-size);
             height: var(--tool-size);
 

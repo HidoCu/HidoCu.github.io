@@ -79,11 +79,11 @@ const handleChangeState = () => {
 
   background-color: var(--menu-button-background-color);
 
-  & .menu-button__inner {
+  .menu-button__inner {
     height: 100%;
     position: relative;
 
-    & .menu-button__button-icon {
+    .menu-button__button-icon {
       --anime-speed: calc(var(--menu-button-speed) / 2);
       width: 100%;
       height: 100%;
@@ -124,7 +124,7 @@ const handleChangeState = () => {
     }
 
     &.active {
-      & .menu-button__button-icon {
+      .menu-button__button-icon {
         &.nth-top::before {
           top: 50%;
           transform: rotate(45deg);

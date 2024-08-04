@@ -26,11 +26,11 @@
 
 .common-card {
   background-color: var(--bg-color-main);
-  border-radius: 10px;
+  border-radius: 6px;
   
   &.blur {
     backdrop-filter: blur(20px);
-    background-color: rgba(255, 255, 255, .1);
+    background-color: rgba(255, 255, 255, .5);
     color: #fff;
   }
   
@@ -83,6 +83,20 @@
 }
 
 .common-h5-container {
+  @include respond('tablet') {
+    display: none;
+  }
+}
+
+.common-pc-box {
+  display: none;
+  
+  @include respond('tablet') {
+    display: block;
+  }
+}
+
+.common-h5-box {
   @include respond('tablet') {
     display: none;
   }

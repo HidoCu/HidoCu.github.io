@@ -17,6 +17,7 @@ declare module 'vue' {
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDrawer: typeof import('naive-ui')['NDrawer']
     NDrawerContent: typeof import('naive-ui')['NDrawerContent']
+    NGradientText: typeof import('naive-ui')['NGradientText']
     NList: typeof import('naive-ui')['NList']
     NListItem: typeof import('naive-ui')['NListItem']
     NowLoading: typeof import('./src/components/loading/NowLoading/index.vue')['default']

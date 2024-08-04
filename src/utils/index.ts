@@ -53,7 +53,7 @@ export const cutArr = <T>(arr: T[], start = 0, size = 5) => {
       start >= arr.length ||
       size > arr.length ||
       start + size > arr.length) {
-    throw new Error('切片取值越界！')
+    throw new Error('切片取值越界！');
   }
   if (arr.length === size) {
     return [arr];
@@ -187,9 +187,16 @@ export const isFunction = (target: any) =>
  * 大驼峰命名转短横线
  * @param str 目标串
  */
-export const upperCamel2Kebab = (str: string) => {
-  return str
+export const upperCamel2Kebab = (str: string) => str
     .replace(/([a-z])([A-Z])/g, '$1-$2') // 在小写字母和大写字母之间添加短横线
     .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2') // 在两个大写字母之间添加短横线（如果后面有小写字母）
     .toLowerCase(); // 转换为小写
-}
+
+/**
+ * 短横名转大驼峰
+ * @param str 目标串
+ */
+export const kebab2PascalCase = (str: string) => str
+    .split('-') // 分割字符串
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // 将每个单词的首字母大写
+    .join(''); // 连接成一个字符串

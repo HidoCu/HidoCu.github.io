@@ -44,7 +44,7 @@ onMounted(() => {
   background-size: cover;
   background-image: v-bind(bgiMobileUrl);
 
-  & .home-layout__header {
+  .home-layout__header {
     position: fixed;
     bottom: 20px;
     right: 10px;
@@ -54,7 +54,7 @@ onMounted(() => {
     }
   }
 
-  & .home-layout__content {
+  .home-layout__content {
     padding-top: 50px;
 
     @include respond('tablet') {

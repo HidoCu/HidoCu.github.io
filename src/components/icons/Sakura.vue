@@ -66,7 +66,7 @@ defineOptions({ inheritAttrs: false });
 .sakura__container {
   position: relative;
 
-  & .debug-serial {
+  .debug-serial {
     color: aqua;
     font-size: 48px;
     font-weight: 600;

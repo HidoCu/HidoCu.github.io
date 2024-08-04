@@ -31,7 +31,7 @@ const loadingStore = useLoadingStore();
 
 <style scoped lang="scss">
 .loading-provider__container {
-  & .loading-provider__loading {
+  .loading-provider__loading {
     position: fixed;
     inset: 0;
     z-index: 1000;
@@ -39,7 +39,7 @@ const loadingStore = useLoadingStore();
 
     transition: all .3s linear;
 
-    & .loading-provider__pc-loading-container {
+    .loading-provider__pc-loading-container {
       display: none;
 
       @include respond('tablet') {
@@ -50,7 +50,7 @@ const loadingStore = useLoadingStore();
       }
     }
 
-    & .loading-provider__h5-loading-container {
+    .loading-provider__h5-loading-container {
       position: absolute;
       inset: 0;
       display: flex;

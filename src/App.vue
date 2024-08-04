@@ -47,7 +47,7 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
 
 <style scoped lang="scss">
 %transition-animation {
-  transition: all .3s linear;
+  transition: all .5s ease-out;
 
   @include respond('tablet') {
     transition: all .2s linear;
@@ -56,7 +56,7 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
 
 // 进入起始态
 .app-layout-enter-from {
-  transform: translateX(100vw);
+  opacity: .5;
 
   @include respond('tablet') {
     transform: scale(0.95);
@@ -71,7 +71,7 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
 
 // 进入结束态
 .app-layout-enter-to {
-  transform: translateX(0);
+  opacity: 1;
 
   @include respond('tablet') {
     transform: scale(1);

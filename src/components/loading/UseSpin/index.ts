@@ -1,8 +1,5 @@
 import Comp from '@/components/loading/UseSpin/Comp.vue';
-import type { FFunction } from '@/types/type-utils';
 import type { IUseSpinConfig } from './types';
-
-
 
 const UseSpin = (config?: IUseSpinConfig) => {
   const fadeDuration = config?.delay || 0

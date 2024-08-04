@@ -52,17 +52,17 @@ const pd = computed(() => props.padding + 'px');
 .nl__container {
   --now-loading-pd: v-bind(pd);
 
-  & .sakura-box {
+  .sakura-box {
     width: 100%;
     height: 100%;
     position: relative;
 
-    & .sakura {
+    .sakura {
       position: absolute;
     }
   }
 
-  & .loading-text {
+  .loading-text {
     position: fixed;
     bottom: var(--now-loading-pd);
     right: var(--now-loading-pd);

@@ -141,17 +141,17 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
 <style scoped lang="scss">
 .ru__content {
 
-  & .ru__source-platform {
+  .ru__source-platform {
     padding-right: 10px;
   }
 
-  & .ru__res-name {
+  .ru__res-name {
     &::before {
       content: '标题：';
     }
   }
 
-  & .ru__res-type {
+  .ru__res-type {
     & > i.iconfont {
       --icon-size: 20px;
       color: var(--color);
@@ -160,7 +160,7 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
     }
   }
 
-  & .ru__author {
+  .ru__author {
     display: flex;
 
     &:hover {
@@ -171,16 +171,16 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
       content: '作者：';
     }
 
-    & .ru__author-list {
+    .ru__author-list {
       display: flex;
       gap: 10px;
 
-      & .ru__author-item {}
+      .ru__author-item {}
     }
   }
 
-  & .ru__tags {}
-  & .ru__description {}
+  .ru__tags {}
+  .ru__description {}
 
 }
 </style>
