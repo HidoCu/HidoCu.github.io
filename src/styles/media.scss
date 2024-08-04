@@ -1,16 +1,12 @@
 // > $break-point
-$break-point-map-max: (
-    pad: 479px,
-    tablet: 767px,
-    desktop: 1023px,
-    tv: 1199px,
-);
 
 $break-point-map: (
-    pad: 480px,
-    tablet: 768px,
-    desktop: 1024px,
-    tv: 1200px,
+    small: 480px,
+    large-mobile: 640px,
+    pad: 768px,
+    tablet: 1024px,
+    desktop: 1280px,
+    large: 1536px,
 );
 
 @mixin respond($break-point) {

@@ -5,10 +5,12 @@ import type { TBreakPoint, TBreakPointHandler, TTrigger } from './types';
 
 export const BreakPointMap = Object.freeze(new Map<TBreakPoint, number>([
   ['mobile', 0],
-  ['pad', 480],
-  ['tablet', 768],
-  ['desktop', 1024],
-  ['tv', 1200],
+  ['small', 480],
+  ['large-mobile', 640],
+  ['pad', 768],
+  ['tablet', 1024],
+  ['desktop', 1280],
+  ['large', 1536],
 ]));
 
 export const useMediaWrapper = () => {

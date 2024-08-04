@@ -1,4 +1,4 @@
-export type TBreakPoint = 'mobile' | 'pad' | 'tablet' | 'desktop' | 'tv';
+export type TBreakPoint = 'mobile' | 'small' | 'large-mobile' | 'pad' | 'tablet' | 'desktop' | 'large';
 
 export type TBreakPointHandler = `on${Capitalize<TBreakPoint>}`;
 

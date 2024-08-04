@@ -49,7 +49,7 @@ onMounted(() => {
     bottom: 20px;
     right: 10px;
 
-    @include respond('tablet') {
+    @include respond('desktop') {
       display: none;
     }
   }
