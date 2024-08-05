@@ -27,6 +27,10 @@ body {
   
   --theme-color-shadow: 255, 255, 255;
   --theme-color-shadow-icon: 255, 255, 255;
+  
+  --text-color-main: #333;
+  --text-color-sub: #666;
+  --text-color-tip: #999;
 }
 
 body[data-theme="dark"] {
@@ -43,4 +47,8 @@ body[data-theme="dark"] {
   
   --theme-color-shadow: 255, 255, 0;
   --theme-color-shadow-icon: 48, 48, 48;
+  
+  --text-color-main: #fff;
+  --text-color-sub: #fff;
+  --text-color-tip: #fff;
 }

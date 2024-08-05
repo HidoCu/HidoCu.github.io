@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4504304 */
-  src: url('//at.alicdn.com/t/c/font_4504304_a1yvb475hg.woff2?t=1722777222181') format('woff2'),
-  url('//at.alicdn.com/t/c/font_4504304_a1yvb475hg.woff?t=1722777222181') format('woff'),
-  url('//at.alicdn.com/t/c/font_4504304_a1yvb475hg.ttf?t=1722777222181') format('truetype');
+  src: url('//at.alicdn.com/t/c/font_4504304_ortee87dps.woff2?t=1722869636100') format('woff2'),
+  url('//at.alicdn.com/t/c/font_4504304_ortee87dps.woff?t=1722869636100') format('woff'),
+  url('//at.alicdn.com/t/c/font_4504304_ortee87dps.ttf?t=1722869636100') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,30 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-chilun:before {
+  content: "\e65b";
+}
+
+.icon-github:before {
+  content: "\e64c";
+}
+
+.icon-bilibili-copy:before {
+  content: "\e603";
+}
+
+.icon-zhihu:before {
+  content: "\eb80";
+}
+
+.icon-GITEE:before {
+  content: "\e604";
+}
+
+.icon-TwitterX:before {
+  content: "\eb8e";
 }
 
 .icon-tuijianma:before {

@@ -3,7 +3,7 @@ import data from './data.json';
 import { random } from '@/utils';
 import type { INativeImage } from '@/types';
 import NativeAccessor from '@/common/constant-util';
-import { NavigationMenu } from '@/components';
+import { DrawerToolbox, NavigationMenu } from '@/components';
 
 /* -------------------- Background -------------------- */
 const bgiList = data['background-list'] as INativeImage[];
@@ -55,10 +55,18 @@ onMounted(() => {
   }
 
   .home-layout__content {
-    padding-top: 50px;
+    padding-top: 30px;
+
+    @include respond('pad') {
+      padding-top: 50px;
+    }
 
     @include respond('tablet') {
-      padding-top: 200px;
+      padding-top: 70px;
+    }
+
+    @include respond('desktop') {
+      padding-top: 100px;
     }
   }
 

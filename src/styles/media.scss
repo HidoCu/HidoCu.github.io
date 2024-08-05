@@ -1,12 +1,13 @@
-// > $break-point
-
 $break-point-map: (
     small: 480px,
     large-mobile: 640px,
     pad: 768px,
     tablet: 1024px,
     desktop: 1280px,
-    large: 1536px,
+    large: 1440px,
+    xl: 1600px,
+    xxl: 1800px,
+    xxxl: 2000px,
 );
 
 @mixin respond($break-point) {

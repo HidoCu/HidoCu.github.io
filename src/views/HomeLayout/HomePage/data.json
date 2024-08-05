@@ -1,7 +1,7 @@
 {
   "user-name": "Ech",
   "signature": "普通的恋厨",
-  "background-list": [
+  "revolver-list": [
     {
       "id": 22276119,
       "suffix": "png",
@@ -31,6 +31,38 @@
       "id": 117898454,
       "suffix": "jpg",
       "p": 0
+    }
+  ],
+  "links": [
+    {
+      "platform": "bilibili",
+      "icon": "icon-bilibili-copy",
+      "color": "#fb7299",
+      "link": "https://space.bilibili.com/2553732"
+    },
+    {
+      "platform": "知乎",
+      "color": "#0063e6",
+      "icon": "icon-zhihu",
+      "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    },
+    {
+      "platform": "X",
+      "color": "#000000",
+      "icon": "icon-TwitterX",
+      "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    },
+    {
+      "platform": "GitHub",
+      "color": "#010409",
+      "icon": "icon-github",
+      "link": "https://github.com/HidoCu"
+    },
+    {
+      "platform": "Gitee",
+      "color": "#c71d23",
+      "icon": "icon-GITEE",
+      "link": "https://gitee.com/KomejiHidoc"
     }
   ]
 }

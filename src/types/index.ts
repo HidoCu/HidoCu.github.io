@@ -9,7 +9,9 @@ export type TImageSuffix = 'jpg' | 'jpeg' | 'png' | 'gif' | 'webp' | 'avif';
 /**
  * 平台
  */
-export type TPlatform = 'pixiv' | 'bilibili' | 'acfun' | 'twitter' | 'x' | 'youtube' | 'others';
+export type TPlatform =
+  'pixiv' | 'bilibili' | 'acfun' |
+  'twitter' | 'x' | 'youtube' | 'others';
 
 /**
  * 使用资源的类型
@@ -103,4 +105,3 @@ export interface IImageInfo {
   p?: number;
   author: ReverseOptional<IAuthor, 'uid' | 'name'>;
 }
-

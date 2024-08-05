@@ -78,3 +78,9 @@ export const TagColorMap = Object.freeze(new Map<TTag, string>([
   ['古明地さとり', rgba(223, 165, 233)],
   ['古明地こいし', rgba(203, 207, 141)],
 ]));
+
+export enum Funkey {
+  RICK = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+  BAD_APPLE = 'https://www.youtube.com/watch?v=FtutLA63Cp8',
+  BAKA = 'https://www.youtube.com/watch?v=V_bQNPG2OyE',
+}

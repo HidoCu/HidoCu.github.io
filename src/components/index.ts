@@ -9,3 +9,6 @@ export { default as OnmyodamaSpin } from './OnmyodamaSpin.vue';
 export { default as NowLoadingFade } from './loading/NowLoading/NowLoadingFade.vue';
 export { default as UseSpin } from './loading/UseSpin';
 export { default as Revolver } from './Revolver.vue';
+export { default as LinkIcon } from './LinkIcon.vue';
+export { default as DrawerToolbox } from './DrawerToolbox.vue';
+export { default as H5FixButton } from './H5FixButton.vue';

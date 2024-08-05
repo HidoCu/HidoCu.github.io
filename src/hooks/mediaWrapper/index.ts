@@ -10,7 +10,10 @@ export const BreakPointMap = Object.freeze(new Map<TBreakPoint, number>([
   ['pad', 768],
   ['tablet', 1024],
   ['desktop', 1280],
-  ['large', 1536],
+  ['large', 1440],
+  ['xl', 1600],
+  ['xxl', 1800],
+  ['xxxl', 2000]
 ]));
 
 export const useMediaWrapper = () => {
