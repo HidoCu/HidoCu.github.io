@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import gsap from 'gsap';
+import { v4 as uuidv4 } from 'uuid';
 
 const props = withDefaults(defineProps<{
   images: string[];
@@ -7,62 +8,62 @@ const props = withDefaults(defineProps<{
   borderSize?: number;
   delay?: number;
   duration?: number;
+  backgroundColor?: string,
+  borderColor?: string,
 }>(), {
   size: 120,
   borderSize: 6,
   delay: 4,
   duration: 2,
+  backgroundColor: 'linear-gradient(to top, #37ecba 0%, #72afd3 100%)',
+  borderColor: 'linear-gradient(180deg, #2af598 0%, #009efd 100%)',
 });
 
+const imgCount = computed(() => props.images.length);
 const portSize = computed(() => props.size + 'px');
 const portBorderSize = computed(() => props.borderSize + 'px');
 
-const imgCount = computed(() => props.images.length);
-
 const calcCenterR = (r: number, n: number) => {
-  if ([1, 2].includes(n)) {
+  if (n === 1) {
     return r;
+  }
+  if (n === 2) {
+    return 2 * r;
   }
   const angle = Math.PI / n;
   const R = r / Math.sin(angle);
   return parseInt(R.toFixed(2));
 }
 
-const positionOrigin = ref(calcCenterR(props.size / 2, props.images.length));
+const positionOrigin = ref(calcCenterR(props.size / 2, imgCount.value));
 const positionOriginPx = computed(() => props.size / 2 + positionOrigin.value + 'px');
 
-const calcKeyFrames = (times: number, gsapKeyframesConfig: GSAPTweenVars) => {
-  const keyframesList: GSAPTweenVars[] = [];
-  for (let i = 1; i <= times; i++) {
-    keyframesList.push({
-      ...gsapKeyframesConfig,
-      rotate: -360 / times * i,
-    });
-  }
-  return keyframesList;
-}
-
 const rotateAnimation = (selector: string) => {
-  const keyFrameList = calcKeyFrames(imgCount.value, {
-    delay: props.delay,
-    duration: props.duration,
-    ease: 'expo.inOut'
-  });
   gsap.to(selector, {
-    keyframes: keyFrameList,
+    keyframes: props.images.map((_, index) => {
+      const rotate = 360 / imgCount.value * (index + 1);
+      return {
+        delay: props.delay,
+        duration: props.duration,
+        ease: 'expo.inOut',
+        rotate,
+      }
+    }),
     repeat: -1,
   });
 }
 
+const uuid = uuidv4();
+
 onMounted(() => {
-  rotateAnimation('.revolver__roulette');
+  rotateAnimation('.revolver-' + uuid);
 });
 </script>
 
 <template>
   <div class="revolver-box">
     <div class="revolver-container">
-      <div class="revolver__roulette">
+      <div class="revolver__roulette" :class="`revolver-${uuid}`">
         <ul class="revolver__img-list">
           <li
               class="revolver__img-item"
@@ -89,7 +90,7 @@ onMounted(() => {
 
   --revolver-border-size: v-bind(portBorderSize);
   --revolver-box-size: calc(var(--revolver-size) + var(--revolver-border-size) * 2);
-  
+
   width: var(--revolver-box-size);
   height: var(--revolver-box-size);
   border-radius: 50%;
@@ -97,13 +98,13 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
 
-  background-image: linear-gradient(to top, #37ecba 0%, #72afd3 100%);
+  background: v-bind(borderColor);
 
   .revolver-container {
     width: var(--revolver-size);
     height: var(--revolver-size);
 
-    background-image: linear-gradient(180deg, #2af598 0%, #009efd 100%);
+    background: v-bind(backgroundColor);
     border-radius: 50%;
     display: flex;
     justify-content: center;

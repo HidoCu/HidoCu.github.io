@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { startViewTransitionSafe } from '@/utils/tools';
 
-type TTheme = 'light' | 'dark';
+export type TTheme = 'light' | 'dark';
 
 export const useThemeStore = defineStore('theme', () => {
     const theme = ref<TTheme>('light');
@@ -15,12 +15,27 @@ export const useThemeStore = defineStore('theme', () => {
       theme.value = themeVal;
     }
     
-    watch(() => theme.value, (newTheme) => {
+    const isTheme = (t: TTheme) => theme.value === t;
+    
+    const isLight = computed(() => isTheme('light'));
+    const isDark = computed(() => isTheme('dark'));
+    
+    watch(theme, (newTheme) => {
+      console.log(newTheme)
       startViewTransitionSafe(() => {
         document.body.dataset.theme = newTheme;
       });
     }, { immediate: true });
     
-    return { theme, toggleTheme, setTheme }
+    
+    
+    return {
+      theme,
+      toggleTheme,
+      setTheme,
+      isTheme,
+      isLight,
+      isDark,
+    }
   }, { persist: true }
 );

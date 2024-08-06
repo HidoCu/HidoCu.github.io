@@ -12,3 +12,5 @@ export interface IWindowContext {
 }
 
 export type TTrigger = (context: IWindowContext) => any;
+
+export type TFnHook = () => void;

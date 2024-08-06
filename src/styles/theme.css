@@ -16,6 +16,8 @@
 body {
   --bg-color-main: #fff;
   --bg-color-card: #fff;
+  --bg-color-dark: #f5f5f5;
+  --bg-color-darker: #3a3f51;
   --icon-color: #666;
   --active-color: #3330e8;
   --border-color: #efeff5;
@@ -36,6 +38,8 @@ body {
 body[data-theme="dark"] {
   --bg-color-main: var(--main-dark);
   --bg-color-card: var(--grey-dark);
+  --bg-color-dark: #333;
+  --bg-color-darker: #2c2c32;
   --icon-color: #fff;
   --active-color: #fff;
   --border-color: #3f3f44;

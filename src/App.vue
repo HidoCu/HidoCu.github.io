@@ -26,10 +26,13 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
                 <component :is="Component" />
               </Transition>
             </RouterView>
-            <AsideToolbox :blur="route.name === 'Home'" />
-            <DrawerToolbox v-model:show="toolStore.show" />
           </div>
           <!-- Content -->
+
+          <!-- Extra Components -->
+          <AsideToolbox :blur="route.name === 'Home'" />
+          <DrawerToolbox v-model:show="toolStore.show" />
+          <!-- Extra Components -->
 
           <!-- Loading -->
           <template #pcLoading>
@@ -49,6 +52,12 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
 </template>
 
 <style scoped lang="scss">
+.app-container {
+  background-color: var(--bg-color-dark);
+}
+
+/* ---------------------------------------- */
+
 %transition-animation {
   transition: all .5s ease-out;
 

@@ -13,7 +13,7 @@ const UseSpin = (config?: IUseSpinConfig) => {
   document.body.appendChild(mountElement);
   const spinComp = spinApp.mount(mountElement) as InstanceType<typeof Comp>;
   
-  const onSpinResult = config && config.onSpin && config.onSpin(spinComp);
+  const spinResult = config && config.onSpin && config.onSpin(spinComp);
   
   const finish = () => {
     spinComp.fadeOut();
@@ -24,7 +24,7 @@ const UseSpin = (config?: IUseSpinConfig) => {
     }, fadeDuration);
   }
   
-  return { onSpinResult, finish }
+  return { spinResult, finish }
 }
 
 export default UseSpin;

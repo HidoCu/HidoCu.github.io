@@ -2,6 +2,8 @@
 import type { IAuthorBase, IResourcesUsed, TPlatform } from '@/types';
 import { SvgIcon } from '@/components';
 import { PlatformAuthorLinkPrefix, PlatformIcon, PlatformLinkPrefix, TagColorMap } from '@/common/constant';
+import { useMediaWrapper } from '@/hooks';
+import { BreakPointMap } from '@/hooks/mediaWrapper';
 
 withDefaults(defineProps<{
   resources: IResourcesUsed[];
@@ -39,13 +41,30 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
   const link = linkPrefix + author.uid;
   window.open(link);
 }
+
+const { onBreakPointChange, breakPoint } = useMediaWrapper();
+
+const drawerW = ref<string | number>('100%');
+
+onBreakPointChange(() => {
+  const bpVal = BreakPointMap.get(breakPoint.value!)!;
+  const mobileBp = BreakPointMap.get('small')!;
+  const padBp = BreakPointMap.get('pad')!;
+
+  if (bpVal > mobileBp) {
+    drawerW.value = '60%';
+  }
+  if (bpVal > padBp) {
+    drawerW.value = 500;
+  }
+});
 </script>
 
 <template>
   <n-drawer
       :placement="placement"
       v-model:show="show"
-      width="500px"
+      :width="drawerW"
       close-on-esc
       show-mask
       block-scroll>
@@ -76,7 +95,7 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
 
               <!-- resName -->
               <template #header>
-                <div class="ru__res-name">{{res.resName}}</div>
+                <div class="ru__res-name">{{ res.resName }}</div>
               </template>
 
               <!-- resType -->
@@ -128,7 +147,7 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
               </template>
 
               <!-- description -->
-              <div class="ru__description">{{res.resDesc}}</div>
+              <div class="ru__description">{{ res.resDesc }}</div>
 
             </n-thing>
           </n-list-item>
@@ -175,12 +194,16 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
       display: flex;
       gap: 10px;
 
-      .ru__author-item {}
+      .ru__author-item {
+      }
     }
   }
 
-  .ru__tags {}
-  .ru__description {}
+  .ru__tags {
+  }
+
+  .ru__description {
+  }
 
 }
 </style>

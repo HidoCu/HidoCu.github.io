@@ -1,4 +1,13 @@
-import type { INativeImage } from '@/types';
+import type { INativeImage, IPixivProxy } from '@/types';
+
+export const pixivProxy = (imgInf: IPixivProxy) => {
+  const proxy = 'https://pixiv.re/';
+  const { pid, serial, suffix } = imgInf;
+  if (serial) {
+    return `${proxy}${pid}-${serial}.${suffix}`;
+  }
+  return `${proxy}${pid}.${suffix}`;
+}
 
 /*
 * pixiv: [画ID]
@@ -17,10 +26,12 @@ const NativeAccessor = {
   },
   
   // 视频访问
-  video() {},
+  video() {
+  },
   
   // 文本（文章）访问
-  text() {},
+  text() {
+  },
   
   // 其他资源访问
 }

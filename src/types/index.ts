@@ -28,6 +28,15 @@ export interface INativeImage {
 }
 
 /**
+ * pixiv图片代理
+ */
+export interface IPixivProxy {
+  pid: number;
+  serial?: number;
+  suffix: 'png' | 'jpg';
+}
+
+/**
  * 原作者信息，一般用不着
  */
 export interface IAuthor {
