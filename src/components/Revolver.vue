@@ -53,10 +53,10 @@ const rotateAnimation = (selector: string) => {
   });
 }
 
-const uuid = uuidv4();
+const uuid = ref(uuidv4())
 
 onMounted(() => {
-  rotateAnimation('.revolver-' + uuid);
+  rotateAnimation('.revolver-' + uuid.value);
 });
 </script>
 

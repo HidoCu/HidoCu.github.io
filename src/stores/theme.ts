@@ -27,8 +27,6 @@ export const useThemeStore = defineStore('theme', () => {
       });
     }, { immediate: true });
     
-    
-    
     return {
       theme,
       toggleTheme,

@@ -11,6 +11,7 @@ const route = useRoute();
 
 const naiveTheme = computed<GlobalTheme | null>(() =>
     themeStore.theme === 'light' ? null : darkTheme);
+
 </script>
 
 <template>
@@ -54,6 +55,7 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
 <style scoped lang="scss">
 .app-container {
   background-color: var(--bg-color-dark);
+  filter: grayscale(100%);
 }
 
 /* ---------------------------------------- */
