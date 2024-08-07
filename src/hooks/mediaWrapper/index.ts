@@ -1,16 +1,17 @@
 import { useWindowSize } from '@vueuse/core';
-import type { FFunction, TAxis } from '@/types/type-utils';
+import type { TAxis } from '@/types/type-utils';
 import { capitalize, debounce } from '@/utils';
-import type { TBreakPoint, TBreakPointHandler, TFnHook, TTrigger } from './types';
+import type { TBreakPoint, TBreakPointHandler, FFnHook, TTrigger } from './types';
 
 export const BreakPointMap = Object.freeze(new Map<TBreakPoint, number>([
   ['mobile', 0],
-  ['small', 480],
-  ['large-mobile', 640],
+  ['mobile-horiz', 480],
   ['pad', 768],
+  
   ['tablet', 1024],
   ['desktop', 1280],
   ['large', 1440],
+  
   ['xl', 1600],
   ['xxl', 1800],
   ['xxxl', 2000]
@@ -133,17 +134,16 @@ export const useMediaWrapper = () => {
     }
   }
   
-  const breakPointChangeTriggerList = ref<TFnHook[]>([]);
-  const onBreakPointChange = (trigger: TFnHook) => {
-    breakPointChangeTriggerList.value.push(trigger);
-  }
-  
   watch(breakPoint, () => {
     _respondHandlerExecutor(breakPoint.value!);
   });
   
+  const bpChangeHooks = ref<FFnHook[]>([]);
+  const onBreakPointChange = (hook: FFnHook) => {
+    bpChangeHooks.value.push(hook);
+  }
   watch(breakPoint, () => {
-    breakPointChangeTriggerList.value.map(trigger => trigger());
+    bpChangeHooks.value.map(hook => hook());
   }, { immediate: true });
   
   onBeforeUnmount(() => {

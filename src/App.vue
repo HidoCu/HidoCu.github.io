@@ -7,7 +7,6 @@ import { useLoadingStore, useToolDrawerStore } from '@/stores';
 const themeStore = useThemeStore();
 const loadingStore = useLoadingStore();
 const toolStore = useToolDrawerStore();
-const route = useRoute();
 
 const naiveTheme = computed<GlobalTheme | null>(() =>
     themeStore.theme === 'light' ? null : darkTheme);
@@ -31,7 +30,7 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
           <!-- Content -->
 
           <!-- Extra Components -->
-          <AsideToolbox :blur="route.name === 'Home'" />
+          <AsideToolbox />
           <DrawerToolbox v-model:show="toolStore.show" />
           <!-- Extra Components -->
 
@@ -55,7 +54,7 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
 <style scoped lang="scss">
 .app-container {
   background-color: var(--bg-color-dark);
-  filter: grayscale(100%);
+  //filter: grayscale(100%);
 }
 
 /* ---------------------------------------- */

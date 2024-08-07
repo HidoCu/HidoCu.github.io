@@ -3,7 +3,6 @@ import type { IAuthorBase, IResourcesUsed, TPlatform } from '@/types';
 import { SvgIcon } from '@/components';
 import { PlatformAuthorLinkPrefix, PlatformIcon, PlatformLinkPrefix, TagColorMap } from '@/common/constant';
 import { useMediaWrapper } from '@/hooks';
-import { BreakPointMap } from '@/hooks/mediaWrapper';
 
 withDefaults(defineProps<{
   resources: IResourcesUsed[];
@@ -44,20 +43,23 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
 
 const { onBreakPointChange, breakPoint } = useMediaWrapper();
 
-const drawerW = ref<string | number>('100%');
+const drawerW = ref<string | number>(500);
 
 onBreakPointChange(() => {
-  const bpVal = BreakPointMap.get(breakPoint.value!)!;
-  const mobileBp = BreakPointMap.get('small')!;
-  const padBp = BreakPointMap.get('pad')!;
-
-  if (bpVal > mobileBp) {
-    drawerW.value = '60%';
-  }
-  if (bpVal > padBp) {
-    drawerW.value = 500;
+  switch(breakPoint.value) {
+    case 'mobile':
+    case 'mobile-horiz':
+      drawerW.value = '100%';
+      break;
+    case 'pad':
+      drawerW.value = '60%';
+      break;
+    default:
+      drawerW.value = 500;
+      break;
   }
 });
+
 </script>
 
 <template>

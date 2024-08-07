@@ -1,6 +1,6 @@
 export type TBreakPoint =
-  'mobile' | 'small' | 'large-mobile' |
-  'pad' | 'tablet' | 'desktop' | 'large' |
+  'mobile' | 'mobile-horiz' | 'pad' |
+  'tablet' | 'desktop' | 'large' |
   'xl' | 'xxl' | 'xxxl';
 
 export type TBreakPointHandler = `on${Capitalize<TBreakPoint>}`;
@@ -13,4 +13,4 @@ export interface IWindowContext {
 
 export type TTrigger = (context: IWindowContext) => any;
 
-export type TFnHook = () => void;
+export type FFnHook = () => void;
