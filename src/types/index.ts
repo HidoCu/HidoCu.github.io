@@ -1,5 +1,5 @@
 import type { TTag } from '@/common/constant';
-import type { ReverseOptional } from './type-utils';
+import type { ReverseOptional, TDateStr } from './type-utils';
 
 /**
  * 文件后缀
@@ -113,4 +113,10 @@ export interface IImageInfo {
   platform: TPlatform;
   p?: number;
   author: ReverseOptional<IAuthor, 'uid' | 'name'>;
+}
+
+export interface IMarkdownInfo {
+  title: string;
+  desc?: string;
+  time?: TDateStr;
 }

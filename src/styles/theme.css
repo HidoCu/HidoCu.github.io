@@ -11,6 +11,8 @@
   --color-warning-light: #f2c97d;
   --color-error: #d03050;
   --color-error-light: #e88080;
+  
+  --theme-color: #5650aa;
 }
 
 body {
@@ -53,6 +55,6 @@ body[data-theme="dark"] {
   --theme-color-shadow-icon: 48, 48, 48;
   
   --text-color-main: #fff;
-  --text-color-sub: #fff;
-  --text-color-tip: #fff;
+  --text-color-sub: #cdcdcd;
+  --text-color-tip: #aaa;
 }

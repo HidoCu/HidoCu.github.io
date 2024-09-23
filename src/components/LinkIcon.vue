@@ -5,16 +5,18 @@ const props = withDefaults(defineProps<{
   color?: string;
   iconSize?: number;
   textSize?: number;
-
+  padding?: number;
 }>(), {
   text: '',
   color: '#333',
   iconSize: 32,
   textSize: 16,
+  padding: 4,
 });
 
 const _iconSize = computed(() => props.iconSize + 'px');
 const _textSize = computed(() => props.textSize + 'px');
+const _padding = computed(() => props.padding + 'px');
 </script>
 
 <template>
@@ -36,7 +38,7 @@ const _textSize = computed(() => props.textSize + 'px');
     justify-content: center;
     align-items: center;
     gap: 4px;
-    padding: 4px;
+    padding: v-bind(_padding);
 
     .link-icon-i {
       transition: all .1s linear;
@@ -44,6 +46,7 @@ const _textSize = computed(() => props.textSize + 'px');
       .icon-i {
         transition: all .1s linear;
         font-size: v-bind(_iconSize);
+        line-height: v-bind(_iconSize);
         color: v-bind(color);
       }
     }

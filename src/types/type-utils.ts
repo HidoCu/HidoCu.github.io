@@ -100,3 +100,23 @@ export type TClassSelector = `.${string}`;
  * ID选择器
  */
 export type TIdSelector = `#${string}`;
+
+/**
+ * 年
+ */
+export type TYear = `${19 | 20}${TZero2Nine}${TZero2Nine}`;
+
+/**
+ * 月
+ */
+export type TMonth = `0${TOne2Nine}` | '10' | '11' | '12';
+
+/**
+ * 日
+ */
+export type TDate = `0${TOne2Nine}` | `${1 | 2}${TZero2Nine}` | `3${0 | 1}`;
+
+/**
+ * 年-月-日
+ */
+export type TDateStr = `${TYear}-${TMonth}-${TDate}`;

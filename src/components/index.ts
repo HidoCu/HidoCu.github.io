@@ -12,3 +12,6 @@ export { default as Revolver } from './Revolver.vue';
 export { default as LinkIcon } from './LinkIcon.vue';
 export { default as DrawerToolbox } from './DrawerToolbox.vue';
 export { default as H5FixButton } from './H5FixButton.vue';
+export { default as ExternalLink } from './ExternalLink.vue';
+export { default as MDRender } from './MDRender.vue';
+export { default as CountdownBoard } from './CountdownBoard.vue';

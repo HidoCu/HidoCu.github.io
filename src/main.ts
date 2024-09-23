@@ -2,6 +2,8 @@ import './styles/main.css';
 import './styles/theme.css';
 import './styles/iconfont.css';
 
+import 'highlight.js/styles/monokai.css';
+
 import 'virtual:svg-icons-register';
 
 import { createApp } from 'vue';

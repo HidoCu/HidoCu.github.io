@@ -84,3 +84,5 @@ export enum Funkey {
   BAD_APPLE = 'https://www.youtube.com/watch?v=FtutLA63Cp8',
   BAKA = 'https://www.youtube.com/watch?v=V_bQNPG2OyE',
 }
+
+export const ONE_DAY = 24 * 60 * 60 * 1000;

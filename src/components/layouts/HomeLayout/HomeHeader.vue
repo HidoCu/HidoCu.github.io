@@ -4,10 +4,13 @@ import type { INativeImage } from '@/types';
 import { LinkIcon, Revolver } from '@/components';
 import { random } from '@/utils';
 import { Funkey } from '@/common/constant';
+import inf from '@/assets/data/info.json';
 
-const props = withDefaults(defineProps<{
-  data: any
-}>(), {});
+const props = defineProps<{
+  data: any;
+}>();
+
+const info = ref<any>(inf);
 
 const revolverList = computed(() =>
     (props.data['revolver-list'] as INativeImage[])
@@ -17,14 +20,10 @@ const nicknameGradient = ref('linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
 const signatureGradient = ref('linear-gradient(to top, #09203f 0%, #537895 100%)');
 
 const dialog = useDialog();
-
-const isRick = (link: string) => link === Funkey.RICK;
-
+const isHidden = (link: string) => link === 'hidden';
 const handleOpenLink = (link: string) => {
-  if (isRick(link)) {
+  if (isHidden(link)) {
     const r = random(1, 20);
-    console.log(r);
-
     dialog.warning({
       title: '😥你被骗了',
       content: '🤣怎么可能会放这个链接出来lolololo~',
@@ -56,13 +55,13 @@ const handleOpenLink = (link: string) => {
       <div class="info-text">
         <div class="nickname">
           <n-gradient-text :gradient="nicknameGradient">
-            <b>{{ data['user-name'] }}</b>
+            <b>{{ info['user-name'] }}</b>
           </n-gradient-text>
         </div>
         <div class="signature">
           <div
               class="signature-char"
-              v-for="char in data['signature']">
+              v-for="char in info['signature']">
             <n-gradient-text :gradient="signatureGradient">
               {{ char }}
             </n-gradient-text>
@@ -74,7 +73,7 @@ const handleOpenLink = (link: string) => {
       <ul class="my-link-list">
         <li
             class="my-link-item"
-            v-for="(link, index) in data['links']"
+            v-for="(link, index) in info['links']"
             :key="index"
             @click="handleOpenLink(link.link)">
           <LinkIcon

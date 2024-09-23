@@ -111,3 +111,18 @@
     display: none;
   }
 }
+
+.common-article {
+  --fs: 18px;
+  display: flex;
+  flex-direction: column;
+  //text-indent: calc(2 * var(--fs));
+  
+  padding-inline: 20px;
+  
+  .article-paragraph {
+    font-size: var(--fs);
+    line-height: calc(2 * var(--fs));
+    padding-block: 5px;
+  }
+}

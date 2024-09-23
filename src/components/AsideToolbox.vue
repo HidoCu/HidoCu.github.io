@@ -101,6 +101,15 @@ const toolCount = computed(() => toolConfigList.length);
   --bth-size: 80px;
   --icon-size: calc(var(--bth-size) - 20px);
   --tool-count: v-bind(toolCount);
+  --ease-in-out: cubic-bezier(0.5, -2.00, 0.5, 2.00);
+
+  $iconRotate: calc(180deg / (var(--tool-count) + 1) * var(--i));
+  $iconRotateR: calc(180deg / (var(--tool-count) + 1) * var(--i) * -1);
+
+  display: none;
+  @include respond('tablet') {
+    display: block;
+  }
 
   position: fixed;
   top: 50%;
@@ -113,10 +122,13 @@ const toolCount = computed(() => toolConfigList.length);
     height: var(--bth-size);
     border-radius: 50%;
     background-color: #5650aa;
-    transition: transform .3s ease;
+    transition:
+        rotate .5s ease,
+        scale .5s var(--ease-in-out),;
 
     &.active {
-      transform: rotate(630deg) scale(.85);
+      rotate: 630deg;
+      scale: .85;
     }
 
     .btn-icon {
@@ -134,10 +146,17 @@ const toolCount = computed(() => toolConfigList.length);
       z-index: -1;
       top: 50%;
       left: 50%;
-      transition: all .3s ease;
-      transform: translate(-50%, -50%) rotate(calc(
-        180deg / (var(--tool-count) + 1) * var(--i)
-      ));
+
+      transition:
+          translate .3s ease,
+          rotate .3s ease,
+          scale .4s var(--ease-in-out);
+      translate: -50% -50%;
+      rotate: $iconRotate;
+
+      &.active {
+        scale: 1.2;
+      }
 
       .tools-item-box {
         width: 100%;
@@ -155,9 +174,7 @@ const toolCount = computed(() => toolConfigList.length);
           font-size: calc(var(--icon-size) - 30px);
           color: var(--icon-color);
           transition: all .3s ease;
-          transform: rotate(calc(
-              -180deg / (var(--tool-count) + 1) * var(--i)
-          ));
+          rotate: $iconRotateR;
         }
       }
 
@@ -165,9 +182,8 @@ const toolCount = computed(() => toolConfigList.length);
         box-shadow: 2px 2px 2px 2px #0001;
 
         .tools-icon {
-          transform: rotate(calc(
-              -180deg / (var(--tool-count) + 1) * var(--i)
-          )) scale(1.3);
+          rotate: $iconRotate;
+          scale: 1.3;
         }
       }
 

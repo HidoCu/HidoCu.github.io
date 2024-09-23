@@ -21,7 +21,6 @@ export const useThemeStore = defineStore('theme', () => {
     const isDark = computed(() => isTheme('dark'));
     
     watch(theme, (newTheme) => {
-      console.log(newTheme)
       startViewTransitionSafe(() => {
         document.body.dataset.theme = newTheme;
       });

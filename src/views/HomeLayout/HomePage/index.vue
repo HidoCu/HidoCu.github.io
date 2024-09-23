@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import pageDataJson from './data.json';
 import { HomeAside, HomeFooter, HomeHeader, HomeMain, HomeNav } from '@/components/layouts';
-import { DrawerToolbox, H5FixButton } from '@/components';
+import { H5FixButton } from '@/components';
 import { useToolDrawerStore } from '@/stores';
+
+const router = useRouter();
 
 const data = ref(pageDataJson);
 
@@ -11,6 +13,16 @@ const toolStore = useToolDrawerStore();
 const handleDrawerShow = () => {
   toolStore.open();
 }
+
+const mainContent = ref('');
+import('./markdown/home/markdown.md?raw')
+    .then(res => {
+      mainContent.value = res.default;
+    })
+    .catch(e => {
+      router.replace('/error');
+      console.error(e);
+    });
 </script>
 
 <template>
@@ -31,7 +43,7 @@ const handleDrawerShow = () => {
       <section class="home-layout-center">
         <main class="home-main-container">
           <div class="main-content common-card blur">
-            <HomeMain />
+            <HomeMain :main-content="mainContent" />
           </div>
         </main>
         <footer class="home-footer-container">
@@ -120,7 +132,11 @@ const handleDrawerShow = () => {
 
       // main
       .home-main-container {
-        .main-content {}
+        flex: 1;
+
+        .main-content {
+          height: 100%;
+        }
       }
 
       // footer
@@ -142,7 +158,11 @@ const handleDrawerShow = () => {
 
       // aside
       .home-aside-container {
-        .aside-content {}
+        //flex: 1;
+
+        .aside-content {
+          height: 100%;
+        }
       }
     }
   }

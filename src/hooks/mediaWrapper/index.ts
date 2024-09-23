@@ -7,11 +7,9 @@ export const BreakPointMap = Object.freeze(new Map<TBreakPoint, number>([
   ['mobile', 0],
   ['mobile-horiz', 480],
   ['pad', 768],
-  
   ['tablet', 1024],
   ['desktop', 1280],
   ['large', 1440],
-  
   ['xl', 1600],
   ['xxl', 1800],
   ['xxxl', 2000]
@@ -24,8 +22,7 @@ export const useMediaWrapper = () => {
    * 根据断点名称获取响应回调名
    * @param respond 断点名
    */
-  const _getHandlerByBreakPoint = (respond: TBreakPoint) =>
-    `on${capitalize(respond)}` as TBreakPointHandler;
+  const _getHandlerByBreakPoint = (respond: TBreakPoint) => `on${capitalize(respond)}` as TBreakPointHandler;
   
   /**
    * 当前屏幕宽高
@@ -69,7 +66,8 @@ export const useMediaWrapper = () => {
    */
   const px2Percentage = (px: number, axis: TAxis) => {
     const screenAxisSize = getScreenAxisSize(axis);
-    return Math.floor(px / screenAxisSize * 100);
+    const perValue = px / screenAxisSize * 100;
+    return Math.floor(perValue);
   }
   
   /**

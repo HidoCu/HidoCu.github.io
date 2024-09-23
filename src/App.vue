@@ -17,35 +17,39 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
   <div class="app-container app-theme">
     <n-config-provider :theme="naiveTheme">
       <n-dialog-provider>
-        <LoadingProvider>
+        <n-notification-provider>
+          <n-message-provider>
+            <LoadingProvider>
 
-          <!-- Content -->
-          <div class="app-content">
-            <RouterView v-slot="{Component}">
-              <Transition name="app-layout" mode="out-in">
-                <component :is="Component" />
-              </Transition>
-            </RouterView>
-          </div>
-          <!-- Content -->
+              <!-- Content -->
+              <div class="app-content">
+                <RouterView v-slot="{Component}">
+                  <Transition name="app-layout" mode="out-in">
+                    <component :is="Component" />
+                  </Transition>
+                </RouterView>
+              </div>
+              <!-- Content -->
 
-          <!-- Extra Components -->
-          <AsideToolbox />
-          <DrawerToolbox v-model:show="toolStore.show" />
-          <!-- Extra Components -->
+              <!-- Extra Components -->
+              <AsideToolbox />
+              <DrawerToolbox v-model:show="toolStore.show" />
+              <!-- Extra Components -->
 
-          <!-- Loading -->
-          <template #pcLoading>
-            <NowLoading :animation="loadingStore.withAnimation">
-              <OnmyodamaSpin />
-            </NowLoading>
-          </template>
-          <template #h5Loading>
-            <OnmyodamaSpin :need-text="false" :icon-size="100" />
-          </template>
-          <!-- Loading -->
+              <!-- Loading -->
+              <template #pcLoading>
+                <NowLoading :animation="loadingStore.withAnimation">
+                  <OnmyodamaSpin />
+                </NowLoading>
+              </template>
+              <template #h5Loading>
+                <OnmyodamaSpin :need-text="false" :icon-size="100" />
+              </template>
+              <!-- Loading -->
 
-        </LoadingProvider>
+            </LoadingProvider>
+          </n-message-provider>
+        </n-notification-provider>
       </n-dialog-provider>
     </n-config-provider>
   </div>

@@ -1,5 +1,5 @@
 import type { IDocument, TIntRange } from '@/types/type-utils';
-import type { IResourcesUsed } from '@/types';
+import type { IMarkdownInfo, IResourcesUsed } from '@/types';
 
 /*
   tools和utils的区别
@@ -38,3 +38,5 @@ export const startViewTransitionSafe = (fn: () => void) => {
 }
 
 export const defineResources = (resources: IResourcesUsed[]) => resources;
+
+export const defineMDInfo = (mdInfo: IMarkdownInfo) => mdInfo;
