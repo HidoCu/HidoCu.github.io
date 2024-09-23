@@ -1,91 +1,170 @@
 <script setup lang="ts">
-import avatars from './data.json';
-import type { INativeImage } from '@/types';
-import { Revolver } from '@/components';
-import NativeAccessor from '@/common/constant-util';
+import pageDataJson from './data.json';
+import { HomeAside, HomeFooter, HomeHeader, HomeMain, HomeNav } from '@/components/layouts';
+import { H5FixButton } from '@/components';
+import { useToolDrawerStore } from '@/stores';
 
-const useHeader = () => {
-  const avatarList = ref(avatars['background-list'] as INativeImage[]);
-  const avatarUrlList = ref<string[]>([]);
-  avatarUrlList.value = avatarList.value.map(img => NativeAccessor.image('revolver', img));
-  return { avatarUrlList }
+const router = useRouter();
+
+const data = ref(pageDataJson);
+
+const toolStore = useToolDrawerStore();
+
+const handleDrawerShow = () => {
+  toolStore.open();
 }
 
-const { avatarUrlList } = useHeader();
+const mainContent = ref('');
+import('./markdown/home/markdown.md?raw')
+    .then(res => {
+      mainContent.value = res.default;
+    })
+    .catch(e => {
+      router.replace('/error');
+      console.error(e);
+    });
 </script>
 
 <template>
-  <div class="home-container">
-    <header class="home__my-info common-card blur">
-      <div class="home__revolver">
-        <Revolver :images="avatarUrlList" />
-      </div>
-    </header>
-    <nav class="home__nav common-card blur">nav</nav>
-    <main class="home__main-content common-card blur">
-      <div class="home__intro">intro</div>
-      <div class="home__illustrate">illustrate</div>
-    </main>
-    <footer class="home__footer common-card blur">footer</footer>
+  <div class="home-container common-container">
+    <div class="home-layout-container">
+      <section class="home-layout-left">
+        <header class="home-header-container">
+          <div class="header-content common-card blur">
+            <HomeHeader :data="data" />
+          </div>
+        </header>
+        <nav class="home-nav-container">
+          <div class="nav-content common-card blur">
+            <HomeNav />
+          </div>
+        </nav>
+      </section>
+      <section class="home-layout-center">
+        <main class="home-main-container">
+          <div class="main-content common-card blur">
+            <HomeMain :main-content="mainContent" />
+          </div>
+        </main>
+        <footer class="home-footer-container">
+          <div class="footer-content common-card blur">
+            <HomeFooter />
+          </div>
+        </footer>
+      </section>
+      <section class="home-layout-right">
+        <aside class="home-aside-container">
+          <div class="aside-content common-card blur">
+            <HomeAside />
+          </div>
+        </aside>
+      </section>
+    </div>
+    <H5FixButton
+        :hidden="toolStore.show"
+        @click="handleDrawerShow"/>
   </div>
 </template>
 
 <style scoped lang="scss">
 .home-container {
-  width: 80%;
-  margin: 0 auto;
+  padding-inline: 20px;
 
-  display: grid;
-  grid-template-areas:
-    "header"
-    "nav"
-    "content"
-    "footer";
-  gap: 20px;
-
-  & > .common-card {
-    box-shadow: 0 0 30px 10px rgba(0, 0, 0, .2);
+  @include respond('pad') {
+    padding-inline: 0;
   }
 
-  // avatar username ...
-  & .home__about-me {
-    grid-area: header;
-  }
+  .home-layout-container {
+    --left-w: 280px;
+    --right-w: 400px;
 
-  // 功能导航
-  & .home__nav {
-    grid-area: nav;
-  }
+    --layout-gap: 20px;
+    --content-gap: 20px;
 
-  //主要内容（介绍、说明）
-  & .home__main-content {
-    grid-area: content;
+    display: flex;
+    flex-direction: column;
+    gap: var(--content-gap);
 
-    & .home__intro {
+    @include respond('pad') {
+      flex-direction: row;
+      gap: var(--layout-gap);
     }
 
-    & .home__illustrate {
+    @include respond('desktop') {
+      --left-w: 400px;
     }
-  }
 
-  // 尾部的一些信息
-  & .home__footer {
-    grid-area: footer;
-  }
+    // left
+    .home-layout-left {
+      flex: 1;
 
-  // media
-  @include respond('tablet') {
-    grid-template-areas:
-      "header content content"
-      "nav    content content"
-      "nav    footer  footer ";
-  }
+      @include respond('pad') {
+        flex: 0 0 var(--left-w);
+      }
 
-  @include respond('desktop') {
-    grid-template-areas:
-      "header content content content"
-      "nav    content content content"
-      "nav    footer  footer  footer ";
+      display: flex;
+      flex-direction: column;
+      gap: var(--content-gap);
+
+      // header
+      .home-header-container {
+        .header-content {}
+      }
+
+      // nav
+      .home-nav-container {
+        display: none;
+
+        @include respond('pad') {
+          display: block;
+        }
+
+        .nav-content {}
+      }
+    }
+
+    // center
+    .home-layout-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--content-gap);
+
+      // main
+      .home-main-container {
+        flex: 1;
+
+        .main-content {
+          height: 100%;
+        }
+      }
+
+      // footer
+      .home-footer-container {
+        .footer-content {}
+      }
+    }
+
+    // right
+    .home-layout-right {
+      display: none;
+
+      @include respond('desktop') {
+        display: flex;
+        flex: 0 0 var(--right-w);
+        flex-direction: column;
+        gap: var(--content-gap);
+      }
+
+      // aside
+      .home-aside-container {
+        //flex: 1;
+
+        .aside-content {
+          height: 100%;
+        }
+      }
+    }
   }
 }
 </style>

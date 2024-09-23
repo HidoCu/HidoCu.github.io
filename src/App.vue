@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useThemeStore } from '@/stores/theme';
-import { AsideToolbox, LoadingProvider, NowLoading, OnmyodamaSpin } from '@/components';
+import { AsideToolbox, DrawerToolbox, LoadingProvider, NowLoading, OnmyodamaSpin } from '@/components';
 import { darkTheme, type GlobalTheme } from 'naive-ui';
-import { useLoadingStore } from '@/stores';
+import { useLoadingStore, useToolDrawerStore } from '@/stores';
 
 const themeStore = useThemeStore();
 const loadingStore = useLoadingStore();
-const route = useRoute();
+const toolStore = useToolDrawerStore();
 
 const naiveTheme = computed<GlobalTheme | null>(() =>
     themeStore.theme === 'light' ? null : darkTheme);
@@ -16,38 +16,55 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
 <template>
   <div class="app-container app-theme">
     <n-config-provider :theme="naiveTheme">
-      <LoadingProvider>
+      <n-dialog-provider>
+        <n-notification-provider>
+          <n-message-provider>
+            <LoadingProvider>
 
-        <!-- Content -->
-        <div class="app-content">
-          <RouterView v-slot="{Component}">
-            <Transition name="app-layout" mode="out-in">
-              <component :is="Component" />
-            </Transition>
-          </RouterView>
-          <AsideToolbox :blur="route.name === 'Home'" />
-        </div>
-        <!-- Content -->
+              <!-- Content -->
+              <div class="app-content">
+                <RouterView v-slot="{Component}">
+                  <Transition name="app-layout" mode="out-in">
+                    <component :is="Component" />
+                  </Transition>
+                </RouterView>
+              </div>
+              <!-- Content -->
 
-        <!-- Loading -->
-        <template #pcLoading>
-          <NowLoading :animation="loadingStore.withAnimation">
-            <OnmyodamaSpin />
-          </NowLoading>
-        </template>
-        <template #h5Loading>
-          <OnmyodamaSpin :need-text="false" :icon-size="100" />
-        </template>
-        <!-- Loading -->
+              <!-- Extra Components -->
+              <AsideToolbox />
+              <DrawerToolbox v-model:show="toolStore.show" />
+              <!-- Extra Components -->
 
-      </LoadingProvider>
+              <!-- Loading -->
+              <template #pcLoading>
+                <NowLoading :animation="loadingStore.withAnimation">
+                  <OnmyodamaSpin />
+                </NowLoading>
+              </template>
+              <template #h5Loading>
+                <OnmyodamaSpin :need-text="false" :icon-size="100" />
+              </template>
+              <!-- Loading -->
+
+            </LoadingProvider>
+          </n-message-provider>
+        </n-notification-provider>
+      </n-dialog-provider>
     </n-config-provider>
   </div>
 </template>
 
 <style scoped lang="scss">
+.app-container {
+  background-color: var(--bg-color-dark);
+  //filter: grayscale(100%);
+}
+
+/* ---------------------------------------- */
+
 %transition-animation {
-  transition: all .3s linear;
+  transition: all .5s ease-out;
 
   @include respond('tablet') {
     transition: all .2s linear;
@@ -56,7 +73,7 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
 
 // 进入起始态
 .app-layout-enter-from {
-  transform: translateX(100vw);
+  opacity: .5;
 
   @include respond('tablet') {
     transform: scale(0.95);
@@ -71,7 +88,7 @@ const naiveTheme = computed<GlobalTheme | null>(() =>
 
 // 进入结束态
 .app-layout-enter-to {
-  transform: translateX(0);
+  opacity: 1;
 
   @include respond('tablet') {
     transform: scale(1);

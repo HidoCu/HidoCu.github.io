@@ -56,5 +56,9 @@ export default defineConfig({
   },
   build: {
     outDir: 'docs'
+  },
+  server:{
+    host:'0.0.0.0'
   }
+  
 });

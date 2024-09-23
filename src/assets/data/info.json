@@ -1,0 +1,36 @@
+{
+  "user-name": "Ech",
+  "signature": "普通的恋厨",
+  "links": [
+    {
+      "platform": "bilibili",
+      "icon": "icon-bilibili-copy",
+      "color": "#fb7299",
+      "link": "https://space.bilibili.com/2553732"
+    },
+    {
+      "platform": "知乎",
+      "color": "#0063e6",
+      "icon": "icon-zhihu",
+      "link": "hidden"
+    },
+    {
+      "platform": "X",
+      "color": "#000000",
+      "icon": "icon-TwitterX",
+      "link": "hidden"
+    },
+    {
+      "platform": "GitHub",
+      "color": "#010409",
+      "icon": "icon-github",
+      "link": "https://github.com/HidoCu"
+    },
+    {
+      "platform": "Gitee",
+      "color": "#c71d23",
+      "icon": "icon-GITEE",
+      "link": "https://gitee.com/KomejiHidoc"
+    }
+  ]
+}

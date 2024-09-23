@@ -2,6 +2,7 @@
 import type { IAuthorBase, IResourcesUsed, TPlatform } from '@/types';
 import { SvgIcon } from '@/components';
 import { PlatformAuthorLinkPrefix, PlatformIcon, PlatformLinkPrefix, TagColorMap } from '@/common/constant';
+import { useMediaWrapper } from '@/hooks';
 
 withDefaults(defineProps<{
   resources: IResourcesUsed[];
@@ -39,13 +40,33 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
   const link = linkPrefix + author.uid;
   window.open(link);
 }
+
+const { onBreakPointChange, breakPoint } = useMediaWrapper();
+
+const drawerW = ref<string | number>(500);
+
+onBreakPointChange(() => {
+  switch(breakPoint.value) {
+    case 'mobile':
+    case 'mobile-horiz':
+      drawerW.value = '100%';
+      break;
+    case 'pad':
+      drawerW.value = '60%';
+      break;
+    default:
+      drawerW.value = 500;
+      break;
+  }
+});
+
 </script>
 
 <template>
   <n-drawer
       :placement="placement"
       v-model:show="show"
-      width="500px"
+      :width="drawerW"
       close-on-esc
       show-mask
       block-scroll>
@@ -76,7 +97,7 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
 
               <!-- resName -->
               <template #header>
-                <div class="ru__res-name">{{res.resName}}</div>
+                <div class="ru__res-name">{{ res.resName }}</div>
               </template>
 
               <!-- resType -->
@@ -128,7 +149,7 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
               </template>
 
               <!-- description -->
-              <div class="ru__description">{{res.resDesc}}</div>
+              <div class="ru__description">{{ res.resDesc }}</div>
 
             </n-thing>
           </n-list-item>
@@ -141,17 +162,17 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
 <style scoped lang="scss">
 .ru__content {
 
-  & .ru__source-platform {
+  .ru__source-platform {
     padding-right: 10px;
   }
 
-  & .ru__res-name {
+  .ru__res-name {
     &::before {
       content: '标题：';
     }
   }
 
-  & .ru__res-type {
+  .ru__res-type {
     & > i.iconfont {
       --icon-size: 20px;
       color: var(--color);
@@ -160,7 +181,7 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
     }
   }
 
-  & .ru__author {
+  .ru__author {
     display: flex;
 
     &:hover {
@@ -171,16 +192,20 @@ const handleAccessAuthor = (author: IAuthorBase, sp: TPlatform) => {
       content: '作者：';
     }
 
-    & .ru__author-list {
+    .ru__author-list {
       display: flex;
       gap: 10px;
 
-      & .ru__author-item {}
+      .ru__author-item {
+      }
     }
   }
 
-  & .ru__tags {}
-  & .ru__description {}
+  .ru__tags {
+  }
+
+  .ru__description {
+  }
 
 }
 </style>

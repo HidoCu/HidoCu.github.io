@@ -13,7 +13,11 @@
   "dependencies": {
     "@types/uuid": "^10.0.0",
     "@vueuse/core": "^10.11.0",
+    "clipboard": "^2.0.11",
+    "dayjs": "^1.11.12",
     "gsap": "^3.12.5",
+    "highlight.js": "^11.10.0",
+    "markdown-it": "^14.1.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "uuid": "^10.0.0",
@@ -22,7 +26,7 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
-    "@types/node": "^20.14.5",
+    "@types/markdown-it": "^14.1.2",
     "@vicons/material": "^0.12.0",
     "@vicons/utils": "^0.1.4",
     "@vitejs/plugin-vue": "^5.0.5",

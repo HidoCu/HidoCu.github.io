@@ -86,8 +86,8 @@ onMounted(() => {
     order: 1;
   }
 
-  & .od-spin__text {
-    & .od-spin__text {
+  .od-spin__text {
+    .od-spin__text {
       @include useMrtFont();
       color: #fff;
 

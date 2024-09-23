@@ -4,33 +4,43 @@
   margin: 0 auto;
   width: 100%;
   
-  @media screen and (min-width: 576px) {
-    width: 540px;
-  }
-  
-  // tablet
-  @media screen and (min-width: 768px) {
+  @include respond('pad') {
     width: 720px;
   }
   
-  // desktop
-  @media screen and (min-width: 1024px) {
-    width: 1000px;
+  @include respond('tablet') {
+    width: 990px;
   }
   
-  // large
-  @media screen and (min-width: 1200px) {
+  @include respond('desktop') {
     width: 1180px;
+  }
+  
+  @include respond('large') {
+    width: 1400px;
+  }
+  
+  @include respond('xl') {
+    width: 1540px;
+  }
+  
+  @include respond('xxl') {
+    width: 1740px;
+  }
+  
+  @include respond('xxxl') {
+    width: 1940px;
   }
 }
 
 .common-card {
   background-color: var(--bg-color-main);
-  border-radius: 10px;
+  border-radius: 6px;
+  padding: 10px;
   
   &.blur {
     backdrop-filter: blur(20px);
-    background-color: rgba(255, 255, 255, .1);
+    background-color: rgba(255, 255, 255, .5);
     color: #fff;
   }
   
@@ -85,5 +95,34 @@
 .common-h5-container {
   @include respond('tablet') {
     display: none;
+  }
+}
+
+.common-pc-box {
+  display: none;
+  
+  @include respond('tablet') {
+    display: block;
+  }
+}
+
+.common-h5-box {
+  @include respond('tablet') {
+    display: none;
+  }
+}
+
+.common-article {
+  --fs: 18px;
+  display: flex;
+  flex-direction: column;
+  //text-indent: calc(2 * var(--fs));
+  
+  padding-inline: 20px;
+  
+  .article-paragraph {
+    font-size: var(--fs);
+    line-height: calc(2 * var(--fs));
+    padding-block: 5px;
   }
 }

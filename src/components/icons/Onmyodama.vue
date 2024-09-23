@@ -75,7 +75,7 @@ const diffusion = computed(() => props.diffusionRadius + 'px');
     background-color: var(--onmyodama-yin-color);
   }
 
-  & .onmyodama__item {
+  .onmyodama__item {
     width: var(--onmyodama-size);
     height: var(--onmyodama-size);
     border-radius: 50%;

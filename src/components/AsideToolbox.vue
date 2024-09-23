@@ -7,65 +7,31 @@ import type { FFunction } from '@/types/type-utils';
 /* ---------------- public ---------------- */
 interface ITool {
   label: '切换主题' | '回到顶部' | '本页资源';
-  icon: `icon-${string}`;
+  icon: string;
   handler: FFunction;
 }
 
-const props = withDefaults(defineProps<{
-  blur?: boolean;
-  iconSize?: number;
-}>(), {
-  blur: false,
-  iconSize: 80
-});
-
-const iconSizeCss = computed(() => Math.abs(props.iconSize) + 'px');
+// const props = withDefaults(defineProps<{
+// }>(), {
+// });
 
 const themeStore = useThemeStore();
-const { updateResources, resourcesUsedList: resUsed } = usePageResources();
+const { updateResources, resourcesUsedList } = usePageResources();
 /* ---------------- public ---------------- */
 
 
 
-/* ---------------- 工具栏样式 ---------------- */
-const toolboxRef = ref<HTMLUListElement | null>(null);
-const toolboxHeight = ref(0);
-
-const initToolboxHeight = () => {
-  if (toolboxRef.value) {
-    toolboxHeight.value = toolboxRef.value.clientHeight;
-  }
-}
-
-onMounted(() => {
-  initToolboxHeight();
-});
-/* ---------------- 工具栏样式 ---------------- */
-
-
-
-/* ---------------- 工具栏打开-关闭 ---------------- */
-const isToolboxOpen = ref(false);
-const currentToolboxContainerHeight = ref(props.iconSize);
-const currentToolboxScaleY = ref(0);
-
+/* ---------------- Toolbox ---------------- */
+const toolboxStatus = ref(false);
 const handleToggleToolbox = () => {
-  if (isToolboxOpen.value) {
-    currentToolboxContainerHeight.value = props.iconSize;
-    currentToolboxScaleY.value = 0;
-  } else {
-    currentToolboxContainerHeight.value = props.iconSize + toolboxHeight.value + 20;
-    currentToolboxScaleY.value = 1;
-  }
-  isToolboxOpen.value = !isToolboxOpen.value;
+  toolboxStatus.value = !toolboxStatus.value;
 }
-/* ---------------- 工具栏打开-关闭 ---------------- */
+/* ---------------- Toolbox ---------------- */
 
 
 
 /* ---------------- 展示页面使用资源 ---------------- */
 const pageResActive = ref(false);
-
 const handleTogglePageRes = (status: boolean) => {
   pageResActive.value = status;
 }
@@ -97,146 +63,131 @@ const toolConfigList: ITool[] = [{
     handleTogglePageRes(true);
   }
 }];
+const toolCount = computed(() => toolConfigList.length);
 /* ---------------- 工具栏配置 ---------------- */
 </script>
 
 <template>
-  <div
-      class="toolbox-container"
-      :style="{ height: currentToolboxContainerHeight + 'px'}">
+  <div class="aside-toolbox">
+    <ul class="toolbox-tools-list">
+      <li
+          class="tools-item"
+          :class="{ active: toolboxStatus }"
+          v-for="(tool, index) in toolConfigList"
+          :key="index"
+          :style="{ '--i': index + 1 }">
+        <div
+            @click="tool.handler"
+            class="tools-item-box common-flex-center common-cursor"
+            :class="{ active: toolboxStatus }">
+          <i class="tools-icon iconfont" :class="tool.icon"></i>
+        </div>
+      </li>
+    </ul>
     <div
-        class="toolbox__icon-btn common-flex-center common-cursor"
-        :class="{ active: isToolboxOpen }"
+        class="toolbox-button common-flex-center common-cursor"
+        :class="{ active: toolboxStatus }"
         @click="handleToggleToolbox">
-      <i class="iconfont icon-logo"></i>
-    </div>
-    <div
-        class="toolbox__tools-list-container"
-        :class="{ blur }"
-        :style="{ transform: `scaleY(${currentToolboxScaleY})` }">
-      <ul class="toolbox__tools-list" ref="toolboxRef">
-        <li
-            class="toolbox__tools-item common-flex-center"
-            v-for="(tool, index) in toolConfigList"
-            :key="index">
-          <div
-              class="toolbox__tools-icon common-flex-center common-cursor"
-              @click="tool.handler">
-            <i class="common-icon iconfont" :class="tool.icon"></i>
-          </div>
-        </li>
-      </ul>
+      <i class="btn-icon iconfont icon-logo"></i>
     </div>
   </div>
-  <ResourcesUsed :resources="resUsed" v-model:show="pageResActive" />
+  <ResourcesUsed
+      :resources="resourcesUsedList"
+      v-model:show="pageResActive" />
 </template>
 
 <style scoped lang="scss">
-.toolbox-container {
+.aside-toolbox {
+  --bth-size: 80px;
+  --icon-size: calc(var(--bth-size) - 20px);
+  --tool-count: v-bind(toolCount);
+  --ease-in-out: cubic-bezier(0.5, -2.00, 0.5, 2.00);
+
+  $iconRotate: calc(180deg / (var(--tool-count) + 1) * var(--i));
+  $iconRotateR: calc(180deg / (var(--tool-count) + 1) * var(--i) * -1);
+
   display: none;
+  @include respond('tablet') {
+    display: block;
+  }
+
   position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 20px;
   user-select: none;
 
-  // PC
-  @include respond('tablet') {
-    display: flex;
-    justify-content: center;
+  .toolbox-button {
+    width: var(--bth-size);
+    height: var(--bth-size);
+    border-radius: 50%;
+    background-color: #5650aa;
+    transition:
+        rotate .5s ease,
+        scale .5s var(--ease-in-out),;
 
-    top: 50%;
-    transform: translateY(-50%);
-    right: 20px;
-
-    --btn-size: v-bind(iconSizeCss);
-    --btn-icon-size: 55px;
-
-    --tool-size: 60px;
-    --tool-icon-size: 45px;
-
-    --toolbox-padding-top: 5px;
-    --toolbox-padding-bottom: 10px;
-
-    --toolbox-top-offset: 40px;
-    --toolbox-top-margin: calc(
-        var(--btn-size) -
-        var(--toolbox-top-offset) +
-        var(--toolbox-padding-top)
-    );
-
-    --anime-duration: .5s;
-    --anime-function: cubic-bezier(0.680, -0.550, 0.265, 1.550);
-
-    width: var(--btn-size);
-    border-radius: 999px;
-    transition: height var(--anime-duration) var(--anime-function);
-
-    // 触发按钮
-    & .toolbox__icon-btn {
-      position: absolute;
-      z-index: 1;
-
-      width: var(--btn-size);
-      height: var(--btn-size);
-      border-radius: 50%;
-      background-color: #6982bd;
-
-      transform: rotate(0deg);
-      transition: all var(--anime-duration) ease;
-
-      &.active {
-        transform: rotate(440deg);
-      }
-
-      & > i.iconfont {
-        font-size: var(--btn-icon-size);
-        line-height: var(--btn-icon-size);
-        color: #fff;
-      }
+    &.active {
+      rotate: 630deg;
+      scale: .85;
     }
 
-    // 容器
-    & .toolbox__tools-list-container {
-      position: absolute;
-      top: var(--toolbox-top-offset);
-      background-color: var(--bg-color-card);
+    .btn-icon {
+      color: #fff;
+      font-size: calc(var(--bth-size) - 30px);
+      line-height: calc(var(--bth-size) - 30px);
+    }
+  }
 
-      &.blur {
-        background-color: rgba(255, 255, 255, .15);
-        backdrop-filter: blur(20px);
-        box-shadow: 0 0 30px 10px rgba(0, 0, 0, .3);
+  .toolbox-tools-list {
+    .tools-item {
+      width: var(--icon-size);
+      height: var(--icon-size);
+      position: absolute;
+      z-index: -1;
+      top: 50%;
+      left: 50%;
+
+      transition:
+          translate .3s ease,
+          rotate .3s ease,
+          scale .4s var(--ease-in-out);
+      translate: -50% -50%;
+      rotate: $iconRotate;
+
+      &.active {
+        scale: 1.2;
       }
 
-      border-radius: 999px;
-      transform-origin: center top;
-      transition: transform var(--anime-duration) var(--anime-function);
-      overflow: hidden;
+      .tools-item-box {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: var(--bg-color-card);
+        box-shadow: 1px 1px 2px 2px #0002;
+        transition: all .3s ease;
 
-      & .toolbox__tools-list {
-        margin-top: var(--toolbox-top-margin);
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        padding-bottom: var(--toolbox-padding-bottom);
+        &.active {
+          transform: translateY(100px);
+        }
 
-        & .toolbox__tools-item {
-          & .toolbox__tools-icon {
-            width: var(--tool-size);
-            height: var(--tool-size);
-
-            & > i.iconfont {
-              font-size: var(--tool-icon-size);
-              line-height: var(--tool-size);
-              color: var(--icon-color);
-              transition: all .1s ease-in;
-            }
-
-            &:hover {
-              & > i.iconfont {
-                color: #ffa9cc;
-              }
-            }
-          }
+        .tools-icon {
+          font-size: calc(var(--icon-size) - 30px);
+          color: var(--icon-color);
+          transition: all .3s ease;
+          rotate: $iconRotateR;
         }
       }
+
+      &:hover {
+        box-shadow: 2px 2px 2px 2px #0001;
+
+        .tools-icon {
+          rotate: $iconRotate;
+          scale: 1.3;
+        }
+      }
+
+
     }
   }
 }

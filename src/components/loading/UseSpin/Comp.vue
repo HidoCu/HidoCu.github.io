@@ -48,7 +48,7 @@ onMounted(() => {
     background-color: #0009;
   }
 
-  & .onmyodama-rotate {
+  .onmyodama-rotate {
     position: absolute;
     top: 50%;
     left: 50%;

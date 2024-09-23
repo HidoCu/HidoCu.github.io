@@ -1,14 +1,18 @@
 import { useWindowSize } from '@vueuse/core';
 import type { TAxis } from '@/types/type-utils';
 import { capitalize, debounce } from '@/utils';
-import type { TBreakPoint, TBreakPointHandler, TTrigger } from './types';
+import type { TBreakPoint, TBreakPointHandler, FFnHook, TTrigger } from './types';
 
 export const BreakPointMap = Object.freeze(new Map<TBreakPoint, number>([
   ['mobile', 0],
-  ['pad', 480],
-  ['tablet', 768],
-  ['desktop', 1024],
-  ['tv', 1200],
+  ['mobile-horiz', 480],
+  ['pad', 768],
+  ['tablet', 1024],
+  ['desktop', 1280],
+  ['large', 1440],
+  ['xl', 1600],
+  ['xxl', 1800],
+  ['xxxl', 2000]
 ]));
 
 export const useMediaWrapper = () => {
@@ -18,8 +22,7 @@ export const useMediaWrapper = () => {
    * 根据断点名称获取响应回调名
    * @param respond 断点名
    */
-  const _getHandlerByBreakPoint = (respond: TBreakPoint) =>
-    `on${capitalize(respond)}` as TBreakPointHandler;
+  const _getHandlerByBreakPoint = (respond: TBreakPoint) => `on${capitalize(respond)}` as TBreakPointHandler;
   
   /**
    * 当前屏幕宽高
@@ -63,7 +66,8 @@ export const useMediaWrapper = () => {
    */
   const px2Percentage = (px: number, axis: TAxis) => {
     const screenAxisSize = getScreenAxisSize(axis);
-    return Math.floor(px / screenAxisSize * 100);
+    const perValue = px / screenAxisSize * 100;
+    return Math.floor(perValue);
   }
   
   /**
@@ -132,6 +136,14 @@ export const useMediaWrapper = () => {
     _respondHandlerExecutor(breakPoint.value!);
   });
   
+  const bpChangeHooks = ref<FFnHook[]>([]);
+  const onBreakPointChange = (hook: FFnHook) => {
+    bpChangeHooks.value.push(hook);
+  }
+  watch(breakPoint, () => {
+    bpChangeHooks.value.map(hook => hook());
+  }, { immediate: true });
+  
   onBeforeUnmount(() => {
     _respondHandlerHolder.value.clear();
   });
@@ -144,5 +156,6 @@ export const useMediaWrapper = () => {
     percentage2Px,
     px2Percentage,
     onRespond,
+    onBreakPointChange,
   }
 }

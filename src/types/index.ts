@@ -1,5 +1,5 @@
 import type { TTag } from '@/common/constant';
-import type { ReverseOptional } from './type-utils';
+import type { ReverseOptional, TDateStr } from './type-utils';
 
 /**
  * 文件后缀
@@ -9,7 +9,9 @@ export type TImageSuffix = 'jpg' | 'jpeg' | 'png' | 'gif' | 'webp' | 'avif';
 /**
  * 平台
  */
-export type TPlatform = 'pixiv' | 'bilibili' | 'acfun' | 'twitter' | 'x' | 'youtube' | 'others';
+export type TPlatform =
+  'pixiv' | 'bilibili' | 'acfun' |
+  'twitter' | 'x' | 'youtube' | 'others';
 
 /**
  * 使用资源的类型
@@ -23,6 +25,15 @@ export interface INativeImage {
   id: string | number;
   suffix: TImageSuffix;
   p: number
+}
+
+/**
+ * pixiv图片代理
+ */
+export interface IPixivProxy {
+  pid: number;
+  serial?: number;
+  suffix: 'png' | 'jpg';
 }
 
 /**
@@ -104,3 +115,8 @@ export interface IImageInfo {
   author: ReverseOptional<IAuthor, 'uid' | 'name'>;
 }
 
+export interface IMarkdownInfo {
+  title: string;
+  desc?: string;
+  time?: TDateStr;
+}
